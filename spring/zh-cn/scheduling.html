@@ -1,0 +1,231 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>&#31532;&nbsp;18&nbsp;&#31456;&nbsp;&#20351;&#29992;Quartz&#25110;Timer&#23436;&#25104;&#26102;&#24207;&#35843;&#24230;&#24037;&#20316;</title><link rel="stylesheet" href="../styles/html.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.65.1"><link rel="home" href="index.html" title="Spring - Java/J2EE Application Framework"><link rel="up" href="index.html" title="Spring - Java/J2EE Application Framework"><link rel="previous" href="mail.html" title="&#31532;&nbsp;17&nbsp;&#31456;&nbsp;&#20351;&#29992;Spring&#37038;&#20214;&#25277;&#35937;&#23618;&#21457;&#36865;Email"><link rel="next" href="springbeansdtd.html" title="&#38468;&#24405;&nbsp;A.&nbsp;Spring's beans.dtd"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">&#31532;&nbsp;18&nbsp;&#31456;&nbsp;&#20351;&#29992;Quartz&#25110;Timer&#23436;&#25104;&#26102;&#24207;&#35843;&#24230;&#24037;&#20316;</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="mail.html">&#19978;&#19968;&#39029;</a>&nbsp;</td><th width="60%" align="center">&nbsp;</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="springbeansdtd.html">&#19979;&#19968;&#39029;</a></td></tr></table><hr></div><div class="chapter" lang="zh_cn"><div class="titlepage"><div><div><h2 class="title"><a name="scheduling"></a>&#31532;&nbsp;18&nbsp;&#31456;&nbsp;&#20351;&#29992;Quartz&#25110;Timer&#23436;&#25104;&#26102;&#24207;&#35843;&#24230;&#24037;&#20316;</h2></div></div><div></div></div><div class="sect1" lang="zh_cn"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d0e8769"></a>18.1.&nbsp;&#31616;&#20171;</h2></div></div><div></div></div><p>Spring&#25552;&#20379;&#20102;&#25903;&#25345;&#26102;&#24207;&#35843;&#24230;(&#35793;&#32773;&#27880;:Scheduling,&#19979;&#21516;)&#30340;&#25972;&#21512;&#31867;.&#29616;&#22312;&#65292;
+		Spring&#25903;&#25345;&#20869;&#32622;&#20110;1.3&#29256;&#26412;&#20197;&#26469;&#30340;JDK&#20013;&#30340;Timer&#21644;Quartz Scheduler(<a href="http://www.quartzscheduler.org" target="_top">http://www.quartzscheduler.org</a>)&#12290;
+		&#20004;&#20010;&#26102;&#24207;&#35843;&#24230;&#22120;&#36890;&#36807;FactoryBean&#24314;&#31435;&#65292;&#20445;&#25345;&#30528;&#21487;&#36873;&#30340;&#23545;Timers&#25110;&#32773;Triggers&#30340;&#24341;&#29992;&#12290;&#26356;&#36827;&#19968;&#27493;&#30340;,
+		&#23545;&#20110;Quartz Scheduler&#21644;Timer&#20004;&#32773;&#23384;&#22312;&#19968;&#20010;&#26041;&#20415;&#30340;&#31867;&#20801;&#35768;&#20320;&#35843;&#29992;&#30446;&#26631;&#23545;&#35937;(&#31867;&#20284;&#20110;&#36890;&#24120;&#30340;<tt class="literal">MethodInvokingFactoryBeans</tt>)&#19978;&#30340;&#26576;&#20010;&#26041;&#27861;
+	</p></div><div class="sect1" lang="zh_cn"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d0e8779"></a>18.2.&nbsp;&#20351;&#29992;OpenSymphony Quartz Scheduler</h2></div></div><div></div></div><p>
+		Quartz&#20351;&#29992;<tt class="literal">Triggers</tt>,<tt class="literal">Jobs</tt>&#21644;<tt class="literal">JobDetail</tt>&#26469;&#23454;&#29616;&#26102;&#24207;&#35843;&#24230;&#20013;&#30340;&#21508;&#31181;&#24037;&#20316;&#12290;
+		&#20026;&#20102;&#20102;&#35299;Quartz&#32972;&#21518;&#30340;&#31181;&#31181;&#22522;&#26412;&#35266;&#28857;&#65292;&#20320;&#21487;&#20197;&#31227;&#27493;&#33267;<a href="http://www.opensymphony.com/quartz" target="_top">http://www.opensymphony.com/quartz</a>&#12290;
+		&#20026;&#20102;&#26041;&#20415;&#30340;&#20351;&#29992;&#65292;Spring&#25552;&#20379;&#20102;&#20960;&#20010;&#31867;&#22312;&#22522;&#20110;Spring&#30340;&#24212;&#29992;&#20013;&#26469;&#31616;&#21270;&#23545;Quartz&#30340;&#20351;&#29992;&#12290;
+	</p><div class="sect2" lang="zh_cn"><div class="titlepage"><div><div><h3 class="title"><a name="d0e8795"></a>18.2.1.&nbsp;&#20351;&#29992;JobDetailBean</h3></div></div><div></div></div><p>
+  			<tt class="literal">JobDetail</tt> &#23545;&#35937;&#21253;&#25324;&#20102;&#36816;&#34892;&#19968;&#20010;job&#25152;&#38656;&#35201;&#30340;&#25152;&#26377;&#20449;&#24687;&#12290;
+			&#20110;&#26159;Spring&#25552;&#20379;&#20102;&#19968;&#20010;&#25152;&#35859;&#30340;<tt class="literal">JobDetailBean</tt>&#20351;&#24471;JobDetail&#25317;&#26377;&#20102;&#19968;&#20010;&#30495;&#23454;&#30340;,&#26377;&#24847;&#20041;&#30340;&#40664;&#35748;&#20540;&#12290;&#35753;&#25105;&#20204;&#26469;&#30475;&#20010;&#20363;&#23376;&#65306;
+  			</p><pre class="programlisting">
+&lt;bean name="exampleJob" class="org.springframework.scheduling.quartz.JobDetailBean"&gt;
+  &lt;property name="jobClass"&gt;
+    &lt;value&gt;example.ExampleJob&lt;/value&gt;
+  &lt;/property&gt;
+  &lt;property name="jobDataAsMap"&gt;
+    &lt;map&gt;
+      &lt;entry key="timeout"&gt;&lt;value&gt;5&lt;/value&gt;&lt;/entry&gt;
+    &lt;/map&gt;
+  &lt;/property&gt;
+&lt;/bean&gt;
+			</pre><p>
+			
+			Job detail bean&#25317;&#26377;&#25152;&#26377;&#36816;&#34892;job(ExampleJob)&#30340;&#24517;&#35201;&#20449;&#24687;&#12290;&#36890;&#36807;job&#30340;data map&#26469;&#21046;&#23450;timeout&#12290;
+			Job&#30340;data map&#21487;&#20197;&#36890;&#36807;JobExecutionContext&#65288;&#22312;&#36816;&#34892;&#26102;&#21051;&#20256;&#36882;&#32473;&#20320;)&#26469;&#24471;&#21040;&#65292;
+			&#20294;&#26159;<tt class="literal">JobDetailBean</tt>&#20063;&#25226;&#20174;job&#30340;data map&#20013;&#24471;&#21040;&#30340;&#23646;&#24615;&#26144;&#23556;&#21040;&#23454;&#38469;job&#20013;&#30340;&#23646;&#24615;&#20013;&#21435;&#12290;
+			&#25152;&#20197;&#65292;&#22914;&#26524;ExampleJob&#20013;&#21253;&#21547;&#19968;&#20010;&#21517;&#20026;<tt class="literal">timeout</tt>&#30340;&#23646;&#24615;&#65292;JobDetailBean&#23558;&#33258;&#21160;&#20026;&#23427;&#36171;&#20540;&#65306;
+			</p><pre class="programlisting">
+package example;
+
+public class ExampleJob extends QuartzJobBean {
+
+  private int timeout;
+  
+  /**
+   * Setter called after the ExampleJob is instantiated
+   * with the value from the JobDetailBean (5)
+   */ 
+  public void setTimeout(int timeout) {
+    this.timeout = timeout;
+  }
+  
+  protected void executeInternal(JobExecutionContext ctx)
+  throws JobExecutionException {
+  
+      // do the actual work
+      
+  }
+}
+			</pre><p>
+			&#25152;&#26377;Job detail bean&#20013;&#30340;&#19968;&#20123;&#20854;&#20182;&#30340;&#35774;&#23450;&#23545;&#20320;&#26469;&#35828;&#20063;&#26159;&#21487;&#20197;&#21516;&#26679;&#35774;&#32622;&#30340;.		
+		</p><p>
+			<span class="emphasis"><em>&#27880;&#24847;&#65306;&#20351;&#29992;<tt class="literal">name</tt>&#21644;<tt class="literal">group</tt>&#23646;&#24615;,&#20320;&#21487;&#20197;&#20462;&#25913;job&#22312;&#21738;&#19968;&#20010;&#32452;&#19979;&#36816;&#34892;&#21644;&#20351;&#29992;&#20160;&#20040;&#21517;&#31216;&#12290;
+			&#40664;&#35748;&#24773;&#20917;&#19979;&#65292;job&#30340;&#21517;&#31216;&#31561;&#20110;job detai bean&#30340;&#21517;&#31216;&#65288;&#22312;&#19978;&#38754;&#30340;&#20363;&#23376;&#20013;&#20026;<tt class="literal">exampleJob</tt>&#65289;&#12290;
+			</em></span>
+		</p></div><div class="sect2" lang="zh_cn"><div class="titlepage"><div><div><h3 class="title"><a name="d0e8832"></a>18.2.2.&nbsp;&#20351;&#29992;MethodInvokingJobDetailFactoryBean</h3></div></div><div></div></div><p>
+			&#36890;&#24120;&#24773;&#20917;&#19979;,&#20320;&#21482;&#38656;&#35201;&#35843;&#29992;&#29305;&#23450;&#23545;&#35937;&#19978;&#30340;&#19968;&#20010;&#26041;&#27861;&#12290;&#20320;&#21487;&#20197;&#20351;&#29992;<tt class="literal">MethodInvokingJobDetailFactoryBean</tt>&#20934;&#30830;&#30340;&#20570;&#21040;&#36825;&#19968;&#28857;:
+			</p><pre class="programlisting">
+&lt;bean id="methodInvokingJobDetail" 
+  class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean"&gt;
+    &lt;property name="targetObject"&gt;&lt;ref bean="exampleBusinessObject"/&gt;&lt;/property&gt;
+    &lt;property name="targetMethod"&gt;&lt;value&gt;doIt&lt;/value&gt;&lt;/property&gt;
+&lt;/bean&gt;
+</pre><p>
+			&#19978;&#38754;&#20363;&#23376;&#23558;&#23548;&#33268;exampleBusinessObject&#20013;&#30340;<tt class="literal">doIt</tt>&#26041;&#27861;&#34987;&#35843;&#29992;&#65288;&#22914;&#19979;&#65289;&#65306;
+			</p><pre class="programlisting">
+public class BusinessObject {
+  
+  // properties and collaborators
+  
+  public void doIt() {
+    // do the actual work
+  }
+}
+			</pre><p>
+
+			</p><pre class="programlisting">
+&lt;bean id="exampleBusinessObject" class="examples.ExampleBusinessObject"/&gt;
+			</pre><p>
+			&#20351;&#29992;<tt class="literal">MethodInvokingJobDetailFactoryBean</tt>&#20320;&#19981;&#38656;&#35201;&#21019;&#24314;&#21482;&#26377;&#19968;&#34892;&#20195;&#30721;&#19988;&#21482;&#35843;&#29992;&#19968;&#20010;&#26041;&#27861;&#30340;job,
+			&#20320;&#21482;&#38656;&#35201;&#21019;&#24314;&#30495;&#23454;&#30340;&#19994;&#21153;&#23545;&#35937;&#26469;&#21253;&#35013;&#20855;&#20307;&#30340;&#32454;&#33410;&#30340;&#23545;&#35937;&#12290;
+		</p><p>
+			&#40664;&#35748;&#24773;&#20917;&#19979;&#65292;Quartz Jobs&#26159;&#26080;&#29366;&#24577;&#30340;&#65292;&#21487;&#33021;&#23548;&#33268;jobs&#20043;&#38388;&#20114;&#30456;&#30340;&#24433;&#21709;&#12290;&#22914;&#26524;&#20320;&#20026;&#30456;&#21516;&#30340;JobDetail&#25351;&#23450;&#20004;&#20010;&#35302;&#21457;&#22120;,
+			&#24456;&#21487;&#33021;&#24403;&#31532;&#19968;&#20010;job&#23436;&#25104;&#20043;&#21069;&#65292;&#31532;&#20108;&#20010;job&#23601;&#24320;&#22987;&#20102;&#12290;&#22914;&#26524;JobDetail&#23545;&#35937;&#23454;&#29616;&#20102;Stateful&#25509;&#21475;&#65292;&#23601;&#19981;&#20250;&#21457;&#29983;&#36825;&#26679;&#30340;&#20107;&#24773;&#12290;
+			&#31532;&#20108;&#20010;job&#23558;&#19981;&#20250;&#22312;&#31532;&#19968;&#20010;job&#23436;&#25104;&#20043;&#21069;&#24320;&#22987;&#12290;&#20026;&#20102;&#20351;&#24471;jobs&#19981;&#24182;&#21457;&#36816;&#34892;,&#35774;&#32622;MethodInvokingJobDetailFactoryBean&#20013;&#30340;<tt class="literal">concurrent</tt>&#26631;&#35760;&#20026;<tt class="literal">false</tt>&#12290;
+			</p><pre class="programlisting">
+&lt;bean id="methodInvokingJobDetail" 
+  class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean"&gt;
+    &lt;property name="targetObject"&gt;&lt;ref bean="exampleBusinessObject"/&gt;&lt;/property&gt;
+    &lt;property name="targetMethod"&gt;&lt;value&gt;doIt&lt;/value&gt;&lt;/property&gt;
+&lt;/bean&gt;			
+			</pre><p>	
+			<span class="emphasis"><em>&#27880;&#24847;&#65306;&#40664;&#35748;&#24773;&#20917;&#19979;&#65292;jobs&#22312;&#24182;&#34892;&#30340;&#26041;&#24335;&#19979;&#36816;&#34892;&#12290;</em></span>
+		</p></div><div class="sect2" lang="zh_cn"><div class="titlepage"><div><div><h3 class="title"><a name="d0e8869"></a>18.2.3.&nbsp;&#20351;&#29992;triggers&#21644;SchedulerFactoryBean&#26469;&#21253;&#35013;&#20219;&#21153;</h3></div></div><div></div></div><p>
+			&#25105;&#20204;&#24050;&#32463;&#21019;&#24314;&#20102;job details,jobs&#12290;&#25105;&#20204;&#22238;&#39038;&#20102;&#20801;&#35768;&#20320;&#35843;&#29992;&#29305;&#23450;&#23545;&#35937;&#19978;&#26576;&#19968;&#20010;&#26041;&#27861;&#30340;&#20415;&#25463;&#30340;bean&#12290;
+			&#24403;&#28982;&#25105;&#20204;&#20173;&#38656;&#35201;&#35843;&#24230;&#36825;&#20123;jobs&#12290;&#36825;&#38656;&#35201;&#20351;&#29992;triggers&#21644;<tt class="literal">SchedulerFactoryBean</tt>&#26469;&#23436;&#25104;&#12290;
+			Quartz&#33258;&#24102;&#19968;&#20123;&#21487;&#20379;&#20351;&#29992;&#30340;triggers&#12290;Spring&#25552;&#20379;&#20004;&#20010;&#23376;&#31867;triggers&#65292;&#20998;&#21035;&#20026;<tt class="literal">CronTriggerBean</tt>&#21644;<tt class="literal">SimpleTriggerBean</tt>&#12290;
+		</p><p>
+			Triggers&#20063;&#38656;&#35201;&#34987;&#35843;&#24230;&#12290;Spring&#25552;&#20379;SchedulerFactoryBean&#26469;&#26292;&#38706;&#19968;&#20123;&#23646;&#24615;&#26469;&#35774;&#32622;triggers&#12290;SchedulerFactoryBean&#36127;&#36131;&#35843;&#24230;&#37027;&#20123;&#23454;&#38469;&#30340;triggers&#12290;
+		</p><p>
+			&#20004;&#20010;&#20363;&#23376;:
+			</p><pre class="programlisting">
+&lt;bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean"&gt;
+  &lt;property name="jobDetail"&gt;
+    &lt;!-- see the example of method invoking job above --&gt;    
+    &lt;ref bean="methodInvokingJobDetail"/&gt;
+  &lt;/property&gt;
+  &lt;property name="startDelay"&gt;
+    &lt;!-- 10 seconds --&gt;
+    &lt;value&gt;10000&lt;/value&gt;
+  &lt;/property&gt;
+  &lt;property name="repeatInterval"&gt;
+    &lt;!-- repeat every 50 seconds --&gt;
+    &lt;value&gt;50000&lt;/value&gt;
+  &lt;/property&gt;
+&lt;/bean&gt;
+
+&lt;bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean"&gt;
+  &lt;property name="jobDetail"&gt;
+    &lt;ref bean="exampleJob"/&gt;
+  &lt;/property&gt;
+  &lt;property name="cronExpression"&gt;
+    &lt;!-- run every morning at 6 am --&gt;
+    &lt;value&gt;0 6 * * 1&lt;/value&gt;
+  &lt;/property&gt;
+&lt;/bean&gt;
+			</pre><p>
+			&#29616;&#22312;&#25105;&#20204;&#21019;&#24314;&#20102;&#20004;&#20010;triggers&#65292;&#20854;&#20013;&#19968;&#20010;&#24320;&#22987;&#24310;&#36831;10&#31186;&#20197;&#21518;&#27599;50&#31186;&#36816;&#34892;&#19968;&#27425;&#65292;&#21478;&#19968;&#20010;&#27599;&#22825;&#26089;&#19978;6&#28857;&#38047;&#36816;&#34892;&#12290;
+			&#25105;&#20204;&#38656;&#35201;&#21019;&#24314;&#19968;&#20010;SchedulerFactoryBean&#26469;&#26368;&#32456;&#23454;&#29616;&#19978;&#36848;&#30340;&#19968;&#20999;&#65306;
+			</p><pre class="programlisting">
+&lt;bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean"&gt;
+  &lt;property name="triggers"&gt;
+    &lt;list&gt;
+      &lt;ref local="cronTrigger"/&gt;
+      &lt;ref local="simpleTrigger"/&gt;
+    &lt;/list&gt;
+  &lt;/property&gt;
+&lt;/bean&gt;
+			</pre><p>
+			&#26356;&#22810;&#30340;&#19968;&#20123;&#23646;&#24615;&#20320;&#21487;&#20197;&#36890;&#36807;SchedulerFactoryBean&#26469;&#35774;&#32622;&#65292;&#20363;&#22914;job details&#20351;&#29992;&#30340;Calendars,&#29992;&#26469;&#35746;&#21046;Quartz&#30340;&#19968;&#20123;&#23646;&#24615;&#20197;&#21450;&#20854;&#23427;&#12290;
+			&#20320;&#21487;&#20197;&#30475;&#30456;&#24212;&#30340;JavaDOC(<a href="http://www.springframework.org/docs/api/org/springframework/scheduling/quartz/SchedulerFactoryBean.html" target="_top">http://www.springframework.org/docs/api/org/springframework/scheduling/quartz/SchedulerFactoryBean.html</a>)&#26469;&#20102;&#35299;&#36827;&#19968;&#27493;&#30340;&#20449;&#24687;&#12290;
+		</p></div></div><div class="sect1" lang="zh_cn"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d0e8895"></a>18.3.&nbsp;&#20351;&#29992;JDK Timer&#25903;&#25345;&#31867;</h2></div></div><div></div></div><p>
+		&#21478;&#22806;&#19968;&#20010;&#35843;&#24230;&#20219;&#21153;&#30340;&#36884;&#24452;&#26159;&#20351;&#29992;JDK Timer&#23545;&#35937;&#12290;&#26356;&#22810;&#30340;&#20851;&#20110;Timers&#30340;&#20449;&#24687;&#21487;&#20197;&#22312;&#36825;&#37324;<a href="http://java.sun.com/docs/books/tutorial/essential/threads/timer.html" target="_top">http://java.sun.com/docs/books/tutorial/essential/threads/timer.html</a>&#25214;&#21040;&#12290;
+		&#19978;&#38754;&#35752;&#35770;&#30340;&#27010;&#24565;&#20173;&#21487;&#20197;&#24212;&#29992;&#20110;Timer&#30340;&#25903;&#25345;&#12290;&#20320;&#21487;&#20197;&#21019;&#24314;&#23450;&#21046;&#30340;timer&#25110;&#32773;&#35843;&#29992;&#26576;&#20123;&#26041;&#27861;&#30340;timer&#12290;
+		&#21253;&#35013;timers&#30340;&#24037;&#20316;&#30001;TimerFactoryBean&#23436;&#25104;&#12290;
+	</p><div class="sect2" lang="zh_cn"><div class="titlepage"><div><div><h3 class="title"><a name="d0e8902"></a>18.3.1.&nbsp;&#21019;&#24314;&#23450;&#21046;&#30340;timers</h3></div></div><div></div></div><p>
+			&#20320;&#21487;&#20197;&#20351;&#29992;<tt class="literal">TimerTask</tt>&#21019;&#24314;&#23450;&#21046;&#30340;timer tasks&#65292;&#31867;&#20284;&#20110;Quartz&#20013;&#30340;jobs:
+  			</p><pre class="programlisting">
+public class CheckEmailAddresses extends TimerTask {
+
+  private List emailAddresses;
+  
+  public void setEmailAddresses(List emailAddresses) {
+    this.emailAddresses = emailAddresses;
+  }
+  
+  public void run() {
+  
+    // iterate over all email addresses and archive them
+    
+  }
+}
+			</pre><p>
+			
+			&#21253;&#35013;&#23427;&#26159;&#31616;&#21333;&#30340;:
+			
+			</p><pre class="programlisting">
+&lt;bean id="checkEmail" class="examples.CheckEmailAddress"&gt;
+  &lt;property name="emailAddresses"&gt;
+    &lt;list&gt;
+      &lt;value&gt;test@springframework.org&lt;/value&gt;
+      &lt;value&gt;foo@bar.com&lt;/value&gt;
+      &lt;value&gt;john@doe.net&lt;/value&gt;
+    &lt;/list&gt;
+  &lt;/property&gt;
+&lt;/bean&gt;
+
+&lt;bean id="scheduledTask" class="org.springframework.scheduling.timer.ScheduledTimerTask"&gt;
+  &lt;!-- wait 10 seconds before starting repeated execution --&gt;
+  &lt;property name="delay"&gt;
+    &lt;value&gt;10000&lt;/value&gt;
+  &lt;/property&gt;
+  &lt;!-- run every 50 seconds --&gt;
+  &lt;property name="period"&gt;
+    &lt;value&gt;50000&lt;/value&gt;
+  &lt;/property&gt;
+  &lt;property name="timerTask"&gt;
+    &lt;ref local="checkEmail"/&gt;
+  &lt;/property&gt;
+&lt;/bean&gt;
+			</pre><p>			
+		</p></div><div class="sect2" lang="zh_cn"><div class="titlepage"><div><div><h3 class="title"><a name="d0e8916"></a>18.3.2.&nbsp;&#20351;&#29992;MethodInvokingTimerTaskFactoryBean</h3></div></div><div></div></div><p>
+			&#23601;&#20687;Quartz&#30340;&#25903;&#25345;&#19968;&#26679;&#65292;Timer&#30340;&#25903;&#25345;&#20063;&#26377;&#19968;&#20010;&#32452;&#20214;&#20801;&#35768;&#20320;&#21608;&#26399;&#24615;&#22320;&#35843;&#29992;&#19968;&#20010;&#26041;&#27861;:
+			</p><pre class="programlisting">
+&lt;bean id="methodInvokingTask" 
+  class="org.springframework.scheduling.timer.MethodInvokingTimerTaskFactoryBean"&gt;
+    &lt;property name="targetObject"&gt;&lt;ref bean="exampleBusinessObject"/&gt;&lt;/property&gt;
+    &lt;property name="targetMethod"&gt;&lt;value&gt;doIt&lt;/value&gt;&lt;/property&gt;
+&lt;/bean&gt;
+</pre><p>
+			&#19978;&#38754;&#30340;&#20363;&#23376;&#23558;&#20250;&#23548;&#33268;exampleBusinessObject&#19978;&#30340;<tt class="literal">doIt</tt>&#26041;&#27861;&#34987;&#35843;&#29992;(&#22914;&#19979;):
+			</p><pre class="programlisting">
+public class BusinessObject {
+  
+  // properties and collaborators
+  
+  public void doIt() {
+    // do the actual work
+  }
+}
+			</pre><p>
+			
+			&#25226;&#19978;&#38754;&#20363;&#23376;&#20013;&#25552;&#21040;ScheduledTimerTask&#30340;&#24341;&#29992;&#25913;&#20026;methodInvokingTask&#23558;&#23548;&#33268;&#35813;task&#34987;&#25191;&#34892;&#12290;
+		</p></div><div class="sect2" lang="zh_cn"><div class="titlepage"><div><div><h3 class="title"><a name="d0e8930"></a>18.3.3.&nbsp;&#21253;&#35013;:&#20351;&#29992;TimerFactoryBean&#26469;&#24314;&#31435;tasks</h3></div></div><div></div></div><p>
+			TimerFactoryBean&#31867;&#20284;&#20110;QuartzSchedulerFactoryBean&#65292;&#37117;&#26159;&#26381;&#21153;&#20110;&#19968;&#20010;&#30446;&#30340;&#65306;&#24314;&#31435;&#36215;&#23454;&#38469;&#30340;&#26102;&#24207;&#35843;&#24230;&#12290;
+			TimerFactoryBean&#24314;&#31435;&#19968;&#20010;&#23454;&#38469;&#30340;Timer&#26469;&#35843;&#24230;&#23427;&#24341;&#29992;&#30340;&#37027;&#20123;tasks&#12290;&#20320;&#21487;&#20197;&#25351;&#23450;&#23427;&#26159;&#21542;&#20351;&#29992;&#19968;&#20010;&#23432;&#25252;&#32447;&#31243;&#12290;
+			</p><pre class="programlisting">
+&lt;bean id="timerFactory" class="org.springframework.scheduling.timer.TimerFactoryBean"&gt;
+  &lt;property name="scheduledTimerTasks"&gt;
+    &lt;list&gt;
+      &lt;!-- see the example above --&gt;
+      &lt;ref local="scheduledTask"/&gt;
+    &lt;/list&gt;
+  &lt;/property&gt;
+&lt;/bean&gt;
+			</pre><p>	
+			&#23601;&#26159;&#36825;&#20123;&#20102;!
+		</p></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="mail.html">&#19978;&#19968;&#39029;</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="index.html">&#19978;&#19968;&#32423;</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="springbeansdtd.html">&#19979;&#19968;&#39029;</a></td></tr><tr><td width="40%" align="left" valign="top">&#31532;&nbsp;17&nbsp;&#31456;&nbsp;&#20351;&#29992;Spring&#37038;&#20214;&#25277;&#35937;&#23618;&#21457;&#36865;Email&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">&#36215;&#22987;&#39029;</a></td><td width="40%" align="right" valign="top">&nbsp;&#38468;&#24405;&nbsp;A.&nbsp;Spring's beans.dtd</td></tr></table></div></body></html>

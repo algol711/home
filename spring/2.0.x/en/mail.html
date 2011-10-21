@@ -1,0 +1,306 @@
+<html>
+<!-- Mirrored from static.springframework.org/spring/docs/2.0.x/reference/mail.html by HTTrack Website Copier/3.x [XR&CO'2005], Tue, 17 Oct 2006 17:46:13 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Chapter&nbsp;22.&nbsp;The Spring email abstraction layer</title><link rel="stylesheet" href="http://static.springframework.org/spring/docs/2.0.x/styles/html.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.60.1"><link rel="home" href="index.html" title="The Spring Framework - Reference Documentation"><link rel="up" href="pt04.html" title="Part&nbsp;IV.&nbsp;Integration"><link rel="previous" href="cci.html" title="Chapter&nbsp;21.&nbsp;JCA CCI"><link rel="next" href="scheduling.html" title="Chapter&nbsp;23.&nbsp;Scheduling and Thread Pooling using Spring"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div xmlns="http://www.w3.org/TR/xhtml1/transitional" style="background-color:white;border:none;height:73px;border:1px solid black;"><a style="border:none;" href="http://www.springframework.org/" title="The Spring Framework"><img style="border:none;" src="images/xdev-spring_logo.jpg"></a><a style="border:none;" href="http://www.interface21.com/" title="Interface21 - Spring from the Source"><img style="border:none;position:absolute;padding-top:5px;right:42px;" src="images/i21-banner-rhs.jpg"></a></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="mail"></a>Chapter&nbsp;22.&nbsp;The Spring email abstraction layer</h2></div></div><div></div></div>
+   <table align="center">
+<tr>
+<td>
+<script type="text/javascript"><!--
+google_ad_client = "pub-2627642070897863";
+google_ad_width = 336;
+google_ad_height = 280;
+google_ad_format = "336x280_as";
+google_ad_type = "text_image";
+//2006-10-13: com_336x280
+google_ad_channel = "7652836435";
+google_color_border = "FFFFFF";
+google_color_bg = "FFFFFF";
+google_color_link = "0000FF";
+google_color_text = "000000";
+google_color_url = "000000";
+//--></script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</td>
+<td>
+<script type="text/javascript"><!--
+google_ad_client = "pub-2627642070897863";
+google_ad_width = 336;
+google_ad_height = 280;
+google_ad_format = "336x280_as";
+google_ad_type = "text_image";
+//2006-10-13: com_336x280
+google_ad_channel = "7652836435";
+google_color_border = "FFFFFF";
+google_color_bg = "FFFFFF";
+google_color_link = "0000FF";
+google_color_text = "000000";
+google_color_url = "000000";
+//--></script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</td>
+</tr>
+</table>
+   <div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="mail-introduction"></a>22.1.&nbsp;Introduction</h2></div></div><div></div></div><p>Spring provides a higher level of abstraction for sending electronic
+    mail which shields the user from the specifics of the underlying mailing
+    system and is responsible for low level resource handling on behalf of
+    the client.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="mail-structure"></a>22.2.&nbsp;Spring mail abstraction structure</h2></div></div><div></div></div><p>The main package of Spring mail abstraction layer is
+    <tt class="literal">org.springframework.mail</tt> package. It contains the central
+    interface for sending emails called <tt class="interfacename">MailSender</tt> and the
+    <span class="emphasis"><em>value object</em></span> which encapsulates properties of a
+    simple mail such as <span class="emphasis"><em>from</em></span>, <span class="emphasis"><em>to</em></span>,
+    <span class="emphasis"><em>cc</em></span>, <span class="emphasis"><em>subject</em></span>,
+    <span class="emphasis"><em>text</em></span> called <tt class="classname">SimpleMailMessage</tt>.
+    This package also contains a hierarchy of checked exceptions which provide
+    a higher level of abstraction over the lower level mail system exceptions
+    with the root exception being <tt class="classname">MailException</tt>. Please
+    refer to the Javadocs for more information on the rich mail exception hierarchy.</p><p>Spring also provides a sub-interface of <tt class="interfacename">MailSender</tt>
+    for specialized <span class="emphasis"><em>JavaMail</em></span> features such as MIME
+    messages, namely
+    <tt class="classname">org.springframework.mail.javamail.JavaMailSender</tt>. It
+    also provides a callback interface for preparation of JavaMail MIME
+    messages, namely
+    <tt class="interfacename">org.springframework.mail.javamail.MimeMessagePreparator</tt></p><pre class="programlisting">public interface MailSender {
+
+    /**
+     * Send the given simple mail message.
+     * @param simpleMessage message to send
+     * @throws MailException in case of message, authentication, or send errors
+     */
+    public void send(SimpleMailMessage simpleMessage) throws MailException;
+
+    /**
+     * Send the given array of simple mail messages in batch.
+     * @param simpleMessages messages to send
+     * @throws MailException in case of message, authentication, or send errors
+     */
+    public void send(SimpleMailMessage[] simpleMessages) throws MailException;
+
+}</pre><pre class="programlisting">public interface JavaMailSender extends MailSender {
+
+    /**
+     * Create a new JavaMail MimeMessage for the underlying JavaMail Session
+     * of this sender. Needs to be called to create MimeMessage instances
+     * that can be prepared by the client and passed to send(MimeMessage).
+     * @return the new MimeMessage instance
+     * @see #send(MimeMessage)
+     * @see #send(MimeMessage[])
+     */
+    public MimeMessage createMimeMessage();
+
+    /**
+     * Send the given JavaMail MIME message.
+     * The message needs to have been created with createMimeMessage.
+     * @param mimeMessage message to send
+     * @throws MailException in case of message, authentication, or send errors
+     * @see #createMimeMessage
+     */
+    public void send(MimeMessage mimeMessage) throws MailException;
+
+    /**
+     * Send the given array of JavaMail MIME messages in batch.
+     * The messages need to have been created with createMimeMessage.
+     * @param mimeMessages messages to send
+     * @throws MailException in case of message, authentication, or send errors
+     * @see #createMimeMessage
+     */
+    public void send(MimeMessage[] mimeMessages) throws MailException;
+
+    /**
+     * Send the JavaMail MIME message prepared by the given MimeMessagePreparator.
+     * Alternative way to prepare MimeMessage instances, instead of createMimeMessage
+     * and send(MimeMessage) calls. Takes care of proper exception conversion.
+     * @param mimeMessagePreparator the preparator to use
+     * @throws MailException in case of message, authentication, or send errors
+     */
+    public void send(MimeMessagePreparator mimeMessagePreparator) throws MailException;
+
+    /**
+     * Send the JavaMail MIME messages prepared by the given MimeMessagePreparators.
+     * Alternative way to prepare MimeMessage instances, instead of createMimeMessage
+     * and send(MimeMessage[]) calls. Takes care of proper exception conversion.
+     * @param mimeMessagePreparators the preparator to use
+     * @throws MailException in case of message, authentication, or send errors
+     */
+    public void send(MimeMessagePreparator[] mimeMessagePreparators) throws MailException;
+
+}</pre><pre class="programlisting">public interface MimeMessagePreparator {
+
+    /**
+     * Prepare the given new MimeMessage instance.
+     * @param mimeMessage the message to prepare
+     * @throws MessagingException passing any exceptions thrown by MimeMessage
+     * methods through for automatic conversion to the MailException hierarchy
+     */
+    void prepare(MimeMessage mimeMessage) throws MessagingException;
+
+}</pre></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="mail-usage"></a>22.3.&nbsp;Using the Spring mail abstraction</h2></div></div><div></div></div><p>Let's assume there is a business interface called
+    <tt class="interfacename">OrderManager</tt>:</p><pre class="programlisting">public interface OrderManager {
+
+    void placeOrder(Order order);
+}</pre><p>Let's assume that there is a use case that says that an email message
+    with an order number needs to be generated and sent to a customer
+    placing the relevant order. So for this purpose we want to use
+    <tt class="interfacename">MailSender</tt> and <tt class="classname">SimpleMailMessage</tt>.</p><p><span class="emphasis"><em>Note that as usual, we work with interfaces in the
+    business code and let Spring IoC container take care of wiring of all the
+    collaborators for us.</em></span></p><p>Here is the implementation of <tt class="interfacename">OrderManager</tt>:</p><pre class="programlisting">import org.springframework.mail.MailException;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.SimpleMailMessage;
+
+public class OrderManagerImpl implements OrderManager {
+
+    private MailSender mailSender;
+    private SimpleMailMessage message;
+
+    public void setMailSender(MailSender mailSender) {
+        this.mailSender = mailSender;
+    }
+
+    public void setMessage(SimpleMailMessage message) {
+        this.message = message;
+    }
+
+    public void placeOrder(Order order) {
+
+        <i class="lineannotation"><span class="lineannotation">// Do the business calculations...</span></i>
+        <i class="lineannotation"><span class="lineannotation">// Call the collaborators to persist the order...</span></i>
+
+        //Create a thread safe "sandbox" of the message
+        SimpleMailMessage msg = new SimpleMailMessage(this.message);
+        msg.setTo(order.getCustomer().getEmailAddress());
+        msg.setText(
+            "Dear "
+                + order.getCustomer().getFirstName()
+                + order.getCustomer().getLastName()
+                + ", thank you for placing order. Your order number is "
+                + order.getOrderNumber());
+        try{
+            mailSender.send(msg);
+        }
+        catch(MailException ex) {
+            //log it and go on
+            System.err.println(ex.getMessage());            
+        }
+    }
+}</pre><p>Here is what the bean definitions for the code above would look like:</p><pre class="programlisting">&lt;bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl"&gt;
+  &lt;property name="host" value="mail.mycompany.com"/&gt;
+&lt;/bean&gt;
+
+&lt;bean id="mailMessage" class="org.springframework.mail.SimpleMailMessage"&gt;
+  &lt;property name="from" value="customerservice@mycompany.com"/&gt;
+  &lt;property name="subject" value="Your order"/&gt;
+&lt;/bean&gt;
+
+&lt;bean id="orderManager" class="com.mycompany.businessapp.support.OrderManagerImpl"&gt;
+  &lt;property name="mailSender" ref="mailSender"/&gt;
+  &lt;property name="message" ref="mailMessage"/&gt;
+&lt;/bean&gt;</pre><p>Here is the implementation of <tt class="interfacename">OrderManager</tt> using
+    <tt class="interfacename">MimeMessagePreparator</tt> callback interface. Please note
+    that the mailSender property is of type <tt class="interfacename">JavaMailSender</tt>
+    in this case in order to be able to use JavaMail <tt class="classname">MimeMessage</tt>:</p><pre class="programlisting">import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
+import javax.mail.internet.MimeMessage;
+import org.springframework.mail.MailException;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessagePreparator;
+
+public class OrderManagerImpl implements OrderManager {
+
+    private JavaMailSender mailSender;
+    
+    public void setMailSender(JavaMailSender mailSender) {
+        this.mailSender = mailSender;
+    }
+
+    public void placeOrder(final Order order) {
+
+        <i class="lineannotation"><span class="lineannotation">// Do the business calculations...</span></i>
+        <i class="lineannotation"><span class="lineannotation">// Call the collaborators to persist the order...</span></i>
+        
+        MimeMessagePreparator preparator = new MimeMessagePreparator() {
+        
+            public void prepare(MimeMessage mimeMessage) throws MessagingException {
+        
+                mimeMessage.setRecipient(Message.RecipientType.TO, 
+                        new InternetAddress(order.getCustomer().getEmailAddress()));
+                mimeMessage.setFrom(new InternetAddress("mail@mycompany.com"));
+                mimeMessage.setText(
+                    "Dear "
+                        + order.getCustomer().getFirstName()
+                        + order.getCustomer().getLastName()
+                        + ", thank you for placing order. Your order number is "
+                        + order.getOrderNumber());
+            }
+        };
+        try {
+            mailSender.send(preparator);
+        }
+        catch (MailException ex) {
+            //log it and go on
+            System.err.println(ex.getMessage());            
+        }
+    }
+}</pre><p>If you want to use the JavaMail <tt class="classname">MimeMessage</tt> to its full power,
+    the <tt class="classname">MimeMessagePreparator</tt> is available to you.</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="http://static.springframework.org/spring/docs/2.0.x/images/admons/note.png"></td><th align="left">Note</th></tr><tr><td colspan="2" align="left" valign="top"><p>The mail code is a crosscutting concern and is a perfect candidate
+        for refactoring into a custom Spring AOP aspect, which then could be executed at
+        appropriate joinpoints on the <tt class="interfacename">OrderManager</tt> target.
+        See the chapter entitled <a href="aop.html" title="Chapter&nbsp;6.&nbsp;Aspect Oriented Programming with Spring">Chapter&nbsp;6, <i>Aspect Oriented Programming with Spring</i></a>.</p></td></tr></table></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e27475"></a>22.3.1.&nbsp;Pluggable <tt class="interfacename">MailSender</tt> implementations</h3></div></div><div></div></div><p>Spring comes with two <tt class="interfacename">MailSender</tt> implementations
+      out of the box - the JavaMail implementation and the implementation on top of Jason
+      Hunter's <tt class="classname">MailMessage</tt> class that's included in
+      <a href="http://servlets.com/cos" target="_top">http://servlets.com/cos</a>
+      (com.oreilly.servlet). Please refer to the relevant Javadocs for more
+      information.</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d0e27492"></a>22.4.&nbsp;Using the JavaMail <tt class="classname">MimeMessageHelper</tt></h2></div></div><div></div></div><p>
+  		One of the components that comes in pretty handy when dealing with
+  		JavaMail messages is the <tt class="classname">org.springframework.mail.javamail.MimeMessageHelper</tt>.
+  		It prevents you from having to use the nasty APIs of the <tt class="literal">javax.mail.internet</tt> classes.
+  		Find below a couple of possible scenarios:
+  	</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e27505"></a>22.4.1.&nbsp;Creating a simple <tt class="classname">MimeMessage</tt> and sending it</h3></div></div><div></div></div><p>
+  			Using the <tt class="classname">MimeMessageHelper</tt> it's pretty easy to setup
+  			and send a <tt class="classname">MimeMessage</tt>:</p><pre class="programlisting"><i class="lineannotation"><span class="lineannotation">// of course you would use DI in any real-world cases</span></i>
+JavaMailSenderImpl sender = new JavaMailSenderImpl();
+sender.setHost("mail.host.com");
+
+MimeMessage message = sender.createMimeMessage();
+MimeMessageHelper helper = new MimeMessageHelper(message);
+helper.setTo("test@host.com");
+helper.setText("Thank you for ordering!");
+
+sender.send(message);</pre></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e27523"></a>22.4.2.&nbsp;Sending attachments and inline resources</h3></div></div><div></div></div><p>
+			Email allows for attachments, but also for inline resources in multipart
+			messages. Inline resources could for example be images or stylesheet you
+			want to use in your message, but don't want displayed as an attachment.
+			The following shows you how to use the <tt class="classname">MimeMessageHelper</tt>
+			to send an email along with an inline image.</p><pre class="programlisting">JavaMailSenderImpl sender = new JavaMailSenderImpl();
+sender.setHost("mail.host.com");
+
+MimeMessage message = sender.createMimeMessage();
+
+<i class="lineannotation"><span class="lineannotation">// use the true flag to indicate you need a multipart message</span></i>
+MimeMessageHelper helper = new MimeMessageHelper(message, true);
+helper.setTo("test@host.com");
+
+<i class="lineannotation"><span class="lineannotation">// use the true flag to indicate the text included is HTML</span></i>
+helper.setText("&lt;html&gt;&lt;body&gt;&lt;img src='cid:identifier1234'&gt;&lt;/body&gt;&lt;/html&gt;", true);
+
+<i class="lineannotation"><span class="lineannotation">// let's include the infamous windows Sample file (this time copied to c:/)</span></i>
+FileSystemResource res = new FileSystemResource(new File("c:/Sample.jpg"));
+helper.addInline("identifier1234", res);
+
+<i class="lineannotation"><span class="lineannotation">// if you would need to include the file as an attachment, use
+// the various addAttachment() methods on the MimeMessageHelper</span></i>
+
+sender.send(message);</pre><div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Warning"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Warning]" src="http://static.springframework.org/spring/docs/2.0.x/images/admons/warning.png"></td><th align="left">Warning</th></tr><tr><td colspan="2" align="left" valign="top"><p>Inline resources are added to the mime message using the Content-ID specified
+            as you've seen just now (<tt class="literal">identifier1234</tt> in this case). The order in 
+            which you're adding the text and the resource are VERY important. First add the text
+            and after that the resources. If you're doing it the other way around, it won't work!</p></td></tr></table></div></div></div></div><div xmlns="http://www.w3.org/TR/xhtml1/transitional" class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="cci.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="scheduling.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter&nbsp;21.&nbsp;JCA CCI&nbsp;</td><td width="20%" align="center"><span style="color:white;font-size:90%;"><a href="http://www.interface21.com/" title="Interface21 - Spring from the Source">Sponsored by Interface21</a></span></td><td width="40%" align="right" valign="top">&nbsp;Chapter&nbsp;23.&nbsp;Scheduling and Thread Pooling using Spring</td></tr></table></div></body>
+<!-- Mirrored from static.springframework.org/spring/docs/2.0.x/reference/mail.html by HTTrack Website Copier/3.x [XR&CO'2005], Tue, 17 Oct 2006 17:46:13 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8"><!-- /Added by HTTrack -->
+</html>

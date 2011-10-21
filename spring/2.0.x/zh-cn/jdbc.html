@@ -1,0 +1,731 @@
+<html>
+<!-- Mirrored from www.redsaga.com/spring_ref/2.0RC2/html/jdbc.html by HTTrack Website Copier/3.x [XR&CO'2005], Tue, 17 Oct 2006 16:56:34 GMT -->
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Chapter&nbsp;11.&nbsp;&#20351;&#29992;JDBC&#36827;&#34892;&#25968;&#25454;&#35775;&#38382;</title><link rel="stylesheet" href="http://www.redsaga.com/spring_ref/2.0RC2/styles/html.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.60.1"><link rel="home" href="index.html" title="Spring Framework &#24320;&#21457;&#21442;&#32771;&#25163;&#20876;"><link rel="up" href="pt02.html" title="Part&nbsp;II.&nbsp;&#20013;&#38388;&#23618;&#25968;&#25454;&#35775;&#38382;"><link rel="previous" href="dao.html" title="Chapter&nbsp;10.&nbsp;DAO&#25903;&#25345;"><link rel="next" href="orm.html" title="Chapter&nbsp;12.&nbsp;&#20351;&#29992;ORM&#24037;&#20855;&#36827;&#34892;&#25968;&#25454;&#35775;&#38382;"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div xmlns="http://www.w3.org/TR/xhtml1/transitional" style="background-color:#31430f;border:none;height:110px;border:1px solid black;"><a style="border:none;background: url();" href="http://www.springframework.org/" title="The Spring Framework"><img style="border:none;" src="images/banner4.jpg"></a><a style="border:none;background: url();" href="http://www.interface21.com/" title="Interface21 - Spring from the Source"><img style="border:none;position:absolute;right:32px;" src="images/bannerR.gif"></a></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="jdbc"></a>Chapter&nbsp;11.&nbsp;&#20351;&#29992;JDBC&#36827;&#34892;&#25968;&#25454;&#35775;&#38382;</h2></div></div><div></div></div>
+   <table align="center">
+<tr>
+<td>
+<script type="text/javascript"><!--
+google_ad_client = "pub-2627642070897863";
+google_ad_width = 336;
+google_ad_height = 280;
+google_ad_format = "336x280_as";
+google_ad_type = "text_image";
+//2006-10-13: com_336x280
+google_ad_channel = "7652836435";
+google_color_border = "FFFFFF";
+google_color_bg = "FFFFFF";
+google_color_link = "0000FF";
+google_color_text = "000000";
+google_color_url = "000000";
+//--></script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</td>
+<td>
+<script type="text/javascript"><!--
+google_ad_client = "pub-2627642070897863";
+google_ad_width = 336;
+google_ad_height = 280;
+google_ad_format = "336x280_as";
+google_ad_type = "text_image";
+//2006-10-13: com_336x280
+google_ad_channel = "7652836435";
+google_color_border = "FFFFFF";
+google_color_bg = "FFFFFF";
+google_color_link = "0000FF";
+google_color_text = "000000";
+google_color_url = "000000";
+//--></script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</td>
+</tr>
+</table>
+   <div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="jdbc-introduction"></a>11.1.&nbsp;&#31616;&#20171;</h2></div></div><div></div></div><p>
+			Spring JDBC&#25277;&#35937;&#26694;&#26550;&#25152;&#24102;&#26469;&#30340;&#20215;&#20540;&#23558;&#22312;&#20197;&#19979;&#20960;&#20010;&#26041;&#38754;&#24471;&#20197;&#20307;&#29616;&#65306;&#65288;&#27880;&#65306;&#20351;&#29992;&#20102;Spring JDBC&#25277;&#35937;&#26694;&#26550;&#20043;&#21518;&#65292;&#24212;&#29992;&#24320;&#21457;&#20154;&#21592;&#21482;&#38656;&#35201;&#23436;&#25104;&#26012;&#20307;&#23383;&#37096;&#20998;&#30340;&#32534;&#30721;&#24037;&#20316;&#12290;&#65289;
+		</p><div class="orderedlist"><ol type="1"><li><p>&#25351;&#23450;&#25968;&#25454;&#24211;&#36830;&#25509;&#21442;&#25968;</p></li><li><p>&#25171;&#24320;&#25968;&#25454;&#24211;&#36830;&#25509;</p></li><li><p><span class="emphasis"><em>&#22768;&#26126;SQL&#35821;&#21477;</em></span></p></li><li><p>&#39044;&#32534;&#35793;&#24182;&#25191;&#34892;SQL&#35821;&#21477;</p></li><li><p>&#36941;&#21382;&#26597;&#35810;&#32467;&#26524;&#65288;&#22914;&#26524;&#38656;&#35201;&#30340;&#35805;&#65289;</p></li><li><p><span class="emphasis"><em>&#22788;&#29702;&#27599;&#19968;&#27425;&#36941;&#21382;&#25805;&#20316;</em></span></p></li><li><p>&#22788;&#29702;&#25243;&#20986;&#30340;&#20219;&#20309;&#24322;&#24120;</p></li><li><p>&#22788;&#29702;&#20107;&#21153;</p></li><li><p>&#20851;&#38381;&#25968;&#25454;&#24211;&#36830;&#25509;</p></li></ol></div><p>
+			Spring&#23558;&#26367;&#25105;&#20204;&#23436;&#25104;&#25152;&#26377;&#21333;&#35843;&#20047;&#21619;&#30340;JDBC&#24213;&#23618;&#32454;&#33410;&#22788;&#29702;&#24037;&#20316;&#12290;
+		</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e11929"></a>11.1.1.&nbsp;Spring JDBC&#21253;&#32467;&#26500;</h3></div></div><div></div></div><p>
+				Spring JDBC&#25277;&#35937;&#26694;&#26550;&#30001;&#22235;&#20010;&#21253;&#26500;&#25104;&#65306;<tt class="literal">core</tt>&#12289; <tt class="literal">dataSource</tt>&#12289;<tt class="literal">object</tt>&#20197;&#21450;<tt class="literal">support</tt>&#12290;
+			</p><p>
+				<tt class="literal">org.springframework.jdbc.core</tt>&#21253;&#30001;<tt class="classname">JdbcTemplate</tt>&#31867;&#20197;&#21450;&#30456;&#20851;&#30340;&#22238;&#35843;&#25509;&#21475;&#65288;callback interface&#65289;&#21644;&#31867;&#32452;&#25104;&#12290;
+			</p><p>
+				<tt class="literal">org.springframework.jdbc.datasource</tt>&#21253;&#30001;&#19968;&#20123;&#29992;&#26469;&#31616;&#21270;<tt class="interfacename">DataSource</tt>&#35775;&#38382;&#30340;&#24037;&#20855;&#31867;&#65292;&#20197;&#21450;&#21508;&#31181;<tt class="interfacename">DataSource</tt>&#25509;&#21475;&#30340;&#31616;&#21333;&#23454;&#29616;(&#20027;&#35201;&#29992;&#20110;&#21333;&#20803;&#27979;&#35797;&#20197;&#21450;&#22312;J2EE&#23481;&#22120;&#20043;&#22806;&#20351;&#29992;JDBC)&#32452;&#25104;&#12290;&#24037;&#20855;&#31867;&#25552;&#20379;&#20102;&#19968;&#20123;&#38745;&#24577;&#26041;&#27861;&#65292;&#35832;&#22914;&#36890;&#36807;JNDI&#33719;&#21462;&#25968;&#25454;&#36830;&#25509;&#20197;&#21450;&#22312;&#24517;&#35201;&#30340;&#24773;&#20917;&#19979;&#20851;&#38381;&#36825;&#20123;&#36830;&#25509;&#12290;&#23427;&#25903;&#25345;&#32465;&#23450;&#32447;&#31243;&#30340;&#36830;&#25509;&#65292;&#27604;&#22914;&#34987;&#29992;&#20110;<tt class="classname">DataSourceTransactionManager</tt>&#30340;&#36830;&#25509;&#12290;
+			</p><p>
+				&#25509;&#19979;&#26469;&#65292;<tt class="literal">org.springframework.jdbc.object</tt>&#21253;&#30001;&#23553;&#35013;&#20102;&#26597;&#35810;&#12289;&#26356;&#26032;&#20197;&#21450;&#23384;&#20648;&#36807;&#31243;&#30340;&#31867;&#32452;&#25104;&#65292;&#36825;&#20123;&#31867;&#30340;&#23545;&#35937;&#37117;&#26159;&#32447;&#31243;&#23433;&#20840;&#24182;&#19988;&#21487;&#37325;&#22797;&#20351;&#29992;&#30340;&#12290;&#23427;&#20204;&#31867;&#20284;&#20110;JDO&#65292;&#19982;JDO&#30340;&#19981;&#21516;&#20043;&#22788;&#22312;&#20110;&#26597;&#35810;&#32467;&#26524;&#19982;&#25968;&#25454;&#24211;&#26159;&#8220;<span class="quote">&#26029;&#24320;&#36830;&#25509;</span>&#8221;&#30340;&#12290;&#23427;&#20204;&#26159;&#22312;<tt class="literal">org.springframework.jdbc.core</tt>&#21253;&#30340;&#22522;&#30784;&#19978;&#23545;JDBC&#26356;&#39640;&#23618;&#27425;&#30340;&#25277;&#35937;&#12290;
+			</p><p>
+				&#26368;&#21518;&#65292;<tt class="literal">org.springframework.jdbc.support</tt>&#21253;&#25552;&#20379;&#20102;&#19968;&#20123;<tt class="classname">SQLException</tt>&#30340;&#36716;&#25442;&#31867;&#20197;&#21450;&#30456;&#20851;&#30340;&#24037;&#20855;&#31867;&#12290;
+			</p><p>
+				&#22312;JDBC&#22788;&#29702;&#36807;&#31243;&#20013;&#25243;&#20986;&#30340;&#24322;&#24120;&#23558;&#34987;&#36716;&#25442;&#25104;<tt class="literal">org.springframework.dao</tt>&#21253;&#20013;&#23450;&#20041;&#30340;&#24322;&#24120;&#12290;&#22240;&#27492;&#20351;&#29992;Spring JDBC&#36827;&#34892;&#24320;&#21457;&#23558;&#19981;&#38656;&#35201;&#22788;&#29702;JDBC&#25110;&#32773;&#29305;&#23450;&#30340;RDBMS&#25165;&#20250;&#25243;&#20986;&#30340;&#24322;&#24120;&#12290;&#25152;&#26377;&#30340;&#24322;&#24120;&#37117;&#26159;unchecked exception&#65292;&#36825;&#26679;&#25105;&#20204;&#23601;&#21487;&#20197;&#23545;&#20256;&#36882;&#21040;&#35843;&#29992;&#32773;&#30340;&#24322;&#24120;&#36827;&#34892;&#26377;&#36873;&#25321;&#30340;&#25429;&#33719;&#12290;
+			</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="jdbc-core"></a>11.2.&nbsp;&#21033;&#29992;JDBC&#26680;&#24515;&#31867;&#23454;&#29616;JDBC&#30340;&#22522;&#26412;&#25805;&#20316;&#21644;&#38169;&#35823;&#22788;&#29702;</h2></div></div><div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="jdbc-JdbcTemplate"></a>11.2.1.&nbsp;<tt class="classname">JdbcTemplate</tt>&#31867;</h3></div></div><div></div></div><p>
+				<tt class="classname">JdbcTemplate</tt>&#26159;core&#21253;&#30340;&#26680;&#24515;&#31867;&#12290;&#23427;&#26367;&#25105;&#20204;&#23436;&#25104;&#20102;&#36164;&#28304;&#30340;&#21019;&#24314;&#20197;&#21450;&#37322;&#25918;&#24037;&#20316;&#65292;&#20174;&#32780;&#31616;&#21270;&#20102;&#25105;&#20204;&#23545;JDBC&#30340;&#20351;&#29992;&#12290;&#23427;&#36824;&#21487;&#20197;&#24110;&#21161;&#25105;&#20204;&#36991;&#20813;&#19968;&#20123;&#24120;&#35265;&#30340;&#38169;&#35823;&#65292;&#27604;&#22914;&#24536;&#35760;&#20851;&#38381;&#25968;&#25454;&#24211;&#36830;&#25509;&#12290;JdbcTemplate&#23558;&#23436;&#25104;JDBC&#26680;&#24515;&#22788;&#29702;&#27969;&#31243;&#65292;&#27604;&#22914;SQL&#35821;&#21477;&#30340;&#21019;&#24314;&#12289;&#25191;&#34892;&#65292;&#32780;&#25226;SQL&#35821;&#21477;&#30340;&#29983;&#25104;&#20197;&#21450;&#26597;&#35810;&#32467;&#26524;&#30340;&#25552;&#21462;&#24037;&#20316;&#30041;&#32473;&#25105;&#20204;&#30340;&#24212;&#29992;&#20195;&#30721;&#12290;&#23427;&#21487;&#20197;&#23436;&#25104;SQL&#26597;&#35810;&#12289;&#26356;&#26032;&#20197;&#21450;&#35843;&#29992;&#23384;&#20648;&#36807;&#31243;&#65292;&#21487;&#20197;&#23545;<tt class="interfacename">ResultSet</tt>&#36827;&#34892;&#36941;&#21382;&#24182;&#21152;&#20197;&#25552;&#21462;&#12290;&#23427;&#36824;&#21487;&#20197;&#25429;&#33719;JDBC&#24322;&#24120;&#24182;&#23558;&#20854;&#36716;&#25442;&#25104;<tt class="literal">org.springframework.dao</tt>&#21253;&#20013;&#23450;&#20041;&#30340;&#65292;&#36890;&#29992;&#30340;&#65292;&#20449;&#24687;&#26356;&#20016;&#23500;&#30340;&#24322;&#24120;&#12290;
+			</p><p>
+				&#20351;&#29992;JdbcTemplate&#36827;&#34892;&#32534;&#30721;&#21482;&#38656;&#35201;&#26681;&#25454;&#26126;&#30830;&#23450;&#20041;&#30340;&#19968;&#32452;&#22865;&#32422;&#26469;&#23454;&#29616;&#22238;&#35843;&#25509;&#21475;&#12290;<tt class="interfacename">PreparedStatementCreator</tt>&#22238;&#35843;&#25509;&#21475;&#36890;&#36807;&#32473;&#23450;&#30340;<tt class="interfacename">Connection</tt>&#21019;&#24314;&#19968;&#20010;PreparedStatement&#65292;&#21253;&#21547;SQL&#21644;&#20219;&#20309;&#30456;&#20851;&#30340;&#21442;&#25968;&#12290;<tt class="literal">CallableStatementCreateor</tt>&#23454;&#29616;&#21516;&#26679;&#30340;&#22788;&#29702;&#65292;&#21482;&#19981;&#36807;&#23427;&#21019;&#24314;&#30340;&#26159;CallableStatement&#12290;<tt class="literal">RowCallbackHandler</tt>&#25509;&#21475;&#21017;&#20174;&#25968;&#25454;&#38598;&#30340;&#27599;&#19968;&#34892;&#20013;&#25552;&#21462;&#20540;&#12290;
+			</p><p>
+				&#25105;&#20204;&#21487;&#20197;&#22312;&#19968;&#20010;service&#23454;&#29616;&#31867;&#20013;&#36890;&#36807;&#20256;&#36882;&#19968;&#20010;<tt class="interfacename">DataSource</tt>&#24341;&#29992;&#26469;&#23436;&#25104;JdbcTemplate&#30340;&#23454;&#20363;&#21270;&#65292;&#20063;&#21487;&#20197;&#22312;application context&#20013;&#37197;&#32622;&#19968;&#20010;JdbcTemplate bean&#65292;&#26469;&#20379;service&#20351;&#29992;&#12290;&#38656;&#35201;&#27880;&#24847;&#30340;&#26159;<tt class="interfacename">DataSource</tt>&#22312;application context&#24635;&#26159;&#37197;&#21046;&#25104;&#19968;&#20010;bean&#65292;&#31532;&#19968;&#31181;&#24773;&#20917;&#19979;&#65292;<tt class="interfacename">DataSource</tt> bean&#23558;&#20256;&#36882;&#32473;service&#65292;&#31532;&#20108;&#31181;&#24773;&#20917;&#19979;<tt class="interfacename">DataSource</tt> bean&#20256;&#36882;&#32473;JdbcTemplate bean&#12290;&#22240;&#20026;JdbcTemplate&#20351;&#29992;&#22238;&#35843;&#25509;&#21475;&#21644;<tt class="interfacename">SQLExceptionTranslator</tt>&#25509;&#21475;&#20316;&#20026;&#21442;&#25968;&#65292;&#25152;&#20197;&#19968;&#33324;&#24773;&#20917;&#19979;&#27809;&#26377;&#24517;&#35201;&#36890;&#36807;&#32487;&#25215;JdbcTemplate&#26469;&#23450;&#20041;&#20854;&#23376;&#31867;&#12290;
+			</p><p>
+				JdbcTemplate&#20013;&#20351;&#29992;&#30340;&#25152;&#26377;SQL&#23558;&#20250;&#20197;&#8220;DEBUG&#8221;&#32423;&#21035;&#35760;&#20837;&#26085;&#24535;&#65288;&#19968;&#33324;&#24773;&#20917;&#19979;&#26085;&#24535;&#30340;category&#26159;<tt class="classname">JdbcTemplate</tt>&#30456;&#24212;&#30340;&#20840;&#38480;&#23450;&#31867;&#21517;&#65292;&#19981;&#36807;&#22914;&#26524;&#38656;&#35201;&#23545;<tt class="classname">JdbcTemplate</tt>&#36827;&#34892;&#23450;&#21046;&#30340;&#35805;&#65292;&#21487;&#33021;&#26159;&#23427;&#30340;&#23376;&#31867;&#21517;&#65289;&#12290;
+			</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="jdbc-NamedParameterJdbcTemplate"></a>11.2.2.&nbsp;<tt class="classname">NamedParameterJdbcTemplate</tt>&#31867;</h3></div></div><div></div></div><p>
+				<tt class="classname">NamedParameterJdbcTemplate</tt>&#31867;&#22686;&#21152;&#20102;&#22312;SQL&#35821;&#21477;&#20013;&#20351;&#29992;&#21629;&#21517;&#21442;&#25968;&#30340;&#25903;&#25345;&#12290;&#22312;&#27492;&#20043;&#21069;&#65292;&#22312;&#20256;&#32479;&#30340;SQL&#35821;&#21477;&#20013;&#65292;&#21442;&#25968;&#37117;&#26159;&#29992;<tt class="literal">'?'</tt>&#21344;&#20301;&#31526;&#26469;&#34920;&#31034;&#30340;&#12290;
+			</p><p>
+				<tt class="classname">NamedParameterJdbcTemplate</tt>&#31867;&#20869;&#37096;&#23553;&#35013;&#20102;&#19968;&#20010;&#26222;&#36890;&#30340;<tt class="classname">JdbcTemplate</tt>&#65292;&#24182;&#20316;&#20026;&#20854;&#20195;&#29702;&#26469;&#23436;&#25104;&#22823;&#37096;&#20998;&#24037;&#20316;&#12290;&#19979;&#38754;&#30340;&#20869;&#23481;&#20027;&#35201;&#38024;&#23545;<tt class="classname">NamedParameterJdbcTemplate</tt>&#19982;<tt class="classname">JdbcTemplate</tt>&#30340;&#19981;&#21516;&#20043;&#22788;&#26469;&#21152;&#20197;&#35828;&#26126;&#65292;&#21363;&#22914;&#20309;&#22312;SQL&#35821;&#21477;&#20013;&#20351;&#29992;&#21629;&#21517;&#21442;&#25968;&#12290;
+			</p><p>
+				The expect usage pattern for the <tt class="classname">NamedParameterJdbcTemplate</tt>
+				class is perhaps best illustrated by looking at an example (the finer
+				points will be addressed immediately thereafter).
+			</p><p>
+				&#36890;&#36807;&#19979;&#38754;&#30340;&#20363;&#23376;&#25105;&#20204;&#21487;&#20197;&#26356;&#22909;&#22320;&#20102;&#35299;<tt class="classname">NamedParameterJdbcTemplate</tt>&#30340;&#20351;&#29992;&#27169;&#24335;&#65288;&#22312;&#21518;&#38754;&#25105;&#20204;&#36824;&#26377;&#26356;&#22909;&#30340;&#20351;&#29992;&#26041;&#24335;&#65289;&#12290;
+			</p><pre class="programlisting"><i class="lineannotation"><span class="lineannotation">// some JDBC-backed DAO class...</span></i>
+public int countOfActorsByFirstName(String firstName) {
+
+    String sql = "select count(0) from T_ACTOR where first_name = :first_name";
+
+    NamedParameterJdbcTemplate template = new NamedParameterJdbcTemplate(this.getDataSource());
+    SqlParameterSource namedParameters = new SimpleSqlParameterSource("first_name", firstName);
+
+    return template.queryForInt(sql, namedParameters);
+}</pre><p>
+				&#22312;&#19978;&#38754;&#20363;&#23376;&#20013;&#65292;<tt class="literal">sql</tt>&#21464;&#37327;&#20351;&#29992;&#20102;&#21629;&#21517;&#21442;&#25968;&#21344;&#20301;&#31526;&#8220;first_name&#8221;&#65292;&#19982;&#20854;&#23545;&#24212;&#30340;&#20540;&#23384;&#22312;<tt class="literal">namedParameters</tt>&#21464;&#37327;&#20013;&#65288;&#31867;&#22411;&#20026;<tt class="classname">SimpleSqlParameterSource</tt>&#65289;&#12290;
+			</p><p>
+				&#22914;&#26524;&#20320;&#21916;&#27426;&#30340;&#35805;&#65292;&#20063;&#21487;&#20197;&#20351;&#29992;&#22522;&#20110;Map&#39118;&#26684;&#30340;&#21517;&#20540;&#23545;&#23558;&#21629;&#21517;&#21442;&#25968;&#20256;&#36882;&#32473;<tt class="classname">NamedParameterJdbcTemplate</tt>&#65288;<tt class="classname">NamedParameterJdbcTemplate</tt>&#23454;&#29616;&#20102;<tt class="interfacename">NamedParameterJdbcOperations</tt>&#25509;&#21475;&#65292;&#21097;&#19979;&#30340;&#24037;&#20316;&#23558;&#30001;&#35843;&#29992;&#35813;&#25509;&#21475;&#30340;&#30456;&#24212;&#26041;&#27861;&#26469;&#23436;&#25104;&#65292;&#36825;&#37324;&#25105;&#20204;&#23601;&#19981;&#20877;&#36184;&#36848;&#65289;&#65306;				
+			</p><pre class="programlisting"><i class="lineannotation"><span class="lineannotation">// some JDBC-backed DAO class...</span></i>
+public int countOfActorsByFirstName(String firstName) {
+
+    String sql = "select count(0) from T_ACTOR where first_name = :first_name";
+
+    NamedParameterJdbcTemplate template = new NamedParameterJdbcTemplate(this.getDataSource());
+    Map namedParameters = new HashMap();
+    namedParameters.put("first_name", firstName);
+
+    return template.queryForInt(sql, namedParameters);
+}</pre><p>
+				&#21478;&#22806;&#19968;&#20010;&#20540;&#24471;&#19968;&#25552;&#30340;&#29305;&#24615;&#26159;&#19982;<tt class="classname">NamedParameterJdbcTemplate</tt>&#20301;&#20110;&#21516;&#19968;&#20010;&#21253;&#20013;&#30340;<tt class="interfacename">SqlParameterSource</tt>&#25509;&#21475;&#12290;&#22312;&#21069;&#38754;&#30340;&#20195;&#30721;&#29255;&#26029;&#20013;&#25105;&#20204;&#24050;&#32463;&#30475;&#21040;&#20102;&#35813;&#25509;&#21475;&#30340;&#23454;&#29616;&#65288;&#21363;<tt class="classname">SimpleSqlParameterSource</tt>&#31867;&#65289;&#65292;<tt class="interfacename">SqlParameterSource</tt>&#21487;&#20197;&#29992;&#26469;&#20316;&#20026;<tt class="classname">NamedParameterJdbcTemplate</tt>&#21629;&#21517;&#21442;&#25968;&#30340;&#26469;&#28304;&#12290;<tt class="classname">SimpleSqlParameterSource</tt>&#31867;&#26159;&#19968;&#20010;&#38750;&#24120;&#31616;&#21333;&#30340;&#23454;&#29616;&#65292;&#23427;&#20165;&#20165;&#26159;&#19968;&#20010;<tt class="interfacename">java.util.Map</tt>&#36866;&#37197;&#22120;&#65292;&#24403;&#28982;&#20854;&#29992;&#27861;&#20063;&#23601;&#19981;&#35328;&#33258;&#26126;&#20102;&#65288;&#22914;&#26524;&#36824;&#26377;&#19981;&#26126;&#20102;&#30340;&#65292;&#21487;&#20197;&#22312;Spring&#30340;JIRA&#31995;&#32479;&#20013;&#35201;&#27714;&#25552;&#20379;&#26356;&#22810;&#30340;&#30456;&#20851;&#36164;&#26009;&#65289;&#12290;
+			</p><p>
+				<tt class="interfacename">SqlParameterSource</tt>&#25509;&#21475;&#30340;&#21478;&#19968;&#20010;&#23454;&#29616;&#65293;&#65293;<tt class="classname">BeanPropertySqlParameterSource</tt>&#20026;&#25105;&#20204;&#25552;&#20379;&#20102;&#26356;&#26377;&#36259;&#30340;&#21151;&#33021;&#12290;&#35813;&#31867;&#21253;&#35013;&#19968;&#20010;&#31867;&#20284;JavaBean&#30340;&#23545;&#35937;&#65292;&#25152;&#38656;&#35201;&#30340;&#21629;&#21517;&#21442;&#25968;&#20540;&#23558;&#30001;&#21253;&#35013;&#23545;&#35937;&#25552;&#20379;&#65292;&#19979;&#38754;&#25105;&#20204;&#20351;&#29992;&#19968;&#20010;&#20363;&#23376;&#26469;&#26356;&#28165;&#26970;&#22320;&#35828;&#26126;&#23427;&#30340;&#29992;&#27861;&#12290;
+			</p><pre class="programlisting"><i class="lineannotation"><span class="lineannotation">// some JavaBean-like class...</span></i>
+public class Actor {
+
+    private Long id;
+    private String firstName;
+    private String lastName;
+    
+    public String getFirstName() {
+        return this.firstName;
+    }
+    
+    public String getLastName() {
+        return this.lastName;
+    }
+    
+    public Long getId() {
+        return this.id;
+    }
+    
+    <i class="lineannotation"><span class="lineannotation">// setters omitted...</span></i>
+
+}</pre><pre class="programlisting"><i class="lineannotation"><span class="lineannotation">// some JDBC-backed DAO class...</span></i>
+public int countOfActors(Actor exampleActor) {
+
+	<i class="lineannotation"><span class="lineannotation">// notice how the named parameters match the properties of the above 'Actor' class</span></i>
+    String sql = "select count(0) from T_ACTOR where first_name = :firstName and last_name = :lastName";
+
+    NamedParameterJdbcTemplate template = new NamedParameterJdbcTemplate(this.getDataSource());
+    SqlParameterSource namedParameters = new BeanPropertySqlParameterSource(exampleActor);
+
+    return template.queryForInt(sql, namedParameters);
+}</pre><p>
+				&#22823;&#23478;&#24517;&#39035;&#29282;&#35760;&#19968;&#28857;&#65306;<tt class="classname">NamedParameterJdbcTemplate</tt>&#31867;&#20869;&#37096;<span class="emphasis"><em>&#21253;&#35013;</em></span>&#20102;&#19968;&#20010;&#26631;&#20934;&#30340;<tt class="classname">JdbcTemplate</tt>&#31867;&#12290;&#22914;&#26524;&#20320;&#38656;&#35201;&#35775;&#38382;&#20854;&#20869;&#37096;&#30340;<tt class="classname">JdbcTemplate</tt>&#23454;&#20363;&#65288;&#27604;&#22914;&#35775;&#38382;<tt class="classname">JdbcTemplate</tt>&#30340;&#19968;&#20123;&#26041;&#27861;&#65289;&#37027;&#20040;&#20320;&#38656;&#35201;&#20351;&#29992;<tt class="literal">getJdbcOperations()</tt>&#26041;&#27861;&#36820;&#22238;&#30340;<span class="emphasis"><em><tt class="interfacename">JdbcOperations</tt>&#25509;&#21475;</em></span>&#12290;&#65288;<tt class="classname">JdbcTemplate</tt>&#23454;&#29616;&#20102;<tt class="interfacename">JdbcOperations</tt>&#25509;&#21475;&#65289;&#12290;
+			</p><p>
+				<tt class="classname">NamedParameterJdbcTemplate</tt>&#31867;&#26159;&#32447;&#31243;&#23433;&#20840;&#30340;&#65292;&#35813;&#31867;&#30340;&#26368;&#20339;&#20351;&#29992;&#26041;&#24335;&#19981;&#26159;&#27599;&#27425;&#25805;&#20316;&#30340;&#26102;&#20505;&#23454;&#20363;&#21270;&#19968;&#20010;&#26032;&#30340;<tt class="classname">NamedParameterJdbcTemplate</tt>&#65292;&#32780;&#26159;&#38024;&#23545;&#27599;&#20010;<tt class="interfacename">DataSource</tt>&#21482;&#37197;&#32622;&#19968;&#20010;<tt class="classname">NamedParameterJdbcTemplate</tt>&#23454;&#20363;&#65288;&#27604;&#22914;&#22312;Spring IoC&#23481;&#22120;&#20013;&#20351;&#29992;Spring IoC&#26469;&#36827;&#34892;&#37197;&#32622;&#65289;&#65292;&#28982;&#21518;&#22312;&#37027;&#20123;&#20351;&#29992;&#35813;&#31867;&#30340;DAO&#20013;&#20849;&#20139;&#35813;&#23454;&#20363;&#12290;
+			</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="jdbc-SimpleJdbcTemplate"></a>11.2.3.&nbsp;<tt class="classname">SimpleJdbcTemplate</tt>&#31867;</h3></div></div><div></div></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="http://www.redsaga.com/spring_ref/2.0RC2/images/admons/note.png"></td><th align="left">Note</th></tr><tr><td colspan="2" align="left" valign="top"><p>
+					<span class="emphasis"><em>&#35831;&#27880;&#24847;&#35813;&#31867;&#25152;&#25552;&#20379;&#30340;&#21151;&#33021;&#20165;&#36866;&#29992;&#20110;Java 5 (Tiger)&#12290;</em></span>
+				</p></td></tr></table></div><p>
+				<tt class="classname">SimpleJdbcTemplate</tt>&#31867;&#26159;<tt class="classname">JdbcTemplate</tt>&#31867;&#30340;&#19968;&#20010;&#21253;&#35013;&#22120;&#65288;wrapper&#65289;&#65292;&#23427;&#21033;&#29992;&#20102;Java 5&#30340;&#19968;&#20123;&#35821;&#35328;&#29305;&#24615;&#65292;&#27604;&#22914;Varargs&#21644;Autoboxing&#12290;&#23545;&#37027;&#20123;&#29992;&#24815;&#20102;Java 5&#30340;&#31243;&#24207;&#21592;&#65292;&#36825;&#20123;&#26032;&#30340;&#35821;&#35328;&#29305;&#24615;&#36824;&#26159;&#24456;&#22909;&#29992;&#30340;&#12290;
+			</p><p>
+				<tt class="classname">SimpleJdbcTemplate</tt> &#31867;&#21033;&#29992;Java 5&#30340;&#35821;&#27861;&#29305;&#24615;&#24102;&#26469;&#30340;&#22909;&#22788;&#21487;&#20197;&#36890;&#36807;&#19968;&#20010;&#20363;&#23376;&#26469;&#35828;&#26126;&#12290;&#22312;&#19979;&#38754;&#30340;&#20195;&#30721;&#29255;&#26029;&#20013;&#25105;&#20204;&#39318;&#20808;&#20351;&#29992;&#26631;&#20934;&#30340;<tt class="classname">JdbcTemplate</tt>&#36827;&#34892;&#25968;&#25454;&#35775;&#38382;&#65292;&#25509;&#19979;&#26469;&#20351;&#29992;<tt class="classname">SimpleJdbcTemplate</tt>&#20570;&#21516;&#26679;&#30340;&#20107;&#24773;&#12290;
+			</p><pre class="programlisting"><i class="lineannotation"><span class="lineannotation">// classic <tt class="classname">JdbcTemplate</tt>-style...</span></i>
+public Actor findActor(long id) {
+    String sql = "select id, first_name, last_name from T_ACTOR where id = ?";
+    
+    RowMapper mapper = new RowMapper() {
+    
+        public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+            Actor actor = new Actor();
+            actor.setId(rs.getLong(Long.valueOf(rs.getLong("id"))));
+            actor.setFirstName(rs.getString("first_name"));
+            actor.setLastName(rs.getString("last_name"));
+            return actor;
+        }
+    };
+    
+    <i class="lineannotation"><span class="lineannotation">// normally this would be dependency injected of course...</span></i>
+    JdbcTemplate jdbcTemplate = new JdbcTemplate(this.getDataSource());
+    
+    <i class="lineannotation"><span class="lineannotation">// notice the cast, and the wrapping up of the 'id' argument
+    // in an array, and the boxing of the 'id' argument as a reference type</span></i>
+    return (Actor) jdbcTemplate.queryForObject(sql, mapper, new Object[] {Long.valueOf(id)});
+}</pre><p>
+				&#19979;&#38754;&#26159;&#21516;&#19968;&#26041;&#27861;&#30340;&#21478;&#19968;&#31181;&#23454;&#29616;&#65292;&#24799;&#19968;&#19981;&#21516;&#20043;&#22788;&#26159;&#25105;&#20204;&#20351;&#29992;&#20102;<tt class="classname">SimpleJdbcTemplate</tt>&#65292;&#36825;&#26679;&#20195;&#30721;&#26174;&#24471;&#26356;&#21152;&#28165;&#26224;&#12290;
+			</p><pre class="programlisting"><i class="lineannotation"><span class="lineannotation">// <tt class="classname">SimpleJdbcTemplate</tt>-style...</span></i>
+public Actor findActor(long id) {
+    String sql = "select id, first_name, last_name from T_ACTOR where id = ?";
+
+    ParameterizedRowMapper&lt;Actor&gt; mapper = new ParameterizedRowMapper()&lt;Actor&gt; {
+    
+        <i class="lineannotation"><span class="lineannotation">// notice the return type (c.f. Java 5 covariant return types)</span></i>
+        public Actor mapRow(ResultSet rs, int rowNum) throws SQLException {
+            Actor actor = new Actor();
+            actor.setId(rs.getLong("id"));
+            actor.setFirstName(rs.getString("first_name"));
+            actor.setLastName(rs.getString("last_name"));
+            return actor;
+        }
+    };
+
+    <i class="lineannotation"><span class="lineannotation">// again, normally this would be dependency injected of course...</span></i>
+    SimpleJdbcTemplate simpleJdbcTemplate = new SimpleJdbcTemplate(this.getDataSource());
+
+    return simpleJdbcTemplate.queryForObject(sql, mapper, id);
+}</pre></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e12268"></a>11.2.4.&nbsp;<tt class="interfacename">DataSource</tt>&#25509;&#21475;</h3></div></div><div></div></div><p>
+				&#20026;&#20102;&#20174;&#25968;&#25454;&#24211;&#20013;&#21462;&#24471;&#25968;&#25454;&#65292;&#25105;&#20204;&#39318;&#20808;&#38656;&#35201;&#33719;&#21462;&#19968;&#20010;&#25968;&#25454;&#24211;&#36830;&#25509;&#12290;
+				Spring&#36890;&#36807;<tt class="interfacename">DataSource</tt>&#23545;&#35937;&#26469;&#23436;&#25104;&#36825;&#20010;&#24037;&#20316;&#12290;
+				<tt class="interfacename">DataSource</tt>&#26159;JDBC&#35268;&#33539;&#30340;&#19968;&#37096;&#20998;&#65292;
+				&#23427;&#34987;&#35270;&#20026;&#19968;&#20010;&#36890;&#29992;&#30340;&#25968;&#25454;&#24211;&#36830;&#25509;&#24037;&#21378;&#12290;&#36890;&#36807;&#20351;&#29992;DataSource&#65292;
+				Container&#25110;Framework&#21487;&#20197;&#23558;&#36830;&#25509;&#27744;&#20197;&#21450;&#20107;&#21153;&#31649;&#29702;&#30340;&#32454;&#33410;&#20174;&#24212;&#29992;&#20195;&#30721;&#20013;&#20998;&#31163;&#20986;&#26469;&#12290;
+				&#20316;&#20026;&#19968;&#20010;&#24320;&#21457;&#20154;&#21592;&#65292;&#22312;&#24320;&#21457;&#21644;&#27979;&#35797;&#20135;&#21697;&#30340;&#36807;&#31243;&#20013;&#65292;&#20320;&#21487;&#33021;&#38656;&#35201;&#30693;&#36947;&#36830;&#25509;&#25968;&#25454;&#24211;&#30340;&#32454;&#33410;&#12290;
+				&#20294;&#22312;&#20135;&#21697;&#23454;&#26045;&#26102;&#65292;&#20320;&#19981;&#38656;&#35201;&#30693;&#36947;&#36825;&#20123;&#32454;&#33410;&#12290;&#36890;&#24120;&#25968;&#25454;&#24211;&#31649;&#29702;&#21592;&#20250;&#24110;&#20320;&#35774;&#32622;&#22909;&#25968;&#25454;&#28304;&#12290;
+			</p><p>
+				&#22312;&#20351;&#29992;Spring JDBC&#26102;&#65292;&#20320;&#26082;&#21487;&#20197;&#36890;&#36807;JNDI&#33719;&#24471;&#25968;&#25454;&#28304;&#65292;&#20063;&#21487;&#20197;&#33258;&#34892;&#37197;&#32622;&#25968;&#25454;&#28304;&#65288;
+				&#20351;&#29992;Spring&#25552;&#20379;&#30340;DataSource&#23454;&#29616;&#31867;&#65289;&#12290;&#20351;&#29992;&#21518;&#32773;&#21487;&#20197;&#26356;&#26041;&#20415;&#30340;&#33073;&#31163;Web&#23481;&#22120;&#26469;&#36827;&#34892;&#21333;&#20803;&#27979;&#35797;&#12290;
+				&#36825;&#37324;&#25105;&#20204;&#23558;&#20351;&#29992;<tt class="classname">DriverManagerDataSource</tt>&#65292;&#19981;&#36807;DataSource&#26377;&#22810;&#31181;&#23454;&#29616;&#65292;
+				&#21518;&#38754;&#25105;&#20204;&#20250;&#35762;&#21040;&#12290;&#20351;&#29992;<tt class="classname">DriverManagerDataSource</tt>&#21644;&#20320;&#20197;&#21069;&#33719;&#21462;&#19968;&#20010;JDBC&#36830;&#25509;
+				&#30340;&#20570;&#27861;&#27809;&#20160;&#20040;&#20004;&#26679;&#12290;&#20320;&#39318;&#20808;&#24517;&#39035;&#25351;&#23450;JDBC&#39537;&#21160;&#31243;&#24207;&#30340;&#20840;&#38480;&#23450;&#21517;&#65292;&#36825;&#26679;<tt class="classname">DriverManager</tt>
+				&#25165;&#33021;&#21152;&#36733;JDBC&#39537;&#21160;&#31867;&#65292;&#25509;&#30528;&#20320;&#24517;&#39035;&#25552;&#20379;&#19968;&#20010;url&#65288;&#22240;JDBC&#39537;&#21160;&#32780;&#24322;&#65292;&#20026;&#20102;&#20445;&#35777;&#35774;&#32622;&#27491;&#30830;&#35831;&#21442;&#32771;&#30456;&#20851;JDBC&#39537;&#21160;&#30340;&#25991;&#26723;&#65289;&#65292;
+				&#26368;&#21518;&#20320;&#24517;&#39035;&#25552;&#20379;&#19968;&#20010;&#29992;&#25143;&#36830;&#25509;&#25968;&#25454;&#24211;&#30340;&#29992;&#25143;&#21517;&#21644;&#23494;&#30721;&#12290;&#19979;&#38754;&#25105;&#20204;&#23558;&#36890;&#36807;&#19968;&#20010;&#20363;&#23376;&#26469;&#35828;&#26126;&#22914;&#20309;&#37197;&#32622;&#19968;&#20010;
+				<tt class="classname">DriverManagerDataSource</tt>&#65306;
+			</p><pre class="programlisting">DriverManagerDataSource dataSource = new DriverManagerDataSource();
+dataSource.setDriverClassName("org.hsqldb.jdbcDriver");
+dataSource.setUrl("jdbc:hsqldb:hsql://localhost:");
+dataSource.setUsername("sa");
+dataSource.setPassword("");</pre></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="jdbc-SQLExceptionTranslator"></a>11.2.5.&nbsp;<tt class="interfacename">SQLExceptionTranslator</tt>&#25509;&#21475;</h3></div></div><div></div></div><p>
+				<tt class="interfacename">SQLExceptionTranslator</tt>&#26159;&#19968;&#20010;&#25509;&#21475;&#65292;&#22914;&#26524;&#20320;&#38656;&#35201;&#22312;
+				<tt class="classname">SQLException</tt>&#21644;<tt class="classname">org.springframework.dao.DataAccessException</tt>&#20043;&#38388;&#20316;&#36716;&#25442;&#65292;&#37027;&#20040;&#24517;&#39035;&#23454;&#29616;&#35813;&#25509;&#21475;&#12290;
+			</p><p>
+				&#36716;&#25442;&#22120;&#31867;&#30340;&#23454;&#29616;&#21487;&#20197;&#37319;&#29992;&#19968;&#33324;&#36890;&#29992;&#30340;&#20570;&#27861;(&#27604;&#22914;&#20351;&#29992;JDBC&#30340;SQLState code)&#65292;&#22914;&#26524;&#20026;&#20102;&#20351;&#36716;&#25442;&#26356;&#20934;&#30830;&#65292;&#20063;&#21487;&#20197;&#36827;&#34892;&#23450;&#21046;&#65288;&#27604;&#22914;&#20351;&#29992;Oracle&#30340;error code&#65289;&#12290;
+			</p><p>
+				<tt class="classname">SQLErrorCodeSQLExceptionTranslator</tt>&#26159;SQLExceptionTranslator&#30340;&#40664;&#35748;&#23454;&#29616;&#12290;
+				&#35813;&#23454;&#29616;&#20351;&#29992;&#25351;&#23450;&#25968;&#25454;&#24211;&#21378;&#21830;&#30340;error code&#65292;&#27604;&#37319;&#29992;<tt class="literal">SQLState</tt>&#26356;&#31934;&#30830;&#12290;
+				&#36716;&#25442;&#36807;&#31243;&#22522;&#20110;&#19968;&#20010;JavaBean&#65288;&#31867;&#22411;&#20026;<tt class="classname">SQLErrorCodes</tt>&#65289;&#20013;&#30340;error code&#12290;
+				&#36825;&#20010;JavaBean&#30001;<tt class="classname">SQLErrorCodesFactory</tt>&#24037;&#21378;&#31867;&#21019;&#24314;&#65292;&#20854;&#20013;&#30340;&#20869;&#23481;&#26469;&#33258;&#20110;
+				"sql-error-codes.xml"&#37197;&#32622;&#25991;&#20214;&#12290;&#35813;&#25991;&#20214;&#20013;&#30340;&#25968;&#25454;&#24211;&#21378;&#21830;&#20195;&#30721;&#22522;&#20110;Database MetaData&#20449;&#24687;&#20013;&#30340;
+				DatabaseProductName&#65292;&#20174;&#32780;&#37197;&#21512;&#24403;&#21069;&#25968;&#25454;&#24211;&#30340;&#20351;&#29992;&#12290;
+			</p><p>
+				</p><p><tt class="classname">SQLErrorCodeSQLExceptionTranslator</tt>&#20351;&#29992;&#20197;&#19979;&#30340;&#21305;&#37197;&#35268;&#21017;&#65306;</p><p>
+				</p><div class="itemizedlist"><ul type="disc" compact><li><p>
+							&#39318;&#20808;&#26816;&#26597;&#26159;&#21542;&#23384;&#22312;&#23436;&#25104;&#23450;&#21046;&#36716;&#25442;&#30340;&#23376;&#31867;&#23454;&#29616;&#12290;&#36890;&#24120;<tt class="classname">SQLErrorCodeSQLExceptionTranslator</tt>
+							&#36825;&#20010;&#31867;&#21487;&#20197;&#20316;&#20026;&#19968;&#20010;&#20855;&#20307;&#31867;&#20351;&#29992;&#65292;&#19981;&#38656;&#35201;&#36827;&#34892;&#23450;&#21046;&#65292;&#37027;&#20040;&#36825;&#20010;&#35268;&#21017;&#23558;&#19981;&#36866;&#29992;&#12290;
+						</p></li><li><p>
+							&#25509;&#30528;&#23558;SQLException&#30340;error code&#19982;&#38169;&#35823;&#20195;&#30721;&#38598;&#20013;&#30340;error code&#36827;&#34892;&#21305;&#37197;&#12290;
+							&#40664;&#35748;&#24773;&#20917;&#19979;&#38169;&#35823;&#20195;&#30721;&#38598;&#23558;&#20174;<tt class="classname">SQLErrorCodesFactory</tt>&#21462;&#24471;&#12290;
+							&#38169;&#35823;&#20195;&#30721;&#38598;&#26469;&#33258;classpath&#19979;&#30340;sql-error-codes.xml&#25991;&#20214;&#65292;
+							&#23427;&#20204;&#23558;&#19982;&#25968;&#25454;&#24211;metadata&#20449;&#24687;&#20013;&#30340;database name&#36827;&#34892;&#26144;&#23556;&#12290;
+						</p></li><li><p>
+							&#22914;&#26524;&#20173;&#28982;&#26080;&#27861;&#21305;&#37197;&#65292;&#26368;&#21518;&#23558;&#35843;&#29992;fallbackTranslator&#23646;&#24615;&#30340;translate&#26041;&#27861;&#65292;<tt class="classname">SQLStateSQLExceptionTranslator</tt>&#31867;&#23454;&#20363;&#26159;&#40664;&#35748;&#30340;fallbackTranslator&#12290;
+						</p></li></ul></div><p>
+			</p><p>
+				<tt class="classname">SQLErrorCodeSQLExceptionTranslator</tt>&#21487;&#20197;&#37319;&#29992;&#19979;&#38754;&#30340;&#26041;&#24335;&#36827;&#34892;&#25193;&#23637;&#65306;
+			</p><pre class="programlisting">public class MySQLErrorCodesTranslator extends SQLErrorCodeSQLExceptionTranslator {
+    protected DataAccessException customTranslate(String task, String sql, SQLException sqlex) {
+        if (sqlex.getErrorCode() == -12345) {
+            return new DeadlockLoserDataAccessException(task, sqlex);
+        }
+        return null;
+    }
+}</pre><p>
+				&#22312;&#19978;&#38754;&#30340;&#36825;&#20010;&#20363;&#23376;&#20013;&#65292;error code&#20026;<tt class="literal">'-12345'</tt>&#30340;SQLException
+				&#23558;&#37319;&#29992;&#35813;&#36716;&#25442;&#22120;&#36827;&#34892;&#36716;&#25442;&#65292;&#32780;&#20854;&#20182;&#30340;error code&#23558;&#30001;&#40664;&#35748;&#30340;&#36716;&#25442;&#22120;&#36827;&#34892;&#36716;&#25442;&#12290;
+				&#20026;&#20102;&#20351;&#29992;&#35813;&#36716;&#25442;&#22120;&#65292;&#24517;&#39035;&#23558;&#20854;&#20316;&#20026;&#21442;&#25968;&#20256;&#36882;&#32473;<tt class="classname">JdbcTemplate</tt>&#31867;
+				&#30340;<tt class="literal">setExceptionTranslator</tt>&#26041;&#27861;&#65292;&#24182;&#22312;&#38656;&#35201;&#20351;&#29992;&#36825;&#20010;&#36716;&#25442;&#22120;&#22120;&#30340;&#25968;&#25454;
+				&#23384;&#21462;&#25805;&#20316;&#20013;&#20351;&#29992;&#35813;<tt class="classname">JdbcTemplate</tt>&#12290;
+				&#19979;&#38754;&#30340;&#20363;&#23376;&#28436;&#31034;&#20102;&#22914;&#20309;&#20351;&#29992;&#35813;&#23450;&#21046;&#36716;&#25442;&#22120;&#65306;
+			</p><pre class="programlisting">// create a JdbcTemplate and set data source 
+JdbcTemplate jt = new JdbcTemplate(); 
+jt.setDataSource(dataSource); 
+// create a custom translator and set the DataSource for the default translation lookup 
+MySQLErrorCodesTransalator tr = new MySQLErrorCodesTransalator(); 
+tr.setDataSource(dataSource); 
+jt.setExceptionTranslator(tr); 
+// use the JdbcTemplate for this SqlUpdate 
+SqlUpdate su = new SqlUpdate(); 
+su.setJdbcTemplate(jt); 
+su.setSql("update orders set shipping_charge = shipping_charge * 1.05"); 
+su.compile(); 
+su.update();</pre><p>
+				&#22312;&#19978;&#38754;&#30340;&#23450;&#21046;&#36716;&#25442;&#22120;&#20013;&#65292;&#25105;&#20204;&#32473;&#23427;&#27880;&#20837;&#20102;&#19968;&#20010;&#25968;&#25454;&#28304;&#65292;&#22240;&#20026;&#25105;&#20204;&#20173;&#28982;&#38656;&#35201;
+				&#20351;&#29992;&#40664;&#35748;&#30340;&#36716;&#25442;&#22120;&#20174;<tt class="literal">sql-error-codes.xml</tt>&#20013;&#33719;&#21462;&#38169;&#35823;&#20195;&#30721;&#38598;&#12290;
+			</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e12384"></a>11.2.6.&nbsp;&#25191;&#34892;SQL&#35821;&#21477;</h3></div></div><div></div></div><p>
+				&#25105;&#20204;&#20165;&#38656;&#35201;&#38750;&#24120;&#23569;&#30340;&#20195;&#30721;&#23601;&#21487;&#20197;&#36798;&#21040;&#25191;&#34892;SQL&#35821;&#21477;&#30340;&#30446;&#30340;&#65292;&#19968;&#26086;&#33719;&#24471;&#19968;&#20010;
+				<tt class="interfacename">DataSource</tt>&#21644;&#19968;&#20010;<tt class="classname">JdbcTemplate</tt>&#65292;
+				&#25105;&#20204;&#23601;&#21487;&#20197;&#20351;&#29992;<tt class="classname">JdbcTemplate</tt>&#25552;&#20379;&#30340;&#20016;&#23500;&#21151;&#33021;&#23454;&#29616;&#25105;&#20204;&#30340;&#25805;&#20316;&#12290;
+				&#19979;&#38754;&#30340;&#20363;&#23376;&#20351;&#29992;&#20102;&#26497;&#23569;&#30340;&#20195;&#30721;&#23436;&#25104;&#21019;&#24314;&#19968;&#24352;&#34920;&#30340;&#24037;&#20316;&#12290;
+			</p><pre class="programlisting">import javax.sql.DataSource;
+import org.springframework.jdbc.core.JdbcTemplate;
+
+public class ExecuteAStatement {
+
+    private JdbcTemplate jt;
+    private DataSource dataSource;
+
+    public void doExecute() {
+        jt = new JdbcTemplate(dataSource);
+        jt.execute("create table mytable (id integer, name varchar(100))"); 
+    }
+
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+}</pre></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e12400"></a>11.2.7.&nbsp;&#25191;&#34892;&#26597;&#35810;</h3></div></div><div></div></div><p>
+				&#38500;&#20102;execute&#26041;&#27861;&#20043;&#22806;&#65292;<tt class="classname">JdbcTemplate</tt>&#36824;&#25552;&#20379;&#20102;&#22823;&#37327;&#30340;&#26597;&#35810;&#26041;&#27861;&#12290;
+				&#22312;&#36825;&#20123;&#26597;&#35810;&#26041;&#27861;&#20013;&#65292;&#26377;&#24456;&#22823;&#19968;&#37096;&#20998;&#26159;&#29992;&#26469;&#26597;&#35810;&#21333;&#20540;&#30340;&#12290;&#27604;&#22914;&#36820;&#22238;&#19968;&#20010;&#27719;&#24635;&#65288;count&#65289;&#32467;&#26524;
+				&#25110;&#32773;&#20174;&#36820;&#22238;&#34892;&#32467;&#26524;&#20013;&#21462;&#24471;&#25351;&#23450;&#21015;&#30340;&#20540;&#12290;&#36825;&#26102;&#25105;&#20204;&#21487;&#20197;&#20351;&#29992;<tt class="literal">queryForInt(..)</tt>&#12289;
+				<tt class="literal">queryForLong(..)</tt>&#25110;&#32773;<tt class="literal">queryForObject(..)</tt>&#26041;&#27861;&#12290;
+				queryForObject&#26041;&#27861;&#29992;&#26469;&#23558;&#36820;&#22238;&#30340;JDBC&#31867;&#22411;&#23545;&#35937;&#36716;&#25442;&#25104;&#25351;&#23450;&#30340;Java&#23545;&#35937;&#65292;&#22914;&#26524;&#31867;&#22411;&#36716;&#25442;&#22833;&#36133;&#23558;&#25243;&#20986;
+				<tt class="classname">InvalidDataAccessApiUsageException</tt>&#24322;&#24120;&#12290;
+				&#19979;&#38754;&#30340;&#20363;&#23376;&#28436;&#31034;&#20102;&#20004;&#20010;&#26597;&#35810;&#30340;&#29992;&#27861;&#65292;&#19968;&#20010;&#36820;&#22238;<tt class="literal">int</tt>&#20540;&#65292;&#21478;&#19968;&#20010;&#36820;&#22238;
+				<tt class="classname">String</tt>&#12290;
+			</p><pre class="programlisting">import javax.sql.DataSource;
+import org.springframework.jdbc.core.JdbcTemplate;
+
+public class RunAQuery {
+
+    private JdbcTemplate jt;
+    private DataSource dataSource;
+  
+    public int getCount() {
+        jt = new JdbcTemplate(dataSource);
+        int count = jt.queryForInt("select count(*) from mytable");
+        return count;
+    }
+
+    public String getName() {
+        jt = new JdbcTemplate(dataSource);
+        String name = (String) jt.queryForObject("select name from mytable", String.class);
+        return name;
+    }
+
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+}</pre><p>
+				&#38500;&#20102;&#36820;&#22238;&#21333;&#20540;&#30340;&#26597;&#35810;&#26041;&#27861;&#65292;<tt class="classname">JdbcTemplate</tt>&#36824;&#25552;&#20379;&#20102;&#19968;&#32452;&#36820;&#22238;List&#32467;&#26524;
+				&#30340;&#26041;&#27861;&#12290;List&#20013;&#30340;&#27599;&#19968;&#39033;&#23545;&#24212;&#26597;&#35810;&#36820;&#22238;&#32467;&#26524;&#20013;&#30340;&#19968;&#34892;&#12290;&#20854;&#20013;&#26368;&#31616;&#21333;&#30340;&#26159;<tt class="literal">queryForList</tt>&#26041;&#27861;&#65292;
+				&#35813;&#26041;&#27861;&#23558;&#36820;&#22238;&#19968;&#20010;<tt class="interfacename">List</tt>&#65292;&#35813;<tt class="interfacename">List</tt>&#20013;&#30340;&#27599;&#19968;&#26465;
+				&#35760;&#24405;&#26159;&#19968;&#20010;<tt class="interfacename">Map</tt>&#23545;&#35937;&#65292;&#23545;&#24212;&#24212;&#25968;&#25454;&#24211;&#20013;&#26576;&#19968;&#34892;&#65307;&#32780;&#35813;<tt class="interfacename">Map</tt>
+				&#20013;&#30340;&#27599;&#19968;&#39033;&#23545;&#24212;&#35813;&#25968;&#25454;&#24211;&#34892;&#20013;&#30340;&#26576;&#19968;&#21015;&#20540;&#12290;&#19979;&#38754;&#30340;&#20195;&#30721;&#29255;&#26029;&#25509;&#30528;&#19978;&#38754;&#30340;&#20363;&#23376;&#28436;&#31034;&#20102;&#22914;&#20309;&#29992;&#35813;&#26041;&#27861;&#36820;&#22238;&#34920;&#20013;
+				&#25152;&#26377;&#35760;&#24405;&#65306;
+			</p><pre class="programlisting">public List getList() {
+    jt = new JdbcTemplate(dataSource);
+    List rows = jt.queryForList("select * from mytable");
+    return rows;
+}</pre><p>
+				&#36820;&#22238;&#30340;&#32467;&#26524;&#38598;&#31867;&#20284;&#19979;&#38754;&#36825;&#31181;&#24418;&#24335;&#65306;
+			</p><pre class="programlisting">[{name=Bob, id=1}, {name=Mary, id=2}]</pre></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e12454"></a>11.2.8.&nbsp;&#26356;&#26032;&#25968;&#25454;&#24211;</h3></div></div><div></div></div><p>
+				<tt class="classname">JdbcTemplate</tt>&#36824;&#25552;&#20379;&#20102;&#19968;&#20123;&#26356;&#26032;&#25968;&#25454;&#24211;&#30340;&#26041;&#27861;&#12290;
+				&#22312;&#19979;&#38754;&#30340;&#20363;&#23376;&#20013;&#65292;&#25105;&#20204;&#26681;&#25454;&#32473;&#23450;&#30340;&#20027;&#38190;&#20540;&#23545;&#25351;&#23450;&#30340;&#21015;&#36827;&#34892;&#26356;&#26032;&#12290;
+				&#20363;&#23376;&#20013;&#30340;SQL&#35821;&#21477;&#20013;&#20351;&#29992;&#20102;&#8220;?&#8221;&#21344;&#20301;&#31526;&#26469;&#25509;&#21463;&#21442;&#25968;&#65288;&#36825;&#31181;&#20570;&#27861;&#22312;&#26356;&#26032;&#21644;&#26597;&#35810;SQL&#35821;&#21477;&#20013;&#24456;&#24120;&#35265;&#65289;&#12290;
+				&#20256;&#36882;&#30340;&#21442;&#25968;&#20540;&#20301;&#20110;&#19968;&#20010;&#23545;&#35937;&#25968;&#32452;&#20013;&#65288;&#22522;&#26412;&#31867;&#22411;&#38656;&#35201;&#34987;&#21253;&#35013;&#25104;&#20854;&#23545;&#24212;&#30340;&#23545;&#35937;&#31867;&#22411;&#65289;&#12290;
+			</p><pre class="programlisting">import javax.sql.DataSource;
+
+import org.springframework.jdbc.core.JdbcTemplate;
+
+public class ExecuteAnUpdate {
+
+    private JdbcTemplate jt;
+    private DataSource dataSource;
+
+    public void setName(int id, String name) {
+        jt = new JdbcTemplate(dataSource);
+        jt.update("update mytable set name = ? where id = ?", new Object[] {name, new Integer(id)});
+    }
+
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+}</pre></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="jdbc-datasource"></a>11.3.&nbsp;&#25511;&#21046;&#25968;&#25454;&#24211;&#36830;&#25509;</h2></div></div><div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="jdbc-DataSourceUtils"></a>11.3.1.&nbsp;<tt class="classname">DataSourceUtils</tt>&#31867;</h3></div></div><div></div></div><p>
+				<tt class="classname">DataSourceUtils</tt>&#20316;&#20026;&#19968;&#20010;&#24110;&#21161;&#31867;&#25552;&#20379;&#26131;&#29992;&#19988;&#24378;&#22823;&#30340;&#25968;&#25454;&#24211;&#35775;&#38382;&#33021;&#21147;&#65292;
+				&#25105;&#20204;&#21487;&#20197;&#20351;&#29992;&#35813;&#31867;&#25552;&#20379;&#30340;<tt class="literal">&#38745;&#24577;</tt>&#26041;&#27861;&#20174;JNDI&#33719;&#21462;&#25968;&#25454;&#24211;&#36830;&#25509;&#20197;&#21450;&#22312;&#24517;&#35201;&#30340;&#26102;&#20505;&#20851;&#38381;&#20043;&#12290;
+				&#23427;&#25552;&#20379;&#25903;&#25345;&#32447;&#31243;&#32465;&#23450;&#30340;&#25968;&#25454;&#24211;&#36830;&#25509;&#65288;&#27604;&#22914;&#20351;&#29992;<tt class="classname">DataSourceTransactionManager</tt>
+				&#30340;&#26102;&#20505;&#65292;&#23558;&#25226;&#25968;&#25454;&#24211;&#36830;&#25509;&#32465;&#23450;&#21040;&#24403;&#21069;&#30340;&#32447;&#31243;&#19978;&#65289;&#12290;
+			</p><p>
+				&#27880;&#65306;<tt class="literal">getDataSourceFromJndi(..)</tt>&#26041;&#27861;&#20027;&#35201;&#29992;&#20110;&#37027;&#20123;&#27809;&#26377;&#20351;&#29992;bean factory
+				&#25110;&#32773;application context&#30340;&#22330;&#21512;&#12290;&#22914;&#26524;&#20351;&#29992;application context&#65292;&#37027;&#20040;&#26368;&#22909;&#26159;&#22312;
+				<tt class="classname">JndiObjectFactoryBean</tt>&#20013;&#37197;&#32622;bean&#25110;&#32773;&#30452;&#25509;&#20351;&#29992;
+				<tt class="classname">JdbcTemplate</tt>&#23454;&#20363;&#12290;<tt class="classname">JndiObjectFactoryBean</tt>
+				&#33021;&#22815;&#36890;&#36807;JNDI&#33719;&#21462;<tt class="interfacename">DataSource</tt>&#24182;&#23558;
+				<tt class="interfacename">DataSource</tt>&#20316;&#20026;&#24341;&#29992;&#21442;&#25968;&#20256;&#36882;&#32473;&#20854;&#20182;bean&#12290;
+				&#36825;&#26679;&#65292;&#22312;&#19981;&#21516;&#30340;<tt class="interfacename">DataSource</tt>&#20043;&#38388;&#20999;&#25442;&#21482;&#38656;&#35201;&#20462;&#25913;&#37197;&#32622;&#25991;&#20214;&#21363;&#21487;&#65292;
+				&#29978;&#33267;&#25105;&#20204;&#21487;&#20197;&#29992;&#19968;&#20010;&#38750;JNDI&#30340;<tt class="interfacename">DataSource</tt>&#26469;&#26367;&#25442;
+				<tt class="interfacename">FactoryBean</tt>&#23450;&#20041;&#65281;
+			</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="jdbc-SmartDataSource"></a>11.3.2.&nbsp;<tt class="interfacename">SmartDataSource</tt>&#25509;&#21475;</h3></div></div><div></div></div><p>
+				<tt class="interfacename">SmartDataSource</tt>&#26159;<tt class="interfacename">DataSource</tt>
+				&#25509;&#21475;&#30340;&#19968;&#20010;&#25193;&#23637;&#65292;&#29992;&#26469;&#25552;&#20379;&#25968;&#25454;&#24211;&#36830;&#25509;&#12290;&#20351;&#29992;&#35813;&#25509;&#21475;&#30340;&#31867;&#22312;&#25351;&#23450;&#30340;&#25805;&#20316;&#20043;&#21518;&#21487;&#20197;&#26816;&#26597;&#26159;&#21542;&#38656;&#35201;&#20851;&#38381;&#36830;&#25509;&#12290;
+				&#35813;&#25509;&#21475;&#22312;&#26576;&#20123;&#24773;&#20917;&#19979;&#38750;&#24120;&#26377;&#29992;&#65292;&#27604;&#22914;&#26377;&#20123;&#24773;&#20917;&#38656;&#35201;&#37325;&#29992;&#25968;&#25454;&#24211;&#36830;&#25509;&#12290;
+			</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="jdbc-AbstractDataSource"></a>11.3.3.&nbsp;<tt class="classname">AbstractDataSource</tt>&#31867;</h3></div></div><div></div></div><p>
+				<tt class="classname">AbstractDataSource</tt>&#26159;&#19968;&#20010;&#23454;&#29616;&#20102;<tt class="interfacename">DataSource</tt>
+				&#25509;&#21475;&#30340;<tt class="literal">abstract</tt>&#22522;&#31867;&#12290;&#23427;&#23454;&#29616;&#20102;<tt class="interfacename">DataSource</tt>&#25509;&#21475;&#30340;
+				&#19968;&#20123;&#26080;&#20851;&#30171;&#30162;&#30340;&#26041;&#27861;&#65292;&#22914;&#26524;&#20320;&#38656;&#35201;&#23454;&#29616;&#33258;&#24049;&#30340;<tt class="interfacename">DataSource</tt>&#65292;&#37027;&#20040;&#32487;&#25215;
+				&#35813;&#31867;&#26159;&#20010;&#22909;&#20027;&#24847;&#12290;
+			</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="jdbc-SingleConnectionDataSource"></a>11.3.4.&nbsp;<tt class="classname">SingleConnectionDataSource</tt>&#31867;</h3></div></div><div></div></div><p>
+				<tt class="classname">SingleConnectionDataSource</tt>&#26159;<tt class="literal">SmartDataSource</tt>&#25509;&#21475;
+				&#30340;&#19968;&#20010;&#23454;&#29616;&#65292;&#20854;&#20869;&#37096;&#21253;&#35013;&#20102;&#19968;&#20010;&#21333;&#36830;&#25509;&#12290;&#35813;&#36830;&#25509;&#22312;&#20351;&#29992;&#20043;&#21518;&#23558;&#19981;&#20250;&#20851;&#38381;&#65292;&#24456;&#26174;&#28982;&#23427;&#19981;&#33021;&#22312;&#22810;&#32447;&#31243;
+				&#30340;&#29615;&#22659;&#19979;&#20351;&#29992;&#12290;
+			</p><p>
+				&#24403;&#23458;&#25143;&#31471;&#20195;&#30721;&#35843;&#29992;close&#26041;&#27861;&#30340;&#26102;&#20505;&#65292;&#22914;&#26524;&#23427;&#24635;&#26159;&#20551;&#35774;&#25968;&#25454;&#24211;&#36830;&#25509;&#26469;&#33258;&#36830;&#25509;&#27744;&#65288;&#23601;&#20687;&#20351;&#29992;&#25345;&#20037;&#21270;&#24037;&#20855;&#26102;&#19968;&#26679;&#65289;&#65292;
+				&#20320;&#24212;&#35813;&#23558;<tt class="literal">suppressClose</tt>&#35774;&#32622;&#20026;true&#12290;
+				&#36825;&#26679;&#65292;&#36890;&#36807;&#35813;&#31867;&#33719;&#21462;&#30340;&#23558;&#26159;&#20195;&#29702;&#36830;&#25509;&#65288;&#31105;&#27490;&#20851;&#38381;&#65289;&#32780;&#19981;&#26159;&#21407;&#26377;&#30340;&#29289;&#29702;&#36830;&#25509;&#12290;
+				&#38656;&#35201;&#27880;&#24847;&#30340;&#26159;&#65292;&#25105;&#20204;&#19981;&#33021;&#25226;&#20351;&#29992;&#35813;&#31867;&#33719;&#21462;&#30340;&#25968;&#25454;&#24211;&#36830;&#25509;&#36896;&#22411;&#65288;cast&#65289;&#20026;Oracle Connection&#20043;&#31867;&#30340;&#26412;&#22320;&#25968;&#25454;&#24211;&#36830;&#25509;&#12290;
+			</p><p>
+				<tt class="classname">SingleConnectionDataSource</tt>&#20027;&#35201;&#22312;&#27979;&#35797;&#30340;&#26102;&#20505;&#20351;&#29992;&#12290;
+				&#23427;&#20351;&#24471;&#27979;&#35797;&#20195;&#30721;&#24456;&#23481;&#26131;&#33073;&#31163;&#24212;&#29992;&#26381;&#21153;&#22120;&#32780;&#22312;&#19968;&#20010;&#31616;&#21333;&#30340;JNDI&#29615;&#22659;&#19979;&#36816;&#34892;&#12290;
+				&#19982;<tt class="classname">DriverManagerDataSource</tt>&#19981;&#21516;&#30340;&#26159;&#65292;&#23427;&#22987;&#32456;&#21482;&#20250;&#20351;&#29992;&#21516;&#19968;&#20010;&#25968;&#25454;&#24211;&#36830;&#25509;&#65292;
+				&#20174;&#32780;&#36991;&#20813;&#27599;&#27425;&#24314;&#31435;&#29289;&#29702;&#36830;&#25509;&#30340;&#24320;&#38144;&#12290;
+			</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="jdbc-DriverManagerDataSource"></a>11.3.5.&nbsp;<tt class="classname">DriverManagerDataSource</tt>&#31867;</h3></div></div><div></div></div><p>
+				<tt class="classname">DriverManagerDataSource</tt>&#31867;&#23454;&#29616;&#20102;
+				<tt class="interfacename">SmartDataSource</tt>&#25509;&#21475;&#12290;&#22312;applicationContext.xml&#20013;&#21487;&#20197;&#20351;&#29992;
+				bean properties&#26469;&#35774;&#32622;JDBC Driver&#23646;&#24615;&#65292;&#35813;&#31867;&#27599;&#27425;&#36820;&#22238;&#30340;&#37117;&#26159;&#19968;&#20010;&#26032;&#30340;&#36830;&#25509;&#12290;
+			</p><p>
+				&#35813;&#31867;&#20027;&#35201;&#22312;&#27979;&#35797;&#20197;&#21450;&#33073;&#31163;J2EE&#23481;&#22120;&#30340;&#29420;&#31435;&#29615;&#22659;&#20013;&#20351;&#29992;&#12290;&#23427;&#26082;&#21487;&#20197;&#29992;&#26469;&#22312;application context&#20013;&#20316;&#20026;&#19968;&#20010;
+				<tt class="interfacename">DataSource</tt> bean&#65292;&#20063;&#21487;&#20197;&#22312;&#31616;&#21333;&#30340;JNDI&#29615;&#22659;&#19979;&#20351;&#29992;&#12290;
+				&#30001;&#20110;<tt class="literal">Connection.close()</tt>&#20165;&#20165;&#21482;&#26159;&#31616;&#21333;&#30340;&#20851;&#38381;&#25968;&#25454;&#24211;&#36830;&#25509;&#65292;&#22240;&#27492;&#20219;&#20309;&#33021;&#22815;&#33719;&#21462;
+				<tt class="interfacename">DataSource</tt>&#30340;&#25345;&#20037;&#21270;&#20195;&#30721;&#37117;&#33021;&#24456;&#22909;&#30340;&#24037;&#20316;&#12290;&#19981;&#36807;&#20351;&#29992;JavaBean&#39118;&#26684;&#30340;&#36830;&#25509;&#27744;
+				&#65288;&#27604;&#22914;commons-dbcp&#65289;&#20063;&#24182;&#38750;&#38590;&#20107;&#12290;&#21363;&#20351;&#26159;&#22312;&#27979;&#35797;&#29615;&#22659;&#19979;&#65292;&#20351;&#29992;&#36830;&#25509;&#27744;&#20063;&#26159;&#19968;&#31181;&#27604;&#20351;&#29992;
+				<tt class="classname">DriverManagerDataSource</tt>&#26356;&#22909;&#30340;&#20570;&#27861;&#12290;
+			</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="jdbc-TransactionAwareDataSourceProxy"></a>11.3.6.&nbsp;<tt class="classname">TransactionAwareDataSourceProxy</tt>&#31867;</h3></div></div><div></div></div><p>
+				<tt class="classname">TransactionAwareDataSourceProxy</tt>&#20316;&#20026;&#30446;&#26631;<tt class="interfacename">DataSource</tt>&#30340;&#19968;&#20010;&#20195;&#29702;&#65292;
+				&#22312;&#23545;&#30446;&#26631;<tt class="interfacename">DataSource</tt>&#21253;&#35013;&#30340;&#21516;&#26102;&#65292;&#36824;&#22686;&#21152;&#20102;Spring&#30340;&#20107;&#21153;&#31649;&#29702;&#33021;&#21147;&#65292;
+				&#22312;&#36825;&#19968;&#28857;&#19978;&#65292;&#36825;&#20010;&#31867;&#30340;&#21151;&#33021;&#38750;&#24120;&#20687;J2EE&#26381;&#21153;&#22120;&#25152;&#25552;&#20379;&#30340;&#20107;&#21153;&#21270;&#30340;JNDI <tt class="interfacename">DataSource</tt>&#12290;
+			</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="http://www.redsaga.com/spring_ref/2.0RC2/images/admons/note.png"></td><th align="left">Note</th></tr><tr><td colspan="2" align="left" valign="top"><p>
+				&#35813;&#31867;&#20960;&#20046;&#24456;&#23569;&#34987;&#29992;&#21040;&#65292;&#38500;&#38750;&#29616;&#26377;&#20195;&#30721;&#22312;&#34987;&#35843;&#29992;&#30340;&#26102;&#20505;&#38656;&#35201;&#19968;&#20010;&#26631;&#20934;&#30340; JDBC <tt class="interfacename">DataSource</tt>&#25509;&#21475;&#23454;&#29616;&#20316;&#20026;&#21442;&#25968;&#12290;
+				&#36825;&#31181;&#24773;&#20917;&#19979;&#65292;&#36825;&#20010;&#31867;&#21487;&#20197;&#20351;&#29616;&#26377;&#20195;&#30721;&#21442;&#19982;Spring&#30340;&#20107;&#21153;&#31649;&#29702;&#12290;&#36890;&#24120;&#26368;&#22909;&#30340;&#20570;&#27861;&#26159;&#20351;&#29992;&#26356;&#39640;&#23618;&#30340;&#25277;&#35937;
+				&#26469;&#23545;&#25968;&#25454;&#28304;&#36827;&#34892;&#31649;&#29702;&#65292;&#27604;&#22914;<tt class="classname">JdbcTemplate</tt>&#21644;<tt class="classname">DataSourceUtils</tt>&#31561;&#31561;&#12290;
+				</p></td></tr></table></div><p>
+				<span class="emphasis"><em>&#22914;&#26524;&#38656;&#35201;&#26356;&#35814;&#32454;&#30340;&#36164;&#26009;&#65292;&#35831;&#21442;&#32771;<tt class="classname">TransactionAwareDataSourceProxy</tt> JavaDoc &#12290;</em></span>
+			</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="jdbc-DataSourceTransactionManager"></a>11.3.7.&nbsp;<tt class="classname">DataSourceTransactionManager</tt>&#31867;</h3></div></div><div></div></div><p>
+				<tt class="classname">DataSourceTransactionManager</tt>&#31867;&#26159;
+				<tt class="interfacename">PlatformTransactionManager</tt>&#25509;&#21475;&#30340;&#19968;&#20010;&#23454;&#29616;&#65292;&#29992;&#20110;&#22788;&#29702;&#21333;JDBC&#25968;&#25454;&#28304;&#12290;
+				&#23427;&#23558;&#20174;&#25351;&#23450;DataSource&#21462;&#24471;&#30340;JDBC&#36830;&#25509;&#32465;&#23450;&#21040;&#24403;&#21069;&#32447;&#31243;&#65292;&#22240;&#27492;&#23427;&#20063;&#25903;&#25345;&#20102;&#27599;&#20010;&#25968;&#25454;&#28304;&#23545;&#24212;&#21040;&#19968;&#20010;&#32447;&#31243;&#12290;
+			</p><p>
+				&#25105;&#20204;&#25512;&#33616;&#22312;&#24212;&#29992;&#20195;&#30721;&#20013;&#20351;&#29992;<tt class="literal">DataSourceUtils.getConnection(DataSource)</tt>&#26469;&#33719;&#21462;
+				JDBC&#36830;&#25509;&#65292;&#32780;&#19981;&#26159;&#20351;&#29992;J2EE&#26631;&#20934;&#30340;<tt class="literal">DataSource.getConnection</tt>&#12290;&#22240;&#20026;&#21069;&#32773;&#23558;&#25243;&#20986;
+				unchecked&#30340;<tt class="literal">org.springframework.dao</tt>&#24322;&#24120;&#65292;&#32780;&#19981;&#26159;checked&#30340;
+				<tt class="classname">SQLException</tt>&#24322;&#24120;&#12290;Spring Framework&#20013;&#25152;&#26377;&#30340;&#31867;&#65288;&#27604;&#22914;
+				<tt class="classname">JdbcTemplate</tt>&#65289;&#37117;&#37319;&#29992;&#36825;&#31181;&#20570;&#27861;&#12290;&#22914;&#26524;&#19981;&#38656;&#35201;&#21644;&#36825;&#20010;
+				<tt class="classname">DataSourceTransactionManager</tt>&#31867;&#19968;&#36215;&#20351;&#29992;&#65292;DataSourceUtils
+				&#25552;&#20379;&#30340;&#21151;&#33021;&#36319;&#19968;&#33324;&#30340;&#25968;&#25454;&#24211;&#36830;&#25509;&#31574;&#30053;&#27809;&#26377;&#20160;&#20040;&#20004;&#26679;&#65292;&#22240;&#27492;&#23427;&#21487;&#20197;&#22312;&#20219;&#20309;&#22330;&#26223;&#19979;&#20351;&#29992;&#12290;
+			</p><p>
+				<tt class="classname">DataSourceTransactionManager</tt>&#31867;&#25903;&#25345;&#23450;&#21046;&#38548;&#31163;&#32423;&#21035;&#65292;&#20197;&#21450;&#23545;SQL&#35821;&#21477;&#26597;&#35810;&#36229;&#26102;&#30340;&#35774;&#23450;&#12290;
+				&#20026;&#20102;&#25903;&#25345;&#21518;&#32773;&#65292;&#24212;&#29992;&#20195;&#30721;&#24517;&#39035;&#20351;&#29992;<tt class="classname">JdbcTemplate</tt>&#25110;&#32773;&#22312;&#27599;&#27425;&#21019;&#24314;SQL&#35821;&#21477;&#26102;&#35843;&#29992;
+				<tt class="literal">DataSourceUtils.applyTransactionTimeout</tt>&#26041;&#27861;&#12290;
+			</p><p>
+				&#22312;&#20351;&#29992;&#21333;&#20010;&#25968;&#25454;&#28304;&#30340;&#24773;&#24418;&#19979;&#65292;&#20320;&#21487;&#20197;&#29992;<tt class="classname">DataSourceTransactionManager</tt>&#26469;&#26367;&#20195;<tt class="classname">JtaTransactionManager</tt>&#65292;
+				&#22240;&#20026;<tt class="classname">DataSourceTransactionManager</tt>&#19981;&#38656;&#35201;&#23481;&#22120;&#25903;&#25345;JTA&#12290;&#22914;&#26524;&#20320;&#20351;&#29992;<tt class="literal">DataSourceUtils.getConnection(DataSource)</tt>&#26469;&#33719;&#21462;
+				JDBC&#36830;&#25509;&#65292;&#20108;&#32773;&#20043;&#38388;&#30340;&#20999;&#25442;&#21482;&#38656;&#35201;&#26356;&#25913;&#19968;&#20123;&#37197;&#32622;&#12290;&#26368;&#21518;&#38656;&#35201;&#27880;&#24847;&#30340;&#19968;&#28857;&#23601;&#26159;<tt class="classname">JtaTransactionManager</tt>&#19981;&#25903;&#25345;&#38548;&#31163;&#32423;&#21035;&#30340;&#23450;&#21046;&#65281;
+			</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="jdbc-object"></a>11.4.&nbsp;&#29992;Java&#23545;&#35937;&#26469;&#34920;&#36798;JDBC&#25805;&#20316;</h2></div></div><div></div></div><p>
+			<tt class="literal">org.springframework.jdbc.object</tt>&#21253;&#19979;&#30340;&#31867;&#20801;&#35768;&#29992;&#25143;&#20197;&#26356;&#21152;
+			&#38754;&#21521;&#23545;&#35937;&#30340;&#26041;&#24335;&#21435;&#35775;&#38382;&#25968;&#25454;&#24211;&#12290;&#27604;&#22914;&#35828;&#65292;&#29992;&#25143;&#21487;&#20197;&#25191;&#34892;&#26597;&#35810;&#24182;&#36820;&#22238;&#19968;&#20010;list&#65292;
+			&#35813;list&#20316;&#20026;&#19968;&#20010;&#32467;&#26524;&#38598;&#23558;&#25226;&#20174;&#25968;&#25454;&#24211;&#20013;&#21462;&#20986;&#30340;&#21015;&#25968;&#25454;&#26144;&#23556;&#21040;&#19994;&#21153;&#23545;&#35937;&#30340;&#23646;&#24615;&#19978;&#12290;
+			&#29992;&#25143;&#20063;&#21487;&#20197;&#25191;&#34892;&#23384;&#20648;&#36807;&#31243;&#65292;&#20197;&#21450;&#36816;&#34892;&#26356;&#26032;&#12289;&#21024;&#38500;&#20197;&#21450;&#25554;&#20837;SQL&#35821;&#21477;&#12290;
+		</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="http://www.redsaga.com/spring_ref/2.0RC2/images/admons/note.png"></td><th align="left">Note</th></tr><tr><td colspan="2" align="left" valign="top"><p>
+				&#22312;&#35768;&#22810;Spring&#24320;&#21457;&#20154;&#21592;&#20013;&#38388;&#23384;&#22312;&#26377;&#19968;&#31181;&#35266;&#28857;&#65292;&#37027;&#23601;&#26159;&#19979;&#38754;&#23558;&#35201;&#25552;&#21040;&#30340;&#21508;&#31181;RDBMS&#25805;&#20316;&#31867;
+				&#65288;<a href="jdbc.html#jdbc-StoredProcedure" title="11.4.4.&nbsp;StoredProcedure&#31867;"><tt class="classname">StoredProcedure</tt></a>&#31867;&#38500;&#22806;&#65289;
+				&#36890;&#24120;&#20063;&#21487;&#20197;&#30452;&#25509;&#20351;&#29992;<tt class="classname">JdbcTemplate</tt>&#30456;&#20851;&#30340;&#26041;&#27861;&#26469;&#26367;&#25442;&#12290;
+				&#30456;&#23545;&#20110;&#25226;&#19968;&#20010;&#26597;&#35810;&#25805;&#20316;&#23553;&#35013;&#25104;&#19968;&#20010;&#31867;&#32780;&#35328;&#65292;&#30452;&#25509;&#35843;&#29992;<tt class="classname">JdbcTemplate</tt>&#26041;&#27861;&#23558;&#26356;&#31616;&#21333;
+				&#32780;&#19988;&#26356;&#23481;&#26131;&#29702;&#35299;&#12290;
+			</p><p>
+				&#24517;&#39035;&#35828;&#26126;&#30340;&#19968;&#28857;&#23601;&#26159;&#65292;&#36825;&#20165;&#20165;&#21482;&#26159;&#19968;&#31181;<span class="emphasis"><em>&#35266;&#28857;</em></span>&#32780;&#24050;&#65292;
+				&#22914;&#26524;&#20320;&#35748;&#20026;&#20320;&#21487;&#20197;&#20174;&#30452;&#25509;&#20351;&#29992;RDBMS&#25805;&#20316;&#31867;&#20013;&#33719;&#21462;&#19968;&#20123;&#39069;&#22806;&#30340;&#22909;&#22788;&#65292;
+				&#20320;&#19981;&#22952;&#26681;&#25454;&#33258;&#24049;&#30340;&#38656;&#35201;&#21644;&#21916;&#22909;&#36827;&#34892;&#19981;&#21516;&#30340;&#36873;&#25321;&#12290;
+			</p></td></tr></table></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="jdbc-SqlQuery"></a>11.4.1.&nbsp;<tt class="classname">SqlQuery</tt>&#31867;</h3></div></div><div></div></div><p>
+				<tt class="classname">SqlQuery</tt>&#26159;&#19968;&#20010;&#21487;&#37325;&#29992;&#12289;&#32447;&#31243;&#23433;&#20840;&#30340;&#31867;&#65292;&#23427;&#23553;&#35013;&#20102;&#19968;&#20010;SQL&#26597;&#35810;&#12290;
+				&#20854;&#23376;&#31867;&#24517;&#39035;&#23454;&#29616;<tt class="literal">newResultReader()</tt>&#26041;&#27861;&#65292;&#35813;&#26041;&#27861;&#29992;&#26469;&#22312;&#36941;&#21382;
+				<tt class="interfacename">ResultSet</tt>&#30340;&#26102;&#20505;&#33021;&#20351;&#29992;&#19968;&#20010;&#31867;&#26469;&#20445;&#23384;&#32467;&#26524;&#12290;
+				&#25105;&#20204;&#24456;&#23569;&#38656;&#35201;&#30452;&#25509;&#20351;&#29992;<tt class="classname">SqlQuery</tt>&#65292;&#22240;&#20026;&#20854;&#23376;&#31867;
+				<tt class="classname">MappingSqlQuery</tt>&#20316;&#20026;&#19968;&#20010;&#26356;&#21152;&#26131;&#29992;&#30340;&#23454;&#29616;&#33021;&#22815;&#23558;&#32467;&#26524;&#38598;&#20013;&#30340;&#34892;&#26144;&#23556;&#20026;Java&#23545;&#35937;&#12290;
+				<tt class="classname">SqlQuery</tt>&#36824;&#26377;&#21478;&#22806;&#20004;&#20010;&#25193;&#23637;&#20998;&#21035;&#26159;
+				<tt class="classname">MappingSqlQueryWithParameters</tt>&#21644;<tt class="classname">UpdatableSqlQuery</tt>&#12290;
+			</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="jdbc-MappingSqlQuery"></a>11.4.2.&nbsp;<tt class="classname">MappingSqlQuery</tt>&#31867;</h3></div></div><div></div></div><p>
+				<tt class="classname">MappingSqlQuery</tt>&#26159;&#19968;&#20010;&#21487;&#37325;&#29992;&#30340;&#26597;&#35810;&#25277;&#35937;&#31867;&#65292;&#20854;&#20855;&#20307;&#31867;&#24517;&#39035;&#23454;&#29616;
+				<tt class="literal">mapRow(ResultSet, int)</tt>&#25277;&#35937;&#26041;&#27861;&#26469;&#23558;&#32467;&#26524;&#38598;&#20013;&#30340;&#27599;&#19968;&#34892;&#36716;&#25442;&#25104;Java&#23545;&#35937;&#12290;
+			</p><p>
+				&#22312;<tt class="interfacename">SqlQuery</tt>&#30340;&#21508;&#31181;&#23454;&#29616;&#20013;&#65292;
+				<tt class="classname">MappingSqlQuery</tt>&#26159;&#26368;&#24120;&#29992;&#20063;&#26159;&#26368;&#23481;&#26131;&#20351;&#29992;&#30340;&#19968;&#20010;&#12290;
+			</p><p>
+				&#19979;&#38754;&#36825;&#20010;&#20363;&#23376;&#28436;&#31034;&#20102;&#19968;&#20010;&#23450;&#21046;&#26597;&#35810;&#65292;&#23427;&#23558;&#20174;&#23458;&#25143;&#34920;&#20013;&#21462;&#24471;&#30340;&#25968;&#25454;&#26144;&#23556;&#21040;&#19968;&#20010;
+				<tt class="classname">Customer</tt>&#31867;&#23454;&#20363;&#12290;
+			</p><pre class="programlisting">private class CustomerMappingQuery extends MappingSqlQuery {
+
+    public CustomerMappingQuery(DataSource ds) {
+        super(ds, "SELECT id, name FROM customer WHERE id = ?");
+        super.declareParameter(new SqlParameter("id", Types.INTEGER));
+        compile();
+    }
+
+    public Object mapRow(ResultSet rs, int rowNumber) throws SQLException {
+        Customer cust = new Customer();
+        cust.setId((Integer) rs.getObject("id"));
+        cust.setName(rs.getString("name"));
+        return cust;
+    } 
+}</pre><p>
+				&#22312;&#19978;&#38754;&#30340;&#20363;&#23376;&#20013;&#65292;&#25105;&#20204;&#20026;&#29992;&#25143;&#26597;&#35810;&#25552;&#20379;&#20102;&#19968;&#20010;&#26500;&#36896;&#20989;&#25968;&#24182;&#20026;&#26500;&#36896;&#20989;&#25968;&#20256;&#36882;&#20102;&#19968;&#20010;
+				<tt class="interfacename">DataSource</tt>&#21442;&#25968;&#12290;&#22312;&#26500;&#36896;&#20989;&#25968;&#37324;&#38754;&#25105;&#20204;&#25226;
+				<tt class="interfacename">DataSource</tt>&#21644;&#19968;&#20010;&#29992;&#26469;&#36820;&#22238;&#26597;&#35810;&#32467;&#26524;&#30340;SQL&#35821;&#21477;&#20316;&#20026;&#21442;&#25968;
+				&#35843;&#29992;&#29238;&#31867;&#30340;&#26500;&#36896;&#20989;&#25968;&#12290;SQL&#35821;&#21477;&#23558;&#34987;&#29992;&#20110;&#29983;&#25104;&#19968;&#20010;<tt class="interfacename">PreparedStatement</tt>&#23545;&#35937;&#65292;
+				&#22240;&#27492;&#23427;&#21487;&#20197;&#21253;&#21547;&#21344;&#20301;&#31526;&#26469;&#20256;&#36882;&#21442;&#25968;&#12290;&#32780;&#27599;&#19968;&#20010;SQL&#35821;&#21477;&#30340;&#21442;&#25968;&#24517;&#39035;&#36890;&#36807;&#35843;&#29992;
+				<tt class="literal">declareParameter</tt>&#26041;&#27861;&#26469;&#36827;&#34892;&#22768;&#26126;&#65292;&#35813;&#26041;&#27861;&#38656;&#35201;&#19968;&#20010;
+				<tt class="classname">SqlParameter</tt>&#65288;&#23553;&#35013;&#20102;&#19968;&#20010;&#23383;&#27573;&#21517;&#23383;&#21644;&#19968;&#20010;
+				<tt class="classname">java.sql.Types</tt>&#20013;&#23450;&#20041;&#30340;JDBC&#31867;&#22411;&#65289;&#23545;&#35937;&#20316;&#20026;&#21442;&#25968;&#12290;
+				&#25152;&#26377;&#21442;&#25968;&#23450;&#20041;&#23436;&#20043;&#21518;&#65292;&#25105;&#20204;&#35843;&#29992;<tt class="literal">compile()</tt>&#26041;&#27861;&#26469;&#23545;SQL&#35821;&#21477;&#36827;&#34892;&#39044;&#32534;&#35793;&#12290;
+			</p><p>
+				&#19979;&#38754;&#35753;&#25105;&#20204;&#30475;&#30475;&#35813;&#23450;&#21046;&#26597;&#35810;&#21021;&#22987;&#21270;&#24182;&#25191;&#34892;&#30340;&#20195;&#30721;&#65306;
+			</p><pre class="programlisting">public Customer getCustomer(Integer id) {
+    CustomerMappingQuery custQry = new CustomerMappingQuery(dataSource); 
+    Object[] parms = new Object[1];
+    parms[0] = id;
+    List customers = custQry.execute(parms);
+    if (customers.size() &gt; 0) {
+        return (Customer) customers.get(0);
+    }
+    else {
+        return null;
+    }
+}</pre><p>
+				&#22312;&#19978;&#38754;&#30340;&#20363;&#23376;&#20013;&#65292;getCustomer&#26041;&#27861;&#36890;&#36807;&#20256;&#36882;&#24799;&#19968;&#21442;&#25968;id&#26469;&#36820;&#22238;&#19968;&#20010;&#23458;&#25143;&#23545;&#35937;&#12290;
+				&#35813;&#26041;&#27861;&#20869;&#37096;&#22312;&#21019;&#24314;<tt class="classname">CustomerMappingQuery</tt>&#23454;&#20363;&#20043;&#21518;&#65292;
+				&#25105;&#20204;&#21019;&#24314;&#20102;&#19968;&#20010;&#23545;&#35937;&#25968;&#32452;&#29992;&#26469;&#21253;&#21547;&#35201;&#20256;&#36882;&#30340;&#26597;&#35810;&#21442;&#25968;&#12290;&#36825;&#37324;&#25105;&#20204;&#21482;&#26377;&#21807;&#19968;&#30340;&#19968;&#20010;
+				<tt class="classname">Integer</tt>&#21442;&#25968;&#12290;&#25191;&#34892;<tt class="classname">CustomerMappingQuery</tt>&#30340;
+				execute&#26041;&#27861;&#20043;&#21518;&#65292;&#25105;&#20204;&#24471;&#21040;&#20102;&#19968;&#20010;<tt class="literal">List</tt>&#65292;&#35813;List&#20013;&#21253;&#21547;&#19968;&#20010;
+				<tt class="classname">Customer</tt>&#23545;&#35937;&#65292;&#22914;&#26524;&#26377;&#23545;&#35937;&#28385;&#36275;&#26597;&#35810;&#26465;&#20214;&#30340;&#35805;&#12290;
+			</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="jdbc-SqlUpdate"></a>11.4.3.&nbsp;<tt class="classname">SqlUpdate</tt>&#31867;</h3></div></div><div></div></div><p>
+				<tt class="classname">SqlUpdate</tt>&#31867;&#23553;&#35013;&#20102;&#19968;&#20010;&#21487;&#37325;&#22797;&#20351;&#29992;&#30340;SQL&#26356;&#26032;&#25805;&#20316;&#12290;
+				&#36319;&#25152;&#26377;<tt class="classname">RdbmsOperation</tt>&#31867;&#19968;&#26679;&#65292;SqlUpdate&#21487;&#20197;&#22312;SQL&#20013;&#23450;&#20041;&#21442;&#25968;&#12290;
+			</p><p>
+				&#35813;&#31867;&#25552;&#20379;&#20102;&#19968;&#31995;&#21015;<tt class="literal">update()</tt>&#26041;&#27861;&#65292;&#23601;&#20687;SqlQuery&#25552;&#20379;&#30340;&#19968;&#31995;&#21015;<tt class="literal">execute()</tt>&#26041;&#27861;&#19968;&#26679;&#12290;
+			</p><p>
+				<tt class="classname">SqlUpdate</tt>&#26159;&#19968;&#20010;&#20855;&#20307;&#30340;&#31867;&#12290;&#36890;&#36807;&#22312;SQL&#35821;&#21477;&#20013;&#23450;&#20041;&#21442;&#25968;&#65292;&#36825;&#20010;&#31867;&#21487;&#20197;&#25903;&#25345;
+				&#19981;&#21516;&#30340;&#26356;&#26032;&#26041;&#27861;&#65292;&#25105;&#20204;&#19968;&#33324;&#19981;&#38656;&#35201;&#36890;&#36807;&#32487;&#25215;&#26469;&#23454;&#29616;&#23450;&#21046;&#12290;
+			</p><pre class="programlisting">import java.sql.Types;
+
+import javax.sql.DataSource;
+
+import org.springframework.jdbc.core.SqlParameter;
+import org.springframework.jdbc.object.SqlUpdate;
+
+public class UpdateCreditRating extends SqlUpdate {
+
+    public UpdateCreditRating(DataSource ds) {
+        setDataSource(ds);
+        setSql("update customer set credit_rating = ? where id = ?");
+        declareParameter(new SqlParameter(Types.NUMERIC));
+        declareParameter(new SqlParameter(Types.NUMERIC));
+        compile();
+    }
+
+    /**
+     * @param id for the Customer to be updated
+     * @param rating the new value for credit rating
+     * @return number of rows updated
+     */
+    public int run(int id, int rating) {
+        Object[] params =
+            new Object[] {
+                new Integer(rating),
+                new Integer(id)};
+        return update(params);
+    }
+}</pre></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="jdbc-StoredProcedure"></a>11.4.4.&nbsp;<tt class="classname">StoredProcedure</tt>&#31867;</h3></div></div><div></div></div><p>
+				<tt class="classname">StoredProcedure</tt>&#31867;&#26159;&#19968;&#20010;&#25277;&#35937;&#22522;&#31867;&#65292;&#23427;&#26159;&#23545;RDBMS&#23384;&#20648;&#36807;&#31243;&#30340;&#19968;&#31181;&#25277;&#35937;&#12290;
+				&#35813;&#31867;&#25552;&#20379;&#20102;&#22810;&#31181;<tt class="literal">execute(..)</tt>&#26041;&#27861;&#65292;&#19981;&#36807;&#36825;&#20123;&#26041;&#27861;&#30340;&#35775;&#38382;&#31867;&#22411;&#37117;&#26159;<tt class="literal">protected</tt>&#30340;&#12290;
+			</p><p>
+				&#20174;&#29238;&#31867;&#32487;&#25215;&#30340;<tt class="literal">sql</tt>&#23646;&#24615;&#29992;&#26469;&#25351;&#23450;RDBMS&#23384;&#20648;&#36807;&#31243;&#30340;&#21517;&#23383;&#12290;
+				&#23613;&#31649;&#35813;&#31867;&#25552;&#20379;&#20102;&#35768;&#22810;&#24517;&#39035;&#22312;JDBC3.0&#19979;&#20351;&#29992;&#30340;&#21151;&#33021;&#65292;&#20294;&#26159;&#25105;&#20204;&#26356;&#20851;&#27880;&#30340;&#26159;JDBC 3.0&#20013;&#24341;&#20837;&#30340;&#21629;&#21517;&#21442;&#25968;&#29305;&#24615;&#12290;
+			</p><p>
+				&#19979;&#38754;&#30340;&#31243;&#24207;&#28436;&#31034;&#20102;&#22914;&#20309;&#35843;&#29992;Oracle&#20013;&#30340;<tt class="literal">sysdate()</tt>&#20989;&#25968;&#12290;
+				&#36825;&#37324;&#25105;&#20204;&#21019;&#24314;&#20102;&#19968;&#20010;&#32487;&#25215;<tt class="classname">StoredProcedure</tt>&#30340;&#23376;&#31867;&#65292;&#34429;&#28982;&#23427;&#27809;&#26377;&#36755;&#20837;&#21442;&#25968;&#65292;
+				&#20294;&#26159;&#25105;&#24517;&#39035;&#36890;&#36807;&#20351;&#29992;<tt class="classname">SqlOutParameter</tt>&#26469;&#22768;&#26126;&#19968;&#20010;&#26085;&#26399;&#31867;&#22411;&#30340;&#36755;&#20986;&#21442;&#25968;&#12290;
+				<tt class="literal">execute()</tt>&#26041;&#27861;&#23558;&#36820;&#22238;&#19968;&#20010;map&#65292;map&#20013;&#30340;&#27599;&#20010;entry&#26159;&#19968;&#20010;&#29992;&#21442;&#25968;&#21517;&#20316;key&#65292;
+				&#20197;&#36755;&#20986;&#21442;&#25968;&#20026;value&#30340;&#21517;&#20540;&#23545;&#12290;
+			</p><pre class="programlisting">import java.sql.Types;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
+import javax.sql.DataSource;
+
+import org.springframework.jdbc.core.SqlOutParameter;
+import org.springframework.jdbc.datasource.*;
+import org.springframework.jdbc.object.StoredProcedure;
+
+public class TestStoredProcedure {
+
+    public static void main(String[] args)  {
+        TestStoredProcedure t = new TestStoredProcedure();
+        t.test();
+        System.out.println("Done!");
+    }
+    
+    void test() {
+        DriverManagerDataSource ds = new DriverManagerDataSource();
+        ds.setDriverClassName("oracle.jdbc.OracleDriver");
+        ds.setUrl("jdbc:oracle:thin:@localhost:1521:mydb");
+        ds.setUsername("scott");
+        ds.setPassword("tiger");
+
+        MyStoredProcedure sproc = new MyStoredProcedure(ds);
+        Map results = sproc.execute();
+        printMap(results);
+    }
+
+    private class MyStoredProcedure extends StoredProcedure {
+        
+        private static final String SQL = "sysdate";
+
+        public MyStoredProcedure(DataSource ds) {
+            setDataSource(ds);
+            setFunction(true);
+            setSql(SQL);
+            declareParameter(new SqlOutParameter("date", Types.DATE));
+            compile();
+        }
+
+        public Map execute() {
+            <i class="lineannotation"><span class="lineannotation">// the 'sysdate' sproc has no input parameters, so an empty Map is supplied...</span></i>
+            return execute(new HashMap());
+        }
+    }
+
+    private static void printMap(Map results) {
+        for (Iterator it = results.entrySet().iterator(); it.hasNext(); ) {
+            System.out.println(it.next());  
+        }
+    }
+}</pre><p>
+			&#19979;&#38754;&#26159;<tt class="classname">StoredProcedure</tt>&#30340;&#21478;&#19968;&#20010;&#20363;&#23376;&#65292;&#23427;&#20351;&#29992;&#20102;&#20004;&#20010;Oracle&#28216;&#26631;&#31867;&#22411;&#30340;&#36755;&#20986;&#21442;&#25968;&#12290;
+		</p><pre class="programlisting">import oracle.jdbc.driver.OracleTypes;
+import org.springframework.jdbc.core.SqlOutParameter;
+import org.springframework.jdbc.object.StoredProcedure;
+
+import javax.sql.DataSource;
+import java.util.HashMap;
+import java.util.Map;
+
+public class TitlesAndGenresStoredProcedure extends StoredProcedure {
+
+    private static final String SPROC_NAME = "AllTitlesAndGenres";
+
+    public TitlesAndGenresStoredProcedure(DataSource dataSource) {
+        super(dataSource, SPROC_NAME);
+        declareParameter(new SqlOutParameter("titles", OracleTypes.CURSOR, new TitleMapper()));
+        declareParameter(new SqlOutParameter("genres", OracleTypes.CURSOR, new GenreMapper()));
+        compile();
+    }
+
+    public Map execute() {
+        <i class="lineannotation"><span class="lineannotation">// again, this sproc has no input parameters, so an empty Map is supplied...</span></i>
+        return super.execute(new HashMap());
+    }
+}</pre><p>
+				&#20540;&#24471;&#27880;&#24847;&#30340;&#26159;<tt class="classname">TitlesAndGenresStoredProcedure</tt>&#26500;&#36896;&#20989;&#25968;&#20013;
+				<tt class="literal">declareParameter(..)</tt>&#30340;<tt class="classname">SqlOutParameter</tt>&#21442;&#25968;&#65292;
+				&#35813;&#21442;&#25968;&#20351;&#29992;&#20102;<tt class="interfacename">RowMapper</tt>&#25509;&#21475;&#30340;&#23454;&#29616;&#12290;
+				&#36825;&#26159;&#19968;&#31181;&#38750;&#24120;&#26041;&#20415;&#32780;&#24378;&#22823;&#30340;&#37325;&#29992;&#26041;&#24335;&#12290;
+				&#19979;&#38754;&#25105;&#20204;&#26469;&#30475;&#19968;&#19979;<tt class="interfacename">RowMapper</tt>&#30340;&#20004;&#20010;&#20855;&#20307;&#23454;&#29616;&#12290;
+			</p><p>
+				&#39318;&#20808;&#26159;<tt class="classname">TitleMapper</tt>&#31867;&#65292;&#23427;&#31616;&#21333;&#30340;&#25226;<tt class="interfacename">ResultSet</tt>&#20013;&#30340;&#27599;&#19968;&#34892;&#26144;&#23556;&#20026;&#19968;&#20010;<tt class="classname">Title</tt>
+				Domain Object&#12290;
+			</p><pre class="programlisting">import com.foo.sprocs.domain.Title;
+import org.springframework.jdbc.core.RowMapper;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public final class TitleMapper implements RowMapper {
+    
+    public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+        Title title = new Title();
+        title.setId(rs.getLong("id"));
+        title.setName(rs.getString("name"));
+        return title;
+    }
+}</pre><p>
+				&#21478;&#19968;&#20010;&#26159;<tt class="classname">GenreMapper</tt>&#31867;&#65292;&#20063;&#26159;&#38750;&#24120;&#31616;&#21333;&#30340;&#23558;<tt class="interfacename">ResultSet</tt>&#20013;&#30340;&#27599;&#19968;&#34892;&#26144;&#23556;&#20026;&#19968;&#20010;<tt class="classname">Genre</tt>
+				Domain Object&#12290;
+			</p><pre class="programlisting">import org.springframework.jdbc.core.RowMapper;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import com.foo.domain.Genre;
+
+public final class GenreMapper implements RowMapper {
+    
+    public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+        return new Genre(rs.getString("name"));
+    }
+}</pre><p>
+				&#22914;&#26524;&#20320;&#38656;&#35201;&#32473;&#23384;&#20648;&#36807;&#31243;&#20256;&#36755;&#20837;&#21442;&#25968;&#65288;&#36825;&#20123;&#36755;&#20837;&#21442;&#25968;&#26159;&#22312;RDBMS&#23384;&#20648;&#36807;&#31243;&#20013;&#23450;&#20041;&#22909;&#20102;&#30340;&#65289;&#65292;
+				&#21017;&#38656;&#35201;&#25552;&#20379;&#19968;&#20010;&#25351;&#23450;&#31867;&#22411;&#30340;<tt class="literal">execute(..)</tt>&#26041;&#27861;&#65292;
+				&#35813;&#26041;&#27861;&#23558;&#35843;&#29992;&#22522;&#31867;&#30340;<tt class="literal">protected</tt> <tt class="literal">execute(Map parameters)</tt>&#26041;&#27861;&#12290;
+				&#20363;&#22914;&#65306;
+			</p><pre class="programlisting">import oracle.jdbc.driver.OracleTypes;
+import org.springframework.jdbc.core.SqlOutParameter;
+import org.springframework.jdbc.object.StoredProcedure;
+
+import javax.sql.DataSource;
+import java.util.HashMap;
+import java.util.Map;
+
+public class TitlesAfterDateStoredProcedure extends StoredProcedure {
+
+    private static final String SPROC_NAME = "TitlesAfterDate";
+    private static final String CUTOFF_DATE_PARAM = "cutoffDate";
+
+    public TitlesAfterDateStoredProcedure(DataSource dataSource) {
+        super(dataSource, SPROC_NAME);
+        declaraParameter(new SqlParameter(CUTOFF_DATE_PARAM, Types.DATE);
+        declareParameter(new SqlOutParameter("titles", OracleTypes.CURSOR, new TitleMapper()));
+        compile();
+    }
+
+    public Map execute(Date cutoffDate) {
+        Map inputs = new HashMap();
+        inputs.put(CUTOFF_DATE_PARAM, cutoffDate);
+        return super.execute(inputs);
+    }
+}</pre></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="jdbc-SqlFunction"></a>11.4.5.&nbsp;<tt class="classname">SqlFunction</tt>&#31867;</h3></div></div><div></div></div><p>
+				<tt class="classname">SqlFunction</tt> RDBMS&#25805;&#20316;&#31867;&#23553;&#35013;&#20102;&#19968;&#20010;SQL&#8220;&#20989;&#25968;&#8221;&#21253;&#35013;&#22120;&#65288;wrapper&#65289;&#65292;
+				&#35813;&#21253;&#35013;&#22120;&#36866;&#29992;&#20110;&#26597;&#35810;&#24182;&#36820;&#22238;&#19968;&#20010;&#21333;&#34892;&#32467;&#26524;&#38598;&#12290;&#40664;&#35748;&#36820;&#22238;&#30340;&#26159;&#19968;&#20010;<tt class="literal">int</tt>&#20540;&#65292;
+				&#19981;&#36807;&#25105;&#20204;&#21487;&#20197;&#37319;&#29992;&#31867;&#20284;<tt class="classname">JdbcTemplate</tt>&#20013;&#30340;<tt class="literal">queryForXxx</tt>
+				&#20570;&#27861;&#33258;&#24049;&#23454;&#29616;&#26469;&#36820;&#22238;&#20854;&#23427;&#31867;&#22411;&#12290;<tt class="classname">SqlFunction</tt>&#20248;&#21183;&#22312;&#20110;&#25105;&#20204;&#19981;&#24517;&#21019;&#24314;
+				<tt class="classname">JdbcTemplate</tt>&#65292;&#36825;&#20123;&#23427;&#37117;&#22312;&#20869;&#37096;&#26367;&#25105;&#20204;&#20570;&#20102;&#12290;
+			</p><p>
+				&#35813;&#31867;&#30340;&#20027;&#35201;&#29992;&#36884;&#26159;&#35843;&#29992;SQL&#20989;&#25968;&#26469;&#36820;&#22238;&#19968;&#20010;&#21333;&#20540;&#30340;&#32467;&#26524;&#38598;&#65292;&#27604;&#22914;&#31867;&#20284;&#8220;select user()&#8221;&#12289;
+				&#8220;select sysdate from dual&#8221;&#30340;&#26597;&#35810;&#12290;&#22914;&#26524;&#38656;&#35201;&#35843;&#29992;&#26356;&#22797;&#26434;&#30340;&#23384;&#20648;&#20989;&#25968;&#65292;
+				&#21487;&#20197;&#20351;&#29992;<tt class="classname">StoredProcedure</tt>&#25110;<tt class="classname">SqlCall</tt>&#12290;
+			</p><p>
+				<tt class="classname">SqlFunction</tt>&#26159;&#19968;&#20010;&#20855;&#20307;&#31867;&#65292;&#36890;&#24120;&#25105;&#20204;&#19981;&#38656;&#35201;&#23427;&#30340;&#23376;&#31867;&#12290;
+				&#20854;&#29992;&#27861;&#26159;&#21019;&#24314;&#35813;&#31867;&#30340;&#23454;&#20363;&#65292;&#28982;&#21518;&#22768;&#26126;SQL&#35821;&#21477;&#20197;&#21450;&#21442;&#25968;&#23601;&#21487;&#20197;&#35843;&#29992;&#30456;&#20851;&#30340;run&#26041;&#27861;&#21435;&#22810;&#27425;&#25191;&#34892;&#20989;&#25968;&#12290;
+				&#19979;&#38754;&#30340;&#20363;&#23376;&#29992;&#26469;&#36820;&#22238;&#25351;&#23450;&#34920;&#30340;&#35760;&#24405;&#34892;&#25968;&#65306;
+			</p><pre class="programlisting">public int countRows() {
+    SqlFunction sf = new SqlFunction(dataSource, "select count(*) from mytable");
+    sf.compile();
+    return sf.run();
+}</pre></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="dao.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="pt02.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="orm.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Chapter&nbsp;10.&nbsp;DAO&#25903;&#25345;&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Chapter&nbsp;12.&nbsp;&#20351;&#29992;ORM&#24037;&#20855;&#36827;&#34892;&#25968;&#25454;&#35775;&#38382;</td></tr></table></div><div xmlns="http://www.w3.org/TR/xhtml1/transitional" style="background-color:#31430f;border:none;height:50px;border:1px solid black;text-align:center"><table cellspacing="0" cellpadding="0" width="100%" style="margin: 0px; padding: 0px"><tr><td width="50%" style="font-size: 110%; color: white; vertical-align: center; text-align: right">
+        				Sponsored by
+        			</td><td width="50%" style="padding: 0px"><a style="border:none;background: url();" href="http://www.interface21.com/" title="Brought to you by Interface21"><img style="border: none" src="images/interface21.gif"></a></td></tr></table></div></body>
+<!-- Mirrored from www.redsaga.com/spring_ref/2.0RC2/html/jdbc.html by HTTrack Website Copier/3.x [XR&CO'2005], Tue, 17 Oct 2006 16:56:35 GMT -->
+</html>

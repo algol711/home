@@ -1,0 +1,694 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>&#31532;&nbsp;13&nbsp;&#31456;&nbsp;&#38598;&#25104;&#34920;&#29616;&#23618;</title><link rel="stylesheet" href="../styles/html.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.65.1"><link rel="home" href="index.html" title="Spring - Java/J2EE Application Framework"><link rel="up" href="index.html" title="Spring - Java/J2EE Application Framework"><link rel="previous" href="mvc.html" title="&#31532;&nbsp;12&nbsp;&#31456;&nbsp;Web&#26694;&#26550;"><link rel="next" href="jms.html" title="&#31532;&nbsp;14&nbsp;&#31456;&nbsp;JMS&#25903;&#25345;"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="navheader"><table width="100%" summary="Navigation header"><tr><th colspan="3" align="center">&#31532;&nbsp;13&nbsp;&#31456;&nbsp;&#38598;&#25104;&#34920;&#29616;&#23618;</th></tr><tr><td width="20%" align="left"><a accesskey="p" href="mvc.html">&#19978;&#19968;&#39029;</a>&nbsp;</td><th width="60%" align="center">&nbsp;</th><td width="20%" align="right">&nbsp;<a accesskey="n" href="jms.html">&#19979;&#19968;&#39029;</a></td></tr></table><hr></div><div class="chapter" lang="zh_cn"><div class="titlepage"><div><div><h2 class="title"><a name="view"></a>&#31532;&nbsp;13&nbsp;&#31456;&nbsp;&#38598;&#25104;&#34920;&#29616;&#23618;</h2></div></div><div></div></div><div class="sect1" lang="zh_cn"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="view-introduction"></a>13.1.&nbsp;&#31616;&#20171;</h2></div></div><div></div></div><p>Spring&#20043;&#25152;&#20197;&#20986;&#33394;&#30340;&#19968;&#20010;&#21407;&#22240;&#23601;&#26159;&#23558;&#34920;&#29616;&#23618;&#20174;MVC&#30340;&#26694;&#26550;&#20013;&#20998;&#31163;&#20986;&#26469;&#12290;&#20363;&#22914;&#65292;&#36890;&#36807;&#37197;&#32622;&#23601;&#21487;&#20197;&#35753;Velocity&#25110;&#32773;XSLT&#26469;&#20195;&#26367;&#24050;&#32463;&#23384;&#22312;&#30340;JSP&#39029;&#38754;&#12290;&#26412;&#31456;&#20171;&#32461;&#21644;Spring&#38598;&#25104;&#30340;&#19968;&#20123;&#20027;&#27969;&#34920;&#29616;&#23618;&#25216;&#26415;&#65292;&#24182;&#31616;&#35201;&#25551;&#36848;&#22914;&#20309;&#38598;&#25104;&#26032;&#30340;&#34920;&#29616;&#23618;&#12290;&#36825;&#37324;&#20551;&#35774;&#20320;&#24050;&#32463;&#29087;&#24713;<a href="mvc.html#mvc-viewresolver" title="12.5.&nbsp;&#35270;&#22270;&#19982;&#35270;&#22270;&#35299;&#26512;">&#31532;&nbsp;12.5&nbsp;&#33410; &#8220;&#35270;&#22270;&#19982;&#35270;&#22270;&#35299;&#26512;&#8221;</a>&#65292;&#37027;&#37324;&#20171;&#32461;&#20102;&#23558;&#34920;&#29616;&#23618;&#38598;&#25104;&#21040;MVC&#26694;&#26550;&#20013;&#30340;&#22522;&#26412;&#30693;&#35782;&#12290;</p></div><div class="sect1" lang="zh_cn"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="view-jsp"></a>13.2.&nbsp;&#21644;JSP &amp; JSTL&#19968;&#36215;&#20351;&#29992;Spring</h2></div></div><div></div></div><p>Spring&#20026;JSP&#21644;JSTL&#25552;&#20379;&#20102;&#19968;&#32452;&#26041;&#26696;&#65288;&#39034;&#20415;&#35828;&#19968;&#19979;&#65292;&#23427;&#20204;&#37117;&#26159;&#26368;&#27969;&#34892;&#30340;&#34920;&#29616;&#23618;&#25216;&#26415;&#20043;&#19968;&#65289;&#12290;&#20351;&#29992;JSP&#25110;JSTL&#38656;&#35201;&#20351;&#29992;&#23450;&#20041;&#22312;WebApplicationContext&#37324;&#30340;&#26631;&#20934;&#30340;&#35270;&#22270;&#35299;&#26512;&#22120;&#12290;&#27492;&#22806;&#65292;&#20320;&#24403;&#28982;&#20063;&#38656;&#35201;&#20889;&#19968;&#20123;JSP&#39029;&#38754;&#26469;&#26174;&#31034;&#39029;&#38754;&#12290;&#36825;&#37324;&#25551;&#36848;&#19968;&#20123;Spring&#20026;&#26041;&#20415;JSP&#24320;&#21457;&#32780;&#25552;&#20379;&#30340;&#39069;&#22806;&#21151;&#33021;&#12290;</p><div class="sect2" lang="zh_cn"><div class="titlepage"><div><div><h3 class="title"><a name="view-jsp-resolver"></a>13.2.1.&nbsp;&#35270;&#22270;&#35299;&#26512;&#22120;</h3></div></div><div></div></div><p>&#23601;&#35937;&#21644;Spring&#38598;&#25104;&#30340;&#20854;&#20182;&#34920;&#29616;&#23618;&#25216;&#26415;&#19968;&#26679;&#65292;&#23545;&#20110;JSP&#39029;&#38754;&#20320;&#38656;&#35201;&#19968;&#20010;&#35270;&#22270;&#35299;&#26512;&#22120;&#26469;&#35299;&#26512;&#12290;&#26368;&#24120;&#29992;&#30340;JSP&#35270;&#22270;&#35299;&#26512;&#22120;&#26159;<tt class="literal">InternalResourceViewResolver</tt>&#21644;<tt class="literal">ResourceBundleViewResolver</tt>&#12290;&#23427;&#20204;&#34987;&#23450;&#20041;&#22312;WebApplicationContext&#37324;&#65306;</p><pre class="programlisting"># The ResourceBundleViewResolver:
+&lt;bean id="viewResolver" class="org.springframework.web.servlet.view.ResourceBundleViewResolver"&gt;
+    &lt;property name="basename"&gt;&lt;value&gt;views&lt;/value&gt;&lt;/property&gt;
+&lt;/bean&gt;
+
+# And a sample properties file is uses (views.properties in WEB-INF/classes):
+welcome.class=org.springframework.web.servlet.view.JstlView
+welcome.url=/WEB-INF/jsp/welcome.jsp
+
+productList.class=org.springframework.web.servlet.view.JstlView
+productList.url=/WEB-INF/jsp/productlist.jsp</pre><p>&#20320;&#21487;&#20197;&#30475;&#21040;ResourceBundleViewResolver&#38656;&#35201;&#19968;&#20010;&#23646;&#24615;&#25991;&#20214;&#26469;&#25226;&#35270;&#22270;&#21517;&#31216;&#26144;&#23556;&#21040; 1)&#31867;&#21644; 2) URL&#12290; &#36890;&#36807;ResolverBundleViewResolver&#65292;&#20320;&#21487;&#20197;&#29992;&#19968;&#20010;&#35299;&#26512;&#22120;&#26469;&#35299;&#26512;&#20004;&#31181;&#31867;&#22411;&#30340;&#35270;&#22270;&#12290;</p><pre class="programlisting">&lt;bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver"&gt;
+    &lt;property name="viewClass"&gt;&lt;value&gt;org.springframework.web.servlet.view.JstlView&lt;/value&gt;&lt;/property&gt;
+    &lt;property name="prefix"&gt;&lt;value&gt;/WEB-INF/jsp/&lt;/value&gt;&lt;/property&gt;
+    &lt;property name="suffix"&gt;&lt;value&gt;.jsp&lt;/value&gt;&lt;/property&gt;
+&lt;/bean&gt;</pre><p> InternalResourceBundleViewResolver&#21487;&#20197;&#37197;&#32622;&#25104;&#20351;&#29992;JSP&#39029;&#38754;&#12290;&#20316;&#20026;&#22909;&#30340;&#23454;&#29616;&#26041;&#24335;&#65292;&#24378;&#28872;&#25512;&#33616;&#20320;&#23558;JSP&#25991;&#20214;&#25918;&#22312;WEB-INF&#19979;&#30340;&#19968;&#20010;&#30446;&#24405;&#20013;&#65292;&#36825;&#26679;&#23458;&#25143;&#31471;&#23601;&#19981;&#20250;&#30452;&#25509;&#35775;&#38382;&#21040;&#23427;&#20204;&#12290;</p></div><div class="sect2" lang="zh_cn"><div class="titlepage"><div><div><h3 class="title"><a name="view-jsp-jstl"></a>13.2.2.&nbsp;&#26222;&#36890;JSP&#39029;&#38754;&#21644;JSTL</h3></div></div><div></div></div><p>&#24403;&#20320;&#20351;&#29992;Java&#26631;&#20934;&#26631;&#31614;&#24211;&#65288;Java Standard Tag Library&#65289;&#26102;&#65292;&#20320;&#24517;&#39035;&#20351;&#29992;&#19968;&#20010;&#29305;&#27530;&#30340;&#31867;&#65292;<tt class="literal">JstlView</tt>&#65292;&#22240;&#20026;JSTL&#22312;&#20351;&#29992;&#35937;I18N&#36825;&#26679;&#30340;&#21151;&#33021;&#21069;&#38656;&#35201;&#19968;&#20123;&#20934;&#22791;&#24037;&#20316;&#12290;</p></div><div class="sect2" lang="zh_cn"><div class="titlepage"><div><div><h3 class="title"><a name="view-jsp-tags"></a>13.2.3.&nbsp;&#20854;&#20182;&#26377;&#21161;&#20110;&#24320;&#21457;&#30340;&#26631;&#31614;</h3></div></div><div></div></div><p>&#27491;&#22914;&#21069;&#38754;&#20960;&#31456;&#25152;&#25552;&#21040;&#30340;&#65292;Spring&#21487;&#20197;&#23558;&#35831;&#27714;&#21442;&#25968;&#32465;&#23450;&#21040;&#21629;&#20196;&#23545;&#35937;&#19978;&#12290;&#20026;&#20102;&#26356;&#23481;&#26131;&#22320;&#24320;&#21457;&#21547;&#26377;&#25968;&#25454;&#32465;&#23450;&#30340;JSP&#39029;&#38754;&#65292;Spring&#23450;&#20041;&#20102;&#19968;&#20123;&#19987;&#38376;&#30340;&#26631;&#31614;&#12290;&#25152;&#26377;&#30340;Spring&#26631;&#31614;&#37117;&#26377;<span class="emphasis"><em>HTML&#36716;&#20041;</em></span>&#21151;&#33021;&#26469;&#20915;&#23450;&#26159;&#21542;&#20351;&#29992;&#23383;&#31526;&#36716;&#20041;&#12290;</p><p>&#26631;&#31614;&#24211;&#25551;&#36848;&#31526;&#65288;TLD&#65289;&#21644;&#24211;&#26412;&#36523;&#37117;&#21253;&#21547;&#22312;<tt class="literal">spring.jar</tt>&#37324;&#12290;&#26356;&#22810;&#26377;&#20851;&#26631;&#31614;&#30340;&#20449;&#24687;&#21487;&#20197;&#35775;&#38382;<a href="http://www.springframework.org/docs/taglib/index.html" target="_top">http://www.springframework.org/docs/taglib/index.html</a>.</p></div></div><div class="sect1" lang="zh_cn"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="view-tiles"></a>13.3.&nbsp;Tiles&#30340;&#20351;&#29992;</h2></div></div><div></div></div><p>Tiles&#35937;&#20854;&#20182;&#34920;&#29616;&#23618;&#25216;&#26415;&#19968;&#26679;&#65292;&#21487;&#20197;&#38598;&#25104;&#22312;&#20351;&#29992;Spring&#30340;Web&#24212;&#29992;&#20013;&#12290;&#19979;&#38754;&#22823;&#33268;&#25551;&#36848;&#19968;&#19979;&#36807;&#31243;&#12290;</p><div class="sect2" lang="zh_cn"><div class="titlepage"><div><div><h3 class="title"><a name="view-tiles-dependencies"></a>13.3.1.&nbsp;&#25152;&#38656;&#30340;&#24211;&#25991;&#20214;</h3></div></div><div></div></div><p>&#20026;&#20102;&#20351;&#29992;Tiles&#65292;&#20320;&#24517;&#39035;&#23558;&#38656;&#35201;&#30340;&#24211;&#25991;&#20214;&#21253;&#21547;&#22312;&#20320;&#30340;&#39033;&#30446;&#20013;&#12290;&#19979;&#38754;&#21015;&#20986;&#20102;&#36825;&#20123;&#24211;&#25991;&#20214;&#12290;</p><p>
+				</p><div class="itemizedlist"><ul type="disc" compact><li><p>
+							<tt class="literal">struts version 1.1</tt>
+						</p></li><li><p>
+							<tt class="literal">commons-beanutils</tt>
+						</p></li><li><p>
+							<tt class="literal">commons-digester</tt>
+						</p></li><li><p>
+							<tt class="literal">commons-logging</tt>
+						</p></li><li><p>
+							<tt class="literal">commons-lang</tt>
+						</p></li></ul></div><p>
+			</p><p>&#36825;&#20123;&#25991;&#20214;&#20197;&#20174;Spring&#20013;&#33719;&#24471;&#12290;</p></div><div class="sect2" lang="zh_cn"><div class="titlepage"><div><div><h3 class="title"><a name="view-tiles-integrate"></a>13.3.2.&nbsp;&#22914;&#20309;&#38598;&#25104;Tiles</h3></div></div><div></div></div><p>&#20026;&#20102;&#20351;&#29992;Tiles&#65292;&#20320;&#24517;&#39035;&#29992;&#23450;&#20041;&#25991;&#20214;&#65288;definition file&#65289;&#26469;&#37197;&#32622;&#23427;&#65288;&#26377;&#20851;&#20110;&#23450;&#20041;&#65288;definition&#65289;&#21644;&#20854;&#20182;Tiles&#27010;&#24565;&#65292;&#35831;&#21442;&#32771;<a href="http://jakarta.apache.org/struts" target="_top">http://jakarta.apache.org/struts</a>&#65289;&#12290;&#22312;Spring&#20013;&#65292;&#36825;&#20123;&#37117;&#21487;&#20197;&#20351;&#29992;<tt class="literal">TilesConfigurer</tt>&#22312;&#23436;&#25104;&#12290;&#19979;&#38754;&#26159;ApplicationContext&#37197;&#32622;&#30340;&#29255;&#27573;&#12290;
+      </p><pre class="programlisting">&lt;bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles.TilesConfigurer"&gt;
+    &lt;property name="factoryClass"&gt;
+        &lt;value&gt;org.apache.struts.tiles.xmlDefinition.I18nFactorySet&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property name="definitions"&gt;
+        &lt;list&gt;
+            &lt;value&gt;/WEB-INF/defs/general.xml&lt;/value&gt;
+            &lt;value&gt;/WEB-INF/defs/widgets.xml&lt;/value&gt;
+            &lt;value&gt;/WEB-INF/defs/administrator.xml&lt;/value&gt;
+            &lt;value&gt;/WEB-INF/defs/customer.xml&lt;/value&gt;
+            &lt;value&gt;/WEB-INF/defs/templates.xml&lt;/value&gt;
+        &lt;/list&gt;
+    &lt;/property&gt;
+&lt;/bean&gt;</pre><p>
+			</p><p>&#20320;&#21487;&#20197;&#30475;&#21040;&#65292;&#26377;&#20116;&#20010;&#25991;&#20214;&#21253;&#21547;&#23450;&#20041;&#65292;&#23427;&#20204;&#37117;&#23384;&#25918;&#22312;WEB-INF/defs&#30446;&#24405;&#20013;&#12290;&#24403;&#21021;&#22987;&#21270;WebApplicationContext&#26102;&#65292;&#36825;&#20123;&#25991;&#20214;&#34987;&#35835;&#21462;&#65292;&#24182;&#19988;&#21021;&#22987;&#21270;&#30001;<tt class="literal">factoryClass</tt>&#23646;&#24615;&#25351;&#23450;&#30340;&#23450;&#20041;&#24037;&#21378;&#65288;definitons factory&#65289;&#12290;&#22312;&#36825;&#20043;&#21518;&#65292;&#20320;&#30340;Spring Web&#24212;&#29992;&#23601;&#21487;&#20197;&#20351;&#29992;&#22312;&#23450;&#20041;&#25991;&#20214;&#20013;&#30340;tiles includes&#20869;&#23481;&#12290;&#20026;&#20102;&#20351;&#29992;&#36825;&#20123;&#65292;&#20320;&#24517;&#39035;&#24471;&#21644;&#20854;&#20182;&#34920;&#29616;&#23618;&#25216;&#26415;&#19968;&#26679;&#26377;&#19968;&#20010;<tt class="literal">ViewResolver</tt>&#12290;&#26377;&#20004;&#31181;&#21487;&#20197;&#36873;&#25321;&#65292;<tt class="literal">InternalResourceViewResolver</tt>&#21644;<tt class="literal">ResourceBundleViewResolver</tt>&#12290;</p><div class="sect3" lang="zh_cn"><div class="titlepage"><div><div><h4 class="title"><a name="view-tiles-internal"></a>13.3.2.1.&nbsp;
+					<tt class="literal">InternalResourceViewResolver</tt>
+				</h4></div></div><div></div></div><p>InternalResourceViewResolver&#29992;<tt class="literal">viewClass</tt>&#23646;&#24615;&#25351;&#23450;&#30340;&#31867;&#23454;&#20363;&#21270;&#27599;&#20010;&#23427;&#35299;&#26512;&#30340;&#35270;&#22270;&#12290;
+        </p><pre class="programlisting">&lt;bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver"&gt;
+    &lt;property name="requestContextAttribute"&gt;&lt;value&gt;requestContext&lt;/value&gt;&lt;/property&gt;
+    &lt;property name="viewClass"&gt;
+        &lt;value&gt;org.springframework.web.servlet.view.tiles.TilesView&lt;/value&gt;
+    &lt;/property&gt;
+&lt;/bean&gt;</pre><p>
+				</p></div><div class="sect3" lang="zh_cn"><div class="titlepage"><div><div><h4 class="title"><a name="view-tiles-resource"></a>13.3.2.2.&nbsp;
+					<tt class="literal">ResourceBundleViewResolver</tt>
+				</h4></div></div><div></div></div><p>&#24517;&#39035;&#25552;&#20379;&#32473;ResourceBundleViewResolver&#19968;&#20010;&#21253;&#21547;viewnames&#21644;viewclassess&#23646;&#24615;&#30340;&#23646;&#24615;&#25991;&#20214;&#12290;
+        </p><pre class="programlisting">&lt;bean id="viewResolver" class="org.springframework.web.servlet.view.ResourceBundleViewResolver"&gt;
+    &lt;property name="basename"&gt;&lt;value&gt;views&lt;/value&gt;&lt;/property&gt;
+&lt;/bean&gt;</pre><p>
+				</p><p>
+					</p><pre class="programlisting">    ...
+    welcomeView.class=org.springframework.web.servlet.view.tiles.TilesView
+    welcomeView.url=welcome (&lt;b&gt;this is the name of a definition&lt;/b&gt;)
+        
+    vetsView.class=org.springframework.web.servlet.view.tiles.TilesView
+    vetsView.url=vetsView (&lt;b&gt;again, this is the name of a definition&lt;/b&gt;)
+        
+    findOwnersForm.class=org.springframework.web.servlet.view.JstlView
+    findOwnersForm.url=/WEB-INF/jsp/findOwners.jsp
+    ...</pre><p>&#20320;&#21487;&#20197;&#21457;&#29616;&#65292;&#24403;&#20351;&#29992;ResourceBundleViewResolver&#65292;&#20320;&#21487;&#20197;&#20351;&#29992;&#19981;&#21516;&#30340;&#34920;&#29616;&#23618;&#25216;&#26415;&#12290;</p></div></div></div><div class="sect1" lang="zh_cn"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="view-velocity"></a>13.4.&nbsp;Velocity</h2></div></div><div></div></div><p>Velocity&#26159;Jakarta&#39033;&#30446;&#24320;&#21457;&#30340;&#34920;&#29616;&#23618;&#25216;&#26415;&#12290;&#26377;&#20851;&#19982;Velocity&#30340;&#35814;&#32454;&#36164;&#26009;&#21487;&#20197;&#22312;http://jakarta.apache.org/velocity&#25214;&#21040;&#12290;&#36825;&#19968;&#37096;&#20998;&#20171;&#32461;&#22914;&#20309;&#38598;&#25104;Velocity&#21040;Spring&#20013;&#12290;</p><div class="sect2" lang="zh_cn"><div class="titlepage"><div><div><h3 class="title"><a name="view-velocity-dependencies"></a>13.4.1.&nbsp;&#25152;&#38656;&#30340;&#24211;&#25991;&#20214;</h3></div></div><div></div></div><p>&#22312;&#20351;&#29992;Velocity&#20043;&#21069;&#65292;&#20320;&#38656;&#35201;&#22312;&#20320;&#30340;Web&#24212;&#29992;&#20013;&#21253;&#21547;&#20004;&#20010;&#24211;&#25991;&#20214;&#65292;<tt class="literal">velocity-1.x.x.jar</tt> &#21644;<tt class="literal">commons-collections.jar</tt> &#12290;&#19968;&#33324;&#23427;&#20204;&#25918;&#22312;<tt class="literal">WEB-INF/lib</tt>&#30446;&#24405;&#19979;&#65292;&#20197;&#20445;&#35777;J2EE&#26381;&#21153;&#22120;&#33021;&#22815;&#25214;&#21040;&#65292;&#21516;&#26102;&#25226;&#23427;&#20204;&#21152;&#21040;&#20320;&#30340;classpath&#20013;&#12290;&#24403;&#28982;&#20551;&#35774;&#20320;&#20063;&#24050;&#32463;&#25226;<tt class="literal">spring.jar</tt>&#25918;&#22312;&#20320;&#30340;<tt class="literal">WEB-INF/lib</tt>&#30446;&#24405;&#19979;&#65281;&#26368;&#26032;&#30340;Velocity&#21644;commnons collections&#30340;&#31283;&#23450;&#29256;&#26412;&#30001;Spring&#26694;&#26550;&#25552;&#20379;&#65292;&#21487;&#20197;&#20174;<tt class="literal">/lib/velocity</tt>&#21644;<tt class="literal">/lib/jakarta-commons</tt>&#30446;&#24405;&#19979;&#33719;&#21462;&#12290;</p></div><div class="sect2" lang="zh_cn"><div class="titlepage"><div><div><h3 class="title"><a name="view-velocity-configuration-dispatcher"></a>13.4.2.&nbsp;&#20998;&#21457;&#22120;&#65288;Dispatcher Servlet&#65289;&#19978;&#19979;&#25991;</h3></div></div><div></div></div><p>&#20320;&#30340;Spring DispatcherServlet&#37197;&#32622;&#25991;&#20214;&#65288;&#19968;&#33324;&#26159;<tt class="literal">WEB-INF/[servletname]-servlet.xml</tt>&#65289;&#24212;&#35813;&#21253;&#21547;&#19968;&#20010;&#35270;&#22270;&#35299;&#26512;&#22120;&#30340;bean&#23450;&#20041;&#12290;&#25105;&#20204;&#20063;&#21487;&#20197;&#20877;&#21152;&#19968;&#20010;bean&#26469;&#37197;&#32622;Velocity&#29615;&#22659;&#12290;&#25105;&#25351;&#23450;DispatcherServlet&#30340;&#21517;&#23383;&#20026;&#8216;frontcontroller&#8217;&#65292;&#25152;&#20197;&#37197;&#32622;&#25991;&#20214;&#30340;&#21517;&#23383;&#21453;&#26144;&#20102;DispatcherServlet&#30340;&#21517;&#23383;</p><p>&#19979;&#38754;&#30340;&#31034;&#20363;&#20195;&#30721;&#26174;&#31034;&#20102;&#19981;&#21516;&#30340;&#37197;&#32622;&#25991;&#20214;</p><pre class="programlisting">&lt;!-- ===========================================================--&gt;
+&lt;!-- View resolver. Required by web framework.                  --&gt;
+&lt;!-- ===========================================================--&gt;
+&lt;!--
+  View resolvers can be configured with ResourceBundles or XML files.  If you need
+  different view resolving based on Locale, you have to use the resource bundle resolver, 
+  otherwise it makes no difference.  I simply prefer to keep the Spring configs and 
+  contexts in XML.  See Spring documentation for more info.
+--&gt;
+&lt;bean id="viewResolver" class="org.springframework.web.servlet.view.XmlViewResolver"&gt;
+    &lt;property name="cache"&gt;&lt;value&gt;true&lt;/value&gt;&lt;/property&gt;
+    &lt;property name="location"&gt;&lt;value&gt;/WEB-INF/frontcontroller-views.xml&lt;/value&gt;&lt;/property&gt;
+&lt;/bean&gt;
+
+&lt;!-- ===========================================================--&gt;
+&lt;!-- Velocity configurer.                                       --&gt;
+&lt;!-- ===========================================================--&gt;
+&lt;!--
+  The next bean sets up the Velocity environment for us based on a properties file, the 
+  location of which is supplied here and set on the bean in the normal way.  My example shows
+  that the bean will expect to find our velocity.properties file in the root of the 
+  WEB-INF folder.  In fact, since this is the default location, it's not necessary for me
+  to supply it here.  Another possibility would be to specify all of the velocity
+  properties here in a property set called "velocityProperties" and dispense with the
+  actual velocity.properties file altogether.
+--&gt;
+&lt;bean 
+    id="velocityConfig" 
+    class="org.springframework.web.servlet.view.velocity.VelocityConfigurer"
+    singleton="true"&gt;
+    &lt;property name="configLocation"&gt;&lt;value&gt;/WEB-INF/velocity.properties&lt;/value&gt;&lt;/property&gt;          
+&lt;/bean&gt;</pre></div><div class="sect2" lang="zh_cn"><div class="titlepage"><div><div><h3 class="title"><a name="view-velocity-configuration-velocityprops"></a>13.4.3.&nbsp;Velocity.properties</h3></div></div><div></div></div><p>&#36825;&#20010;&#23646;&#24615;&#25991;&#20214;&#29992;&#26469;&#37197;&#32622;Velocity&#65292;&#23646;&#24615;&#30340;&#20540;&#20250;&#20256;&#36882;&#32473;Velocity&#36816;&#34892;&#26102;&#12290;&#20854;&#20013;&#21482;&#26377;&#19968;&#20123;&#23646;&#24615;&#26159;&#24517;&#39035;&#30340;&#65292;&#20854;&#20313;&#22823;&#37096;&#20998;&#23646;&#24615;&#26159;&#21487;&#36873;&#30340; &#65293; &#35814;&#32454;&#21487;&#20197;&#26597;&#30475;Velocity&#30340;&#25991;&#26723;&#12290;&#36825;&#37324;&#65292;&#25105;&#20165;&#20165;&#28436;&#31034;&#22312;Spring&#30340;MVC&#26694;&#26550;&#19979;&#36816;&#34892;Velocity&#25152;&#24517;&#38656;&#30340;&#20869;&#23481;&#12290;</p><div class="sect3" lang="zh_cn"><div class="titlepage"><div><div><h4 class="title"><a name="view-velocity-template-locations"></a>13.4.3.1.&nbsp;&#27169;&#29256;&#20301;&#32622;</h4></div></div><div></div></div><p>&#22823;&#37096;&#20998;&#23646;&#24615;&#20540;&#21644;Velocity&#27169;&#29256;&#30340;&#20301;&#32622;&#26377;&#20851;&#12290;Velocity&#27169;&#29256;&#21487;&#20197;&#36890;&#36807;classpath&#25110;&#25991;&#20214;&#31995;&#32479;&#36733;&#20837;&#65292;&#20004;&#31181;&#26041;&#24335;&#37117;&#26377;&#21508;&#33258;&#30340;&#20248;&#32570;&#28857;&#12290;&#20174;classpath&#36733;&#20837;&#20855;&#26377;&#24456;&#22909;&#30340;&#31227;&#26893;&#24615;&#65292;&#21487;&#20197;&#22312;&#25152;&#26377;&#30340;&#30446;&#26631;&#26381;&#21153;&#22120;&#19978;&#24037;&#20316;&#65292;&#20294;&#20320;&#20250;&#21457;&#29616;&#22312;&#36825;&#31181;&#26041;&#24335;&#20013;&#65292;&#27169;&#29256;&#25991;&#20214;&#20250;&#25226;&#20320;&#30340;java&#21253;&#32467;&#26500;&#24324;&#20081;&#65288;&#38500;&#38750;&#20320;&#20026;&#27169;&#29256;&#24314;&#31435;&#29420;&#31435;&#26641;&#32467;&#26500;&#65289;&#12290;&#20174;classpath&#36733;&#20837;&#30340;&#21478;&#19968;&#20010;&#37325;&#35201;&#32570;&#28857;&#26159;&#22312;&#24320;&#21457;&#36807;&#31243;&#20013;&#65292;&#22312;&#28304;&#25991;&#20214;&#30446;&#24405;&#20013;&#30340;&#20219;&#20309;&#25913;&#21160;&#24120;&#24120;&#20250;&#24341;&#36215;<tt class="literal">WEB-INF/classes</tt>&#19979;&#36164;&#28304;&#25991;&#20214;&#30340;&#21047;&#26032;&#65292;&#36825;&#23558;&#23548;&#33268;&#24320;&#21457;&#26381;&#21153;&#22120;&#37325;&#21551;&#20320;&#30340;&#24212;&#29992;&#65288;&#20195;&#30721;&#30340;&#21363;&#26102;&#37096;&#32626;&#65289;&#12290;&#36825;&#21487;&#33021;&#26159;&#20196;&#20154;&#26080;&#27861;&#24525;&#21463;&#30340;&#12290;&#19968;&#26086;&#23436;&#25104;&#22823;&#37096;&#20998;&#30340;&#24320;&#21457;&#24037;&#20316;&#65292;&#20320;&#21487;&#20197;&#25226;&#27169;&#29256;&#25991;&#20214;&#23384;&#22312;&#22312;jar&#20013;&#65292;&#24182;&#25226;&#23427;&#25918;&#22312;<tt class="literal">WEB-INF/lib</tt>&#30446;&#24405;&#19979;&#20013;&#12290;</p></div><div class="sect3" lang="zh_cn"><div class="titlepage"><div><div><h4 class="title"><a name="view-velocity-example-velocityproperties"></a>13.4.3.2.&nbsp;velocity.properties&#31034;&#20363;</h4></div></div><div></div></div><p>&#36825;&#20010;&#20363;&#23376;&#23558;Velocity&#27169;&#29256;&#23384;&#25918;&#22312;&#25991;&#20214;&#31995;&#32479;&#30340;<tt class="literal">WEB-INF</tt>&#19979;&#65292;&#23458;&#25143;&#27983;&#35272;&#22120;&#26159;&#26080;&#27861;&#30452;&#25509;&#35775;&#38382;&#21040;&#23427;&#20204;&#30340;&#65292;&#36825;&#26679;&#20063;&#19981;&#20250;&#22240;&#20026;&#20320;&#24320;&#21457;&#36807;&#31243;&#20013;&#20462;&#25913;&#23427;&#20204;&#32780;&#24341;&#36215;Web&#24212;&#29992;&#37325;&#21551;&#12290;&#23427;&#30340;&#32570;&#28857;&#26159;&#30446;&#26631;&#26381;&#21153;&#22120;&#21487;&#33021;&#19981;&#33021;&#27491;&#30830;&#35299;&#26512;&#25351;&#21521;&#36825;&#20123;&#25991;&#20214;&#30340;&#36335;&#24452;&#65292;&#23588;&#20854;&#26159;&#24403;&#30446;&#26631;&#26381;&#21153;&#22120;&#27809;&#26377;&#25226;WAR&#27169;&#22359;&#23637;&#24320;&#22312;&#25991;&#20214;&#31995;&#32479;&#20013;&#12290;Tomcat 4.1.x/5.x&#65292;WebSphere 4.x&#21644;WebSphere 5.x&#25903;&#25345;&#36890;&#36807;&#25991;&#20214;&#31995;&#32479;&#36733;&#20837;&#27169;&#29256;&#12290;&#20294;&#26159;&#20320;&#22312;&#20854;&#20182;&#31867;&#22411;&#30340;&#26381;&#21153;&#22120;&#19978;&#21487;&#33021;&#20250;&#26377;&#25152;&#19981;&#21516;&#12290;</p><pre class="programlisting">#
+# velocity.properties - example configuration
+#
+
+
+# uncomment the next two lines to load templates from the 
+# classpath (i.e. WEB-INF/classes)
+#resource.loader=class
+#class.resource.loader.class=org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+
+# comment the next two lines to stop loading templates from the
+# file system
+resource.loader=file
+file.resource.loader.class=org.apache.velocity.runtime.resource.loader.FileResourceLoader
+
+
+# additional config for file system loader only.. tell Velocity where the root
+# directory is for template loading.  You can define multiple root directories
+# if you wish, I just use the one here.  See the text below for a note about
+# the ${webapp.root}
+file.resource.loader.path=${webapp.root}/WEB-INF/velocity
+
+
+# caching should be 'true' in production systems, 'false' is a development
+# setting only.  Change to 'class.resource.loader.cache=false' for classpath
+# loading
+file.resource.loader.cache=false
+
+# override default logging to direct velocity messages
+# to our application log for example.  Assumes you have 
+# defined a log4j.properties file
+runtime.log.logsystem.log4j.category=com.mycompany.myapplication </pre></div><div class="sect3" lang="zh_cn"><div class="titlepage"><div><div><h4 class="title"><a name="view-velocity-root-markers"></a>13.4.3.3.&nbsp;Web&#24212;&#29992;&#30340;&#26681;&#30446;&#24405;&#26631;&#35760;</h4></div></div><div></div></div><p>&#19978;&#38754;&#22312;&#37197;&#32622;&#25991;&#20214;&#36164;&#28304;&#36733;&#20837;&#26102;&#65292;&#20351;&#29992;&#19968;&#20010;&#26631;&#35760;<tt class="literal">${webapp.root}</tt>&#26469;&#20195;&#34920;Web&#24212;&#29992;&#22312;&#25991;&#20214;&#31995;&#32479;&#20013;&#30340;&#26681;&#30446;&#24405;&#12290;&#36825;&#20010;&#26631;&#35760;&#22312;&#20316;&#20026;&#23646;&#24615;&#25552;&#20379;&#32473;Velocity&#20043;&#21069;&#65292;&#20250;&#34987;Spring&#30340;&#20195;&#30721;&#35299;&#37322;&#25104;&#21644;&#25805;&#20316;&#31995;&#32479;&#26377;&#20851;&#30340;&#23454;&#38469;&#36335;&#24452;&#12290;&#36825;&#31181;&#25991;&#20214;&#36164;&#28304;&#30340;&#36733;&#20837;&#26041;&#24335;&#22312;&#19968;&#20123;&#26381;&#21153;&#22120;&#20013;&#26159;&#19981;&#21487;&#31227;&#26893;&#30340;&#12290;&#22914;&#26524;&#20320;&#35748;&#20026;&#21487;&#31227;&#26893;&#24615;&#24456;&#37325;&#35201;&#65292;&#21487;&#20197;&#32473;VelocityConfigurer&#23450;&#20041;&#19981;&#21516;&#30340;&#8220;appRootMarker&#8221;&#65292;&#26469;&#20462;&#25913;&#26681;&#30446;&#24405;&#26631;&#35760;&#26412;&#36523;&#30340;&#21517;&#23383;&#12290;Spring&#30340;&#25991;&#26723;&#23545;&#27492;&#26377;&#35814;&#32454;&#34920;&#36848;&#12290;</p></div><div class="sect3" lang="zh_cn"><div class="titlepage"><div><div><h4 class="title"><a name="view-velocity-alternate-properties"></a>13.4.3.4.&nbsp;&#21478;&#19968;&#31181;&#21487;&#36873;&#30340;&#23646;&#24615;&#35268;&#33539;</h4></div></div><div></div></div><p>&#20316;&#20026;&#36873;&#25321;&#65292;&#20320;&#21487;&#20197;&#29992;&#19979;&#38754;&#30340;&#20869;&#23884;&#23646;&#24615;&#26469;&#20195;&#26367;Velocity&#37197;&#32622;bean&#20013;&#30340;&#8220;configLocation&#8221;&#23646;&#24615;&#65292;&#20174;&#32780;&#30452;&#25509;&#25351;&#23450;Velocity&#23646;&#24615;&#12290;</p><pre class="programlisting">&lt;property name="velocityProperties"&gt;
+    &lt;props&gt;
+        &lt;prop key="resource.loader"&gt;file&lt;/prop&gt;
+        &lt;prop key="file.resource.loader.class"&gt;org.apache.velocity.runtime.resource.loader.FileResourceLoader&lt;/prop&gt;
+        &lt;prop key="file.resource.loader.path"&gt;${webapp.root}/WEB-INF/velocity&lt;/prop&gt;
+        &lt;prop key="file.resource.loader.cache"&gt;false&lt;/prop&gt;
+    &lt;/props&gt;
+&lt;/property&gt;</pre></div><div class="sect3" lang="zh_cn"><div class="titlepage"><div><div><h4 class="title"><a name="view-velocity-default-properties"></a>13.4.3.5.&nbsp;&#32570;&#30465;&#37197;&#32622;&#65288;&#25991;&#20214;&#36164;&#28304;&#36733;&#20837;&#65289;</h4></div></div><div></div></div><p>&#27880;&#24847;&#20174;Spring 1.0-m4&#36215;&#65292;&#20320;&#21487;&#20197;&#19981;&#20351;&#29992;&#23646;&#24615;&#25991;&#20214;&#25110;&#20869;&#23884;&#23646;&#24615;&#26469;&#23450;&#20041;&#27169;&#29256;&#25991;&#20214;&#30340;&#36733;&#20837;&#65292;&#20320;&#21487;&#20197;&#25226;&#19979;&#38754;&#30340;&#23646;&#24615;&#25918;&#22312;Velocity&#37197;&#32622;bean&#20013;&#12290;</p><pre class="programlisting">&lt;property name="resourceLoaderPath"&gt;&lt;value&gt;/WEB-INF/velocity/&lt;/value&gt;&lt;/property&gt;</pre></div></div><div class="sect2" lang="zh_cn"><div class="titlepage"><div><div><h3 class="title"><a name="view-velocity-configuration-viewconfig"></a>13.4.4.&nbsp;&#35270;&#22270;&#37197;&#32622;</h3></div></div><div></div></div><p>&#37197;&#32622;&#30340;&#26368;&#21518;&#19968;&#27493;&#26159;&#23450;&#20041;&#19968;&#20123;&#35270;&#22270;&#65292;&#36825;&#20123;&#35270;&#22270;&#21644;Velocity&#27169;&#29256;&#19968;&#36215;&#34987;&#26174;&#31034;&#12290;&#35270;&#22270;&#34987;&#23450;&#20041;&#22312;Spring&#19978;&#19979;&#25991;&#25991;&#20214;&#20013;&#12290;&#27491;&#22914;&#21069;&#38754;&#25552;&#21040;&#30340;&#65292;&#36825;&#20010;&#20363;&#23376;&#20351;&#29992;XML&#25991;&#20214;&#23450;&#20041;&#35270;&#22270;bean&#65292;&#20294;&#26159;&#20063;&#21487;&#20197;&#20351;&#29992;&#23646;&#24615;&#25991;&#20214;&#65288;ResourceBundle&#65289;&#26469;&#23450;&#20041;&#12290;&#35270;&#22270;&#23450;&#20041;&#25991;&#20214;&#30340;&#21517;&#23383;&#34987;&#23450;&#20041;&#22312;<tt class="literal">WEB-INF/frontcontroller-servlet.xml</tt>&#25991;&#20214;&#30340;ViewResolver&#30340;bean&#20013;&#12290;</p><pre class="programlisting">&lt;!--
+  Views can be hierarchical, here's an example of a parent view that 
+  simply defines the class to use and sets a default template which
+  will normally be overridden in child definitions.
+--&gt;
+&lt;bean id="parentVelocityView" class="org.springframework.web.servlet.view.velocity.VelocityView"&gt;
+    &lt;property name="url"&gt;&lt;value&gt;mainTemplate.vm&lt;/value&gt;&lt;/property&gt;        
+&lt;/bean&gt;
+
+&lt;!--
+  - The main view for the home page.  Since we don't set a template name, the value
+  from the parent is used.
+--&gt;
+&lt;bean id="welcomeView" parent="parentVelocityView"&gt;
+  &lt;property name="attributes"&gt;
+      &lt;props&gt;
+          &lt;prop key="title"&gt;My Velocity Home Page&lt;/prop&gt;
+      &lt;/props&gt;
+  &lt;/property&gt;     
+&lt;/bean&gt;  
+
+&lt;!--
+  - Another view - this one defines a different velocity template.
+--&gt;
+&lt;bean id="secondaryView" parent="parentVelocityView"&gt;
+    &lt;property name="url"&gt;&lt;value&gt;secondaryTemplate.vm&lt;/value&gt;&lt;/property&gt;  
+    &lt;property name="attributes"&gt;
+        &lt;props&gt;
+            &lt;prop key="title"&gt;My Velocity Secondary Page&lt;/prop&gt;
+        &lt;/props&gt;
+    &lt;/property&gt;    
+&lt;/bean&gt;</pre></div><div class="sect2" lang="zh_cn"><div class="titlepage"><div><div><h3 class="title"><a name="view-velocity-templates"></a>13.4.5.&nbsp;&#21019;&#24314;Velocity&#27169;&#29256;</h3></div></div><div></div></div><p>&#26368;&#21518;&#65292;&#20320;&#38656;&#35201;&#20570;&#30340;&#23601;&#26159;&#21019;&#24314;Velocity&#27169;&#29256;&#12290;&#25105;&#20204;&#23450;&#20041;&#30340;&#35270;&#22270;&#24341;&#29992;&#20102;&#20004;&#20010;&#27169;&#29256;&#65292;mainTemplate.vm&#21644;secondaryTemplate.vm&#12290;&#23646;&#24615;&#25991;&#20214;velocity.proeprties&#23450;&#20041;&#36825;&#20004;&#20010;&#25991;&#20214;&#34987;&#25918;&#22312;<tt class="literal">WEB-INF/velocity/</tt>&#19979;&#12290;&#22914;&#26524;&#20320;&#22312;velocity.properties&#20013;&#36873;&#25321;&#36890;&#36807;classpath&#36733;&#20837;&#65292;&#23427;&#20204;&#24212;&#35813;&#34987;&#25918;&#22312;&#32570;&#30465;&#21253;&#30340;&#30446;&#24405;&#19979;&#65292;(<tt class="literal">WEB-INF/classes</tt>)&#65292;&#25110;&#32773;<tt class="literal">WEB-INF/lib</tt>&#19979;&#30340;jar&#25991;&#20214;&#20013;&#12290;&#19979;&#38754;&#23601;&#26159;&#25105;&#20204;&#30340;&#8216;secondaryView&#8217;&#30475;&#19978;&#21435;&#30340;&#26679;&#23376;&#65288;&#31616;&#21270;&#20102;&#30340;HTML&#25991;&#20214;&#65289;&#12290;</p><pre class="programlisting">## $title is set in the view definition file for this view.
+&lt;html&gt;
+    &lt;head&gt;&lt;title&gt;$title&lt;/title&gt;&lt;/head&gt;
+    &lt;body&gt;
+        &lt;h1&gt;This is $title!!&lt;/h1&gt;
+
+        ## model objects are set in the controller and referenced
+        ## via bean properties o method names.  See the Velocity 
+        ## docs for info
+
+        Model Value: $model.value
+        Model Method Return Value: $model.getReturnVal()
+
+    &lt;/body&gt;
+&lt;/html&gt;</pre><p>&#29616;&#22312;&#65292;&#24403;&#20320;&#30340;&#25511;&#21046;&#22120;&#36820;&#22238;&#19968;&#20010;ModelAndView&#21253;&#21547;&#8220;secondaryView&#8221;&#26102;&#65292;Velocity&#23601;&#20250;&#24037;&#20316;&#65292;&#23558;&#19978;&#38754;&#30340;&#39029;&#38754;&#36716;&#21270;&#20026;&#26222;&#36890;&#30340;HTML&#39029;&#38754;&#12290;</p></div><div class="sect2" lang="zh_cn"><div class="titlepage"><div><div><h3 class="title"><a name="view-velocity-forms"></a>13.4.6.&nbsp;&#34920;&#21333;&#22788;&#29702;</h3></div></div><div></div></div><p>Spring&#25552;&#20379;&#19968;&#20010;&#26631;&#31614;&#24211;&#32473;JSP&#39029;&#38754;&#20351;&#29992;&#65292;&#20854;&#20013;&#21253;&#21547;&#20102;<tt class="literal">&lt;spring:bind&gt;</tt>&#26631;&#31614;&#12290;&#36825;&#20010;&#26631;&#31614;&#20027;&#35201;&#20351;&#34920;&#21333;&#33021;&#22815;&#26174;&#31034;&#22312;web&#23618;&#25110;&#19994;&#21153;&#23618;&#20013;&#30340;<tt class="literal">Validator</tt>&#39564;&#35777;&#26102;&#20135;&#29983;&#30340;&#20986;&#38169;&#28040;&#24687;&#12290;&#36825;&#31181;&#34892;&#20026;&#21487;&#20197;&#34987;Velocity&#23439;&#21644;&#20854;&#20182;&#30340;Spring&#21151;&#33021;&#27169;&#25311;&#23454;&#29616;&#12290;</p><div class="sect3" lang="zh_cn"><div class="titlepage"><div><div><h4 class="title"><a name="view-velocity-validation"></a>13.4.6.1.&nbsp;&#39564;&#35777;&#38169;&#35823;</h4></div></div><div></div></div><p>&#36890;&#36807;&#34920;&#21333;&#39564;&#35777;&#32780;&#20135;&#29983;&#30340;&#20986;&#38169;&#28040;&#24687;&#21487;&#20197;&#20174;&#23646;&#24615;&#25991;&#20214;&#20013;&#35835;&#21462;&#65292;&#36825;&#26377;&#21161;&#20110;&#32500;&#25252;&#21644;&#22269;&#38469;&#21270;&#23427;&#20204;&#12290;Spring&#20197;&#23427;&#33258;&#24049;&#30340;&#26041;&#24335;&#22788;&#29702;&#36825;&#20123;&#65292;&#20851;&#20110;&#23427;&#30340;&#24037;&#20316;&#26041;&#24335;&#65292;&#20320;&#21487;&#20197;&#21442;&#32771;MVC&#25351;&#21335;&#25110;javadoc&#20013;&#30340;&#30456;&#20851;&#20869;&#23481;&#12290;&#20026;&#20102;&#35775;&#38382;&#36825;&#20123;&#20986;&#38169;&#28040;&#24687;&#65292;&#38656;&#35201;&#25226;<tt class="literal">RequestContext</tt>&#23545;&#35937;&#26292;&#38706;&#32473;<tt class="literal">VelocityContext</tt>&#20013;&#30340;Velocity&#27169;&#29256;&#12290;&#20462;&#25913;&#20320;&#22312;views.properties&#25110;views.xml&#20013;&#30340;&#27169;&#29256;&#23450;&#20041;&#65292;&#32473;&#19968;&#20010;&#21517;&#23383;&#21040;&#23427;&#30340;attributes&#37324;&#65288;&#26377;&#20102;&#21517;&#23383;&#23601;&#21487;&#20197;&#34987;&#35775;&#38382;&#21040;&#65289;&#12290;</p><pre class="programlisting">&lt;bean id="welcomeView" parent="parentVelocityView"&gt;
+    &lt;property name="requestContextAttribute"&gt;&lt;value&gt;rc&lt;/value&gt;&lt;/property&gt;  
+    &lt;property name="attributes"&gt;
+        &lt;props&gt;
+            &lt;prop key="title"&gt;My Velocity Home Page&lt;/prop&gt;
+        &lt;/props&gt;
+    &lt;/property&gt;     
+&lt;/bean&gt;</pre><p>&#22312;&#25105;&#20204;&#21069;&#38754;&#20363;&#23376;&#30340;&#22522;&#30784;&#19978;&#65292;&#19978;&#38754;&#30340;&#20363;&#23376;&#23558;RequestContext&#23646;&#24615;&#21629;&#21517;&#20026;rc&#12290;&#36825;&#26679;&#20174;&#36825;&#20010;&#35270;&#22270;&#32487;&#25215;&#30340;&#25152;&#26377;Velocity&#35270;&#22270;&#37117;&#21487;&#20197;&#35775;&#38382;<tt class="literal">$rc</tt>&#12290;</p></div><div class="sect3" lang="zh_cn"><div class="titlepage"><div><div><h4 class="title"><a name="view-velocity-macrohelper"></a>13.4.6.2.&nbsp;Velocity&#30340;&#23439;</h4></div></div><div></div></div><p>&#25509;&#19979;&#26469;&#65292;&#38656;&#35201;&#23450;&#20041;&#19968;&#20010;Velocity&#23439;&#12290;&#26082;&#28982;&#23439;&#21487;&#20197;&#22312;&#20960;&#20010;Velocity&#27169;&#29256;&#65288;HTML&#34920;&#21333;&#65289;&#20013;&#37325;&#29992;&#65292;&#37027;&#20040;&#23436;&#20840;&#21487;&#20197;&#25226;&#23439;&#23450;&#20041;&#22312;&#19968;&#20010;&#23439;&#25991;&#20214;&#20013;&#12290;&#21019;&#24314;&#23439;&#30340;&#35814;&#32454;&#20449;&#24687;&#65292;&#21442;&#32771;Velocity&#25991;&#26723;&#12290;</p><p>&#19979;&#38754;&#30340;&#20195;&#30721;&#24212;&#35813;&#25918;&#22312;&#20320;&#30340;Velocity&#27169;&#29256;&#26681;&#30446;&#24405;&#30340;VM_global_library.vm&#25991;&#20214;&#20013;&#12290;</p><pre class="programlisting">#*
+ * showerror
+ *
+ * display an error for the field name supplied if one exists
+ * in the supplied errors object.
+ *
+ * param $errors the object obtained from RequestContext.getErrors( "formBeanName" )
+ * param $field the field name you want to display errors for (if any)
+ *
+ *#
+#macro( showerror $errors $field )
+    #if( $errors )
+        #if( $errors.getFieldErrors( $field ))
+            #foreach($err in $errors.getFieldErrors( $field ))
+                &lt;span class="fieldErrorText"&gt;$rc.getMessage($err)&lt;/span&gt;&lt;br /&gt;
+            #end
+        #end
+    #end
+#end      </pre></div><div class="sect3" lang="zh_cn"><div class="titlepage"><div><div><h4 class="title"><a name="view-velocity-validationmessages"></a>13.4.6.3.&nbsp;&#23558;&#20986;&#38169;&#28040;&#24687;&#21644;HTML&#30340;&#22495;&#20851;&#32852;&#36215;&#26469;</h4></div></div><div></div></div><p>&#26368;&#21518;&#65292;&#22312;&#20320;&#30340;HTML&#34920;&#21333;&#20013;&#65292;&#20320;&#21487;&#20197;&#20351;&#29992;&#21644;&#31867;&#20284;&#19979;&#38754;&#30340;&#20195;&#30721;&#20026;&#27599;&#20010;&#36755;&#20837;&#22495;&#26174;&#31034;&#25152;&#32465;&#23450;&#30340;&#20986;&#38169;&#28040;&#24687;&#12290;</p><pre class="programlisting">## set the following variable once somewhere at the top of
+## the velocity template
+#set ($errors=$rc.getErrors("commandBean"))
+&lt;html&gt;
+...
+&lt;form ...&gt;
+    &lt;input name="query" value="$!commandBean.query"&gt;&lt;br&gt;
+    #showerror($errors "query")
+&lt;/form&gt;
+...
+&lt;/html&gt;        </pre></div></div><div class="sect2" lang="zh_cn"><div class="titlepage"><div><div><h3 class="title"><a name="view-velocity-summary"></a>13.4.7.&nbsp;&#24635;&#32467;</h3></div></div><div></div></div><p>&#24635;&#20043;&#65292;&#19979;&#38754;&#26159;&#19978;&#38754;&#37027;&#20010;&#20363;&#23376;&#30340;&#25991;&#20214;&#30446;&#24405;&#32467;&#26500;&#12290;&#21482;&#26377;&#19968;&#37096;&#20998;&#34987;&#26174;&#31034;&#65292;&#20854;&#20182;&#19968;&#20123;&#24517;&#35201;&#30340;&#30446;&#24405;&#27809;&#26377;&#26174;&#31034;&#20986;&#26469;&#12290;&#25991;&#20214;&#23450;&#20301;&#20986;&#38169;&#24456;&#21487;&#33021;&#26159;Velocity&#35270;&#22270;&#19981;&#33021;&#24037;&#20316;&#30340;&#20027;&#35201;&#21407;&#22240;&#65292;&#20854;&#27425;&#22312;&#35270;&#22270;&#20013;&#23450;&#20041;&#20102;&#38169;&#35823;&#30340;&#23646;&#24615;&#20063;&#26159;&#24456;&#24120;&#35265;&#30340;&#21407;&#22240;&#12290;</p><pre class="programlisting">ProjectRoot
+  |
+  +- WebContent
+      |
+      +- WEB-INF
+          |
+          +- lib
+          |   |
+          |   +- velocity-1.3.1.jar
+          |   +- spring.jar
+          |
+          +- velocity
+          |   |
+          |   +- VM_global_library.vm
+          |   +- mainTemplate.vm
+          |   +- secondaryTemplate.vm
+          |
+          +- frontcontroller-servlet.xml
+          +- frontcontroller-views.xml
+          +- velocity.properties</pre></div></div><div class="sect1" lang="zh_cn"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="view-xslt"></a>13.5.&nbsp;XSLT&#35270;&#22270;</h2></div></div><div></div></div><p>XSLT&#19968;&#31181;&#29992;&#20110;XML&#25991;&#20214;&#30340;&#36716;&#25442;&#35821;&#35328;&#65292;&#20316;&#20026;web&#24212;&#29992;&#30340;&#19968;&#31181;&#34920;&#29616;&#23618;&#25216;&#26415;&#38750;&#24120;&#27969;&#34892;&#12290;&#22914;&#26524;&#20320;&#30340;&#24212;&#29992;&#26412;&#36523;&#38656;&#35201;&#22788;&#29702;XML&#25991;&#20214;&#65292;&#25110;&#32773;&#20320;&#30340;&#25968;&#25454;&#27169;&#22411;&#24456;&#23481;&#26131;&#36716;&#25442;&#25104;XML&#25991;&#20214;&#65292;XSLT&#23601;&#26159;&#19968;&#20010;&#19981;&#38169;&#30340;&#36873;&#25321;&#12290;&#19979;&#38754;&#20171;&#32461;&#22914;&#20309;&#29983;&#25104;XML&#25991;&#26723;&#29992;&#20316;&#27169;&#22411;&#25968;&#25454;&#65292;&#20197;&#21450;&#22914;&#20309;&#22312;Spring&#24212;&#29992;&#20013;&#20351;&#29992;XSLT&#36716;&#25442;&#23427;&#20204;&#12290;</p><div class="sect2" lang="zh_cn"><div class="titlepage"><div><div><h3 class="title"><a name="view-xslt-firstwords"></a>13.5.1.&nbsp;My First Words</h3></div></div><div></div></div><p>&#36825;&#20010;Spring&#24212;&#29992;&#30340;&#20363;&#23376;&#22312;&#25511;&#21046;&#22120;&#20013;&#21019;&#24314;&#19968;&#32452;&#21333;&#35789;&#65292;&#24182;&#25226;&#23427;&#20204;&#21152;&#21040;&#25968;&#25454;&#27169;&#22411;&#30340;&#26144;&#23556;&#34920;&#20013;&#12290;&#36825;&#20010;&#26144;&#23556;&#34920;&#21644;&#25105;&#20204;XSLT&#35270;&#22270;&#30340;&#21517;&#23383;&#19968;&#36215;&#34987;&#36820;&#22238;&#12290;&#20851;&#20110;Spring&#20013;<tt class="literal">Controller</tt>&#30340;&#35814;&#32454;&#20449;&#24687;&#65292;&#21442;&#32771;<a href="mvc.html#mvc-controller" title="12.3.&nbsp;&#25511;&#21046;&#22120;">&#31532;&nbsp;12.3&nbsp;&#33410; &#8220;&#25511;&#21046;&#22120;&#8221;</a> &#12290; XSLT&#35270;&#22270;&#20250;&#25226;&#36825;&#32452;&#21333;&#35789;&#29983;&#25104;&#19968;&#20010;&#31616;&#21333;XML&#25991;&#26723;&#29992;&#20110;&#36716;&#25442;&#12290;</p><div class="sect3" lang="zh_cn"><div class="titlepage"><div><div><h4 class="title"><a name="view-xslt-beandefs"></a>13.5.1.1.&nbsp;Bean&#30340;&#23450;&#20041;</h4></div></div><div></div></div><p>&#23545;&#20110;&#19968;&#20010;&#31616;&#21333;&#30340;Spring&#24212;&#29992;&#65292;&#37197;&#32622;&#26159;&#26631;&#20934;&#30340;&#12290;DispatcherServlet&#37197;&#32622;&#25991;&#20214;&#21253;&#21547;&#19968;&#20010;<tt class="literal">ViewResolver</tt>&#65292;URL&#26144;&#23556;&#21644;&#19968;&#20010;&#25511;&#21046;&#22120;bean..</p><pre class="programlisting">&lt;bean id="homeController"class="xslt.HomeController"/&gt; </pre><p>..&#23427;&#23454;&#29616;&#20102;&#25105;&#20204;&#21333;&#35789;&#30340;&#20135;&#29983;&#8220;&#36923;&#36753;&#8221;&#12290;</p></div><div class="sect3" lang="zh_cn"><div class="titlepage"><div><div><h4 class="title"><a name="view-xslt-controllercode"></a>13.5.1.2.&nbsp;&#26631;&#20934;MVC&#25511;&#21046;&#22120;&#20195;&#30721;</h4></div></div><div></div></div><p>&#25511;&#21046;&#22120;&#36923;&#36753;&#34987;&#23553;&#35013;&#22312;AbstractController&#30340;&#23376;&#31867;&#20013;&#65292;&#21253;&#21547;&#35937;&#19979;&#38754;&#36825;&#26679;&#30340;&#22788;&#29702;&#22120;&#26041;&#27861;&#12290;
+        </p><pre class="programlisting">protected ModelAndView handleRequestInternal(
+    HttpServletRequest req,
+    HttpServletResponse resp)
+    throws Exception {
+        
+    Map map = new HashMap();
+    List wordList = new ArrayList();
+        
+    wordList.add("hello");
+    wordList.add("world");
+       
+    map.put("wordList", wordList);
+      
+    return new ModelAndView("home", map);
+} </pre><p>
+				</p><p>&#21040;&#30446;&#21069;&#20026;&#27490;&#65292;&#25105;&#20204;&#27809;&#26377;&#20570;&#20219;&#20309;XSLT&#29305;&#23450;&#30340;&#19996;&#35199;&#12290;&#27169;&#22411;&#25968;&#25454;&#30340;&#21019;&#24314;&#26041;&#24335;&#21644;&#20854;&#20182;Spring&#30340; MVC&#24212;&#29992;&#30456;&#21516;&#12290;&#29616;&#22312;&#26681;&#25454;&#19981;&#21516;&#30340;&#24212;&#29992;&#37197;&#32622;&#65292;&#36825;&#32452;&#21333;&#35789;&#34987;&#20316;&#20026;&#35831;&#27714;&#23646;&#24615;&#20132;&#32473;JSP/JSTL&#22788;&#29702;&#65292;&#25110;&#32773;&#20316;&#20026;VelocityContext&#37324;&#30340;&#23545;&#35937;&#65292;&#20132;&#32473;Velocity&#22788;&#29702;&#12290;&#20026;&#20102;&#20351;XSLT&#33021;&#22788;&#29702;&#23427;&#20204;&#65292;&#23427;&#20204;&#24517;&#39035;&#24471;&#36716;&#25442;&#25104;&#26576;&#31181;XML&#25991;&#26723;&#12290;&#26377;&#19968;&#20123;&#36719;&#20214;&#21253;&#21487;&#20197;&#33258;&#21160;DOM&#21270;&#19968;&#20010;&#23545;&#35937;&#22270;&#65292;&#20294;&#22312;Spring&#20013;&#65292;&#20320;&#21487;&#20197;&#29992;&#20219;&#20309;&#26041;&#24335;&#25226;&#20320;&#30340;&#27169;&#22411;&#36716;&#25442;&#25104;DOM&#26641;&#12290;&#36825;&#26679;&#21487;&#20197;&#36991;&#20813;&#20351;XML&#36716;&#25442;&#20915;&#23450;&#20320;&#27169;&#22411;&#25968;&#25454;&#32467;&#26500;&#65292;&#36825;&#22312;&#20351;&#29992;&#24037;&#20855;&#31649;&#29702;DOM&#21270;&#36807;&#31243;&#30340;&#26102;&#20505;&#26159;&#24456;&#21361;&#38505;&#30340;&#12290;</p></div><div class="sect3" lang="zh_cn"><div class="titlepage"><div><div><h4 class="title"><a name="view-xslt-subclassing"></a>13.5.1.3.&nbsp;&#25226;&#27169;&#22411;&#25968;&#25454;&#36716;&#25442;&#25104;XML&#25991;&#26723;</h4></div></div><div></div></div><p>&#20026;&#20102;&#20174;&#25105;&#20204;&#30340;&#21333;&#35789;&#21015;&#34920;&#25110;&#20854;&#20182;&#27169;&#22411;&#25968;&#25454;&#20013;&#21019;&#24314;DOM&#25991;&#26723;&#65292;&#25105;&#20204;&#32487;&#25215;<tt class="literal">org.springframework.web.servlet.view.xslt.AbstractXsltView</tt>&#12290;&#21516;&#26102;&#65292;&#25105;&#20204;&#24517;&#39035;&#23454;&#29616;&#25277;&#35937;&#26041;&#27861;<tt class="literal">createDomNode()</tt>&#12290;&#20256;&#32473;&#23427;&#30340;&#31532;&#19968;&#20010;&#21442;&#25968;&#23601;&#26159;&#25105;&#20204;&#30340;&#25968;&#25454;&#27169;&#22411;&#30340;Map&#12290;&#19979;&#38754;&#26159;&#25105;&#20204;&#36825;&#20010;&#24212;&#29992;&#20013;HomePage&#31867;&#30340;&#28304;&#31243;&#24207;&#28165;&#21333; &#65293; &#23427;&#20351;&#29992;JDOM&#26469;&#21019;&#24314;XML&#25991;&#26723;&#65292;&#28982;&#21518;&#22312;&#36716;&#25442;&#25104;&#25152;&#38656;&#35201;&#30340;W3C&#33410;&#28857;&#65292;&#36825;&#20165;&#20165;&#26159;&#22240;&#20026;&#25105;&#21457;&#29616;JDOM&#65288;&#21644;Dom4J&#65289;&#30340;API&#27604;W3C&#30340;API&#31616;&#21333;&#12290;</p><pre class="programlisting">
+package xslt;
+
+// imports omitted for brevity
+
+public class HomePage extends AbstractXsltView {
+
+    protected Node createDomNode( 
+        Map model, String rootName, HttpServletRequest req, HttpServletResponse res
+    ) throws Exception {
+        
+        org.jdom.Document doc = new org.jdom.Document();
+        Element root = new Element(rootName);
+        doc.setRootElement(root);
+
+        List words = (List) model.get("wordList");
+        for (Iterator it = words.iterator(); it.hasNext();) {
+            String nextWord = (String) it.next();
+            Element e = new Element("word");
+            e.setText(nextWord);
+            root.addContent(e);
+        }
+
+        // convert JDOM doc to a W3C Node and return
+        return new DOMOutputter().output( doc );
+    }
+
+}</pre><p>
+				</p><div class="sect4" lang="zh_cn"><div class="titlepage"><div><div><h5 class="title"><a name="d0e7513"></a>13.5.1.3.1.&nbsp;&#28155;&#21152;&#26679;&#24335;&#34920;&#21442;&#25968;</h5></div></div><div></div></div><p>&#20320;&#30340;&#35270;&#22270;&#23376;&#31867;&#21487;&#20197;&#23450;&#20041;&#19968;&#20123;name/value&#32452;&#25104;&#30340;&#21442;&#25968;&#65292;&#36825;&#20123;&#21442;&#25968;&#23558;&#34987;&#21152;&#21040;&#36716;&#25442;&#23545;&#35937;&#20013;&#12290;&#21442;&#25968;&#30340;&#21517;&#23383;&#24517;&#39035;&#31526;&#21512;&#20320;&#22312;XSLT&#27169;&#29256;&#20013;&#20351;&#29992;<tt class="literal">&lt;xsl:param
+          name="myParam"&gt;defaultValue&lt;/xsl:param&gt;</tt>&#26684;&#24335;&#23450;&#20041;&#30340;&#21442;&#25968;&#21517;&#12290;&#20026;&#20102;&#25351;&#23450;&#36825;&#20123;&#21442;&#25968;&#65292;&#21487;&#20197;&#20174;AbstractXsltView&#20013;&#37325;&#36733;&#26041;&#27861;<tt class="literal">getParameters()</tt>&#65292;&#24182;&#36820;&#22238;&#21253;&#21547;name/value&#32452;&#21512;&#30340;<tt class="literal">Map</tt>&#12290;</p></div><div class="sect4" lang="zh_cn"><div class="titlepage"><div><div><h5 class="title"><a name="view-xslt-formathelper"></a>13.5.1.3.2.&nbsp;&#26684;&#24335;&#21270;&#26085;&#26399;&#21644;&#36135;&#24065;</h5></div></div><div></div></div><p>&#19981;&#35937;JSTL&#21644;Velocity&#65292;XSLT&#23545;&#21644;&#26412;&#22320;&#21270;&#30456;&#20851;&#30340;&#36135;&#24065;&#21644;&#26085;&#26399;&#26684;&#24335;&#21270;&#25903;&#25345;&#36739;&#24369;&#12290;Spring&#20026;&#27492;&#25552;&#20379;&#20102;&#19968;&#20010;&#24110;&#21161;&#31867;&#65292;&#35753;&#20320;&#22312;<tt class="literal">createDomNode()</tt>&#20013;&#20351;&#29992;&#65292;&#20174;&#32780;&#33719;&#24471;&#36825;&#20123;&#25903;&#25345;&#12290;&#35814;&#32454;&#35831;&#21442;&#32771;<tt class="literal">org.springframework.web.servlet.view.xslt.FormatHelper</tt>&#30340;javadoc&#12290;</p></div></div><div class="sect3" lang="zh_cn"><div class="titlepage"><div><div><h4 class="title"><a name="view-xslt-viewdefinitions"></a>13.5.1.4.&nbsp;&#23450;&#20041;&#35270;&#22270;&#23646;&#24615;</h4></div></div><div></div></div><p>&#19979;&#38754;&#26159;&#21333;&#35270;&#22270;&#24212;&#29992;&#30340;&#23646;&#24615;&#25991;&#20214;views.properties&#65288;&#22914;&#26524;&#20320;&#20351;&#29992;&#22522;&#20110;XML&#30340;&#35270;&#22270;&#35299;&#26512;&#22120;&#65292;&#27604;&#22914;&#19978;&#38754;&#20363;&#23376;&#20013;&#30340;Velocity&#65292;&#23427;&#31561;&#20215;&#20110;XML&#23450;&#20041;&#65289;&#65292;&#22914;&#25105;&#20204;&#30340;&#8220;My First Words&#8221;..</p><pre class="programlisting">
+home.class=xslt.HomePage
+home.stylesheetLocation=/WEB-INF/xsl/home.xslt
+home.root=words
+</pre><p> &#36825;&#20799;&#65292;&#20320;&#21487;&#20197;&#30475;&#21040;&#35270;&#22270;&#26159;&#22914;&#20309;&#32465;&#23450;&#22312;&#30001;&#23646;&#24615;&#8220;.class&#8221;&#23450;&#20041;&#30340;HomePage&#31867;&#19978;&#30340;&#65292;HomePage&#31867;&#22788;&#29702;&#25968;&#25454;&#27169;&#22411;&#30340;DOM&#21270;&#25805;&#20316;&#12290;&#23646;&#24615;&#8220;stylesheetLocation&#8221;&#25351;&#23450;&#20102;&#23558;XML&#25991;&#26723;&#36716;&#25442;&#25104;HTML&#25991;&#26723;&#26102;&#25152;&#38656;&#35201;&#30340;XSLT&#25991;&#20214;&#65292;&#32780;&#26368;&#21518;&#19968;&#20010;&#23646;&#24615;&#8220;.root&#8221;&#25351;&#23450;&#20102;XML&#25991;&#26723;&#26681;&#33410;&#28857;&#30340;&#21517;&#23383;&#12290;&#23427;&#34987;&#19978;&#38754;&#30340;HomePage&#31867;&#20316;&#20026;&#31532;&#20108;&#20010;&#21442;&#25968;&#20256;&#36882;&#32473;<tt class="literal">createDomNode</tt>&#26041;&#27861;&#12290;</p></div><div class="sect3" lang="zh_cn"><div class="titlepage"><div><div><h4 class="title"><a name="view-xslt-transforming"></a>13.5.1.5.&nbsp;&#25991;&#26723;&#36716;&#25442;</h4></div></div><div></div></div><p>&#26368;&#21518;&#65292;&#25105;&#20204;&#23450;&#20041;&#20102;XSLT&#30340;&#20195;&#30721;&#26469;&#36716;&#25442;&#19978;&#38754;&#30340;XML&#25991;&#26723;&#12290;&#22312;views.properties&#25991;&#20214;&#20013;&#25351;&#23450;&#20102;&#36825;&#20010;XSLT&#25991;&#20214;<tt class="literal">home.xslt</tt>&#23384;&#25918;&#22312;war&#25991;&#20214;&#37324;&#30340;<tt class="literal">WEB-INF/xsl</tt>&#19979;&#12290;</p><pre class="programlisting">&lt;?xml version="1.0"?&gt;
+
+&lt;xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"&gt;
+    &lt;xsl:output method="text/html" omit-xml-declaration="yes"/&gt;
+
+    &lt;xsl:template match="/"&gt;
+        &lt;html&gt;
+            &lt;head&gt;&lt;title&gt;Hello!&lt;/title&gt;&lt;/head&gt;
+            &lt;body&gt;
+
+                &lt;h1&gt;My First Words&lt;/h1&gt;
+                &lt;xsl:for-each select="wordList/word"&gt;
+                    &lt;xsl:value-of select="."/&gt;&lt;br /&gt;
+                &lt;/xsl:for-each&gt; 
+
+            &lt;/body&gt;
+        &lt;/html&gt;
+    &lt;/xsl:template&gt;
+
+&lt;/xsl:stylesheet&gt;</pre><p>
+				</p></div></div><div class="sect2" lang="zh_cn"><div class="titlepage"><div><div><h3 class="title"><a name="view-xslt-summary"></a>13.5.2.&nbsp;&#24635;&#32467;</h3></div></div><div></div></div><p>&#19979;&#38754;&#30340;WAR&#25991;&#20214;&#32467;&#26500;&#31616;&#21333;&#21015;&#20102;&#19968;&#20123;&#19978;&#38754;&#25152;&#25552;&#21040;&#30340;&#25991;&#20214;&#21644;&#23427;&#20204;&#22312;WAR&#25991;&#20214;&#20013;&#30340;&#20301;&#32622;&#12290;</p><pre class="programlisting">ProjectRoot
+  |
+  +- WebContent
+      |
+      +- WEB-INF
+          |
+          +- classes
+          |    |
+          |    +- xslt
+          |    |   |
+          |    |   +- HomePageController.class 
+          |    |   +- HomePage.class
+          |    |
+          |    +- views.properties
+          |
+          +- lib
+          |   |
+          |   +- spring.jar
+          |
+          +- xsl
+          |   |
+          |   +- home.xslt
+          |
+          +- frontcontroller-servlet.xml</pre><p> &#24403;&#28982;&#65292;&#20320;&#36824;&#38656;&#35201;&#20445;&#35777;XML&#35299;&#26512;&#22120;&#21644;XSLT&#24341;&#25806;&#22312;classpath&#20013;&#21487;&#20197;&#34987;&#25214;&#21040;&#12290;JDK 1.4&#20250;&#32570;&#30465;&#25552;&#20379;&#23427;&#20204;&#65292;&#24182;&#19988;&#22823;&#22810;&#25968;J2EE&#23481;&#22120;&#20063;&#20250;&#25552;&#20379;&#23427;&#20204;&#65292;&#20294;&#26159;&#36825;&#20063;&#26159;&#19968;&#20123;&#24050;&#30693;&#30340;&#21487;&#33021;&#24341;&#36215;&#38169;&#35823;&#30340;&#21407;&#22240;&#12290;</p></div></div><div class="sect1" lang="zh_cn"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="view-document"></a>13.6.&nbsp;&#25991;&#26723;&#35270;&#22270; (PDF/Excel)</h2></div></div><div></div></div><div class="sect2" lang="zh_cn"><div class="titlepage"><div><div><h3 class="title"><a name="view-document-intro"></a>13.6.1.&nbsp;&#31616;&#20171;</h3></div></div><div></div></div><p>HTML&#39029;&#38754;&#24182;&#19981;&#24635;&#26159;&#21521;&#29992;&#25143;&#26174;&#31034;&#25968;&#25454;&#36755;&#20986;&#30340;&#26368;&#22909;&#26041;&#24335;&#65292;Spring&#25903;&#25345;&#20174;&#25968;&#25454;&#21160;&#24577;&#29983;&#25104;PDF&#25110;Excel&#25991;&#20214;&#65292;&#24182;&#20351;&#36825;&#19968;&#36807;&#31243;&#21464;&#24471;&#31616;&#21333;&#12290;&#25991;&#26723;&#26412;&#36523;&#23601;&#26159;&#35270;&#22270;&#65292;&#20174;&#26381;&#21153;&#22120;&#20197;&#27969;&#30340;&#26041;&#24335;&#21152;&#19978;&#20869;&#23481;&#31867;&#22411;&#36820;&#22238;&#25991;&#26723;&#65292;&#23458;&#25143;&#31471;PC&#21482;&#35201;&#36816;&#34892;&#30005;&#23376;&#34920;&#26684;&#36719;&#20214;&#25110;PDF&#27983;&#35272;&#36719;&#20214;&#23601;&#21487;&#20197;&#27983;&#35272;&#12290;</p><p>&#20026;&#20102;&#20351;&#29992;Excel&#30005;&#23376;&#34920;&#26684;&#65292;&#20320;&#38656;&#35201;&#22312;&#20320;&#30340;classpath&#20013;&#21152;&#20837;&#8216;poi&#8217;&#24211;&#25991;&#20214;&#65292;&#32780;&#23545;PDF&#25991;&#20214;&#65292;&#21017;&#38656;&#35201;iText.jar&#25991;&#20214;&#12290;&#23427;&#20204;&#37117;&#21253;&#21547;&#22312;Spring&#30340;&#20027;&#21457;&#24067;&#21253;&#20013;&#12290;</p></div><div class="sect2" lang="zh_cn"><div class="titlepage"><div><div><h3 class="title"><a name="view-document-config"></a>13.6.2.&nbsp;&#37197;&#32622;&#21644;&#23433;&#35013;</h3></div></div><div></div></div><p>&#22522;&#20110;&#25991;&#26723;&#30340;&#35270;&#22270;&#30340;&#22788;&#29702;&#26041;&#24335;&#21644;XSLT&#35270;&#22270;&#20960;&#20046;&#23436;&#20840;&#30456;&#21516;&#65292;&#19979;&#38754;&#30340;&#37096;&#20998;&#23558;&#20197;&#21069;&#38754;&#30340;&#20363;&#23376;&#20026;&#22522;&#30784;&#65292;&#28436;&#31034;&#20102;XSLT&#20363;&#23376;&#20013;&#30340;&#25511;&#21046;&#22120;&#26159;&#22914;&#20309;&#20351;&#29992;&#30456;&#21516;&#30340;&#25968;&#25454;&#27169;&#22411;&#29983;&#25104;PDF&#25991;&#26723;&#21644;Excel&#30005;&#23376;&#34920;&#26684;&#65288;&#23427;&#20204;&#21487;&#20197;&#22312;Open Office&#20013;&#25171;&#24320;&#25110;&#32534;&#36753;&#65289;&#12290;</p><div class="sect3" lang="zh_cn"><div class="titlepage"><div><div><h4 class="title"><a name="view-document-configviews"></a>13.6.2.1.&nbsp;&#25991;&#26723;&#35270;&#22270;&#23450;&#20041;</h4></div></div><div></div></div><p>&#39318;&#20808;&#65292;&#35753;&#25105;&#20204;&#26469;&#20462;&#25913;&#19968;&#19979;view.properties&#25991;&#20214;&#65288;&#25110;&#31561;&#20215;&#30340;xml&#23450;&#20041;&#65289;&#65292;&#32473;&#20004;&#31181;&#25991;&#26723;&#31867;&#22411;&#37117;&#28155;&#21152;&#19968;&#20010;&#35270;&#22270;&#23450;&#20041;&#12290;&#21152;&#19978;&#21018;&#25165;XSLT&#35270;&#22270;&#20363;&#23376;&#30340;&#20869;&#23481;&#65292;&#25972;&#20010;&#25991;&#20214;&#22914;&#19979;&#12290; </p><pre class="programlisting">home.class=xslt.HomePage
+home.stylesheetLocation=/WEB-INF/xsl/home.xslt
+home.root=words
+
+xl.class=excel.HomePage
+
+pdf.class=pdf.HomePage</pre><p>
+					<span class="emphasis"><em>&#22914;&#26524;&#20320;&#28155;&#21152;&#20320;&#30340;&#25968;&#25454;&#21040;&#19968;&#20010;&#27169;&#29256;&#30005;&#23376;&#34920;&#26684;&#65292;&#24517;&#39035;&#22312;&#35270;&#22270;&#23450;&#20041;&#30340;&#8216;url&#8217;&#23646;&#24615;&#20013;&#25351;&#23450;&#27169;&#29256;&#20301;&#32622;&#12290;</em></span>
+				</p></div><div class="sect3" lang="zh_cn"><div class="titlepage"><div><div><h4 class="title"><a name="view-document-configcontroller"></a>13.6.2.2.&nbsp;&#25511;&#21046;&#22120;&#20195;&#30721;</h4></div></div><div></div></div><p>&#25105;&#20204;&#29992;&#30340;&#25511;&#21046;&#22120;&#20195;&#30721;&#21644;&#21069;&#38754;XSLT&#20363;&#23376;&#20013;&#29992;&#30340;&#19968;&#26679;&#65292;&#38500;&#20102;&#35270;&#22270;&#30340;&#21517;&#23383;&#12290;&#24403;&#28982;&#65292;&#20320;&#21487;&#20197;&#24178;&#24471;&#24039;&#22937;&#19968;&#28857;&#65292;&#20351;&#23427;&#22522;&#20110;URL&#21442;&#25968;&#25110;&#32773;&#20854;&#20182;&#36923;&#36753;&#65293;&#36825;&#35777;&#26126;&#20102;Spring&#30340;&#30830;&#22312;&#20998;&#31163;&#35270;&#22270;&#21644;&#25511;&#21046;&#22120;&#26041;&#38754;&#38750;&#24120;&#20986;&#33394;&#65281;</p></div><div class="sect3" lang="zh_cn"><div class="titlepage"><div><div><h4 class="title"><a name="view-document-configsubclasses"></a>13.6.2.3.&nbsp;&#29992;&#20110;Excel&#35270;&#22270;&#30340;&#35270;&#22270;&#23376;&#31867;&#21270;</h4></div></div><div></div></div><p>&#27491;&#20837;&#25105;&#20204;&#22312;XSLT&#20363;&#23376;&#20013;&#20570;&#30340;&#65292;&#20026;&#20102;&#22312;&#29983;&#25104;&#36755;&#20986;&#25991;&#26723;&#30340;&#36807;&#31243;&#20013;&#23454;&#29616;&#23450;&#21046;&#30340;&#34892;&#20026;&#65292;&#25105;&#20204;&#23558;&#32487;&#25215;&#21512;&#36866;&#30340;&#25277;&#35937;&#31867;&#12290;&#23545;&#20110;Excel&#65292;&#36825;&#21253;&#25324;&#25552;&#20379;&#19968;&#20010;<tt class="literal">org.springframework.web.servlet.view.document.AbstractExcelView</tt>&#30340;&#23376;&#31867;&#65292;&#24182;&#23454;&#29616;<tt class="literal">buildExcelDocument</tt>&#26041;&#27861;&#12290;</p><p>&#19979;&#38754;&#26159;&#19968;&#20010;&#25105;&#20204;Excel&#35270;&#22270;&#30340;&#28304;&#31243;&#24207;&#28165;&#21333;&#65292;&#23427;&#22312;&#30005;&#23376;&#34920;&#26684;&#20013;&#27599;&#19968;&#34892;&#30340;&#31532;&#19968;&#21015;&#20013;&#26174;&#31034;&#27169;&#22411;map&#20013;&#30340;&#21333;&#35789;&#12290;</p><pre class="programlisting">package excel;
+
+// imports omitted for brevity
+
+public class HomePage extends AbstractExcelView {
+
+    protected void buildExcelDocument(
+        Map model,
+        HSSFWorkbook wb,
+        HttpServletRequest req,
+        HttpServletResponse resp)
+        throws Exception {
+    
+        HSSFSheet sheet;
+        HSSFRow sheetRow;
+        HSSFCell cell;
+
+        // Go to the first sheet
+        // getSheetAt: only if wb is created from an existing document
+        //sheet = wb.getSheetAt( 0 );
+        sheet = wb.createSheet("Spring");
+        sheet.setDefaultColumnWidth((short)12);
+
+        // write a text at A1
+        cell = getCell( sheet, 0, 0 );
+        setText(cell,"Spring-Excel test");
+
+        List words = (List ) model.get("wordList");
+        for (int i=0; i &lt; words.size(); i++) {
+            cell = getCell( sheet, 2+i, 0 );
+            setText(cell, (String) words.get(i));
+
+        }
+    }
+}</pre><p>
+				</p><p>&#22914;&#26524;&#20320;&#29616;&#22312;&#20462;&#25913;&#25511;&#21046;&#22120;&#20351;&#23427;&#36820;&#22238;<tt class="literal">xl</tt>&#20316;&#20026;&#35270;&#22270;&#30340;&#21517;&#23383;&#65288;<tt class="literal">return new
+        ModelAndView("xl", map);</tt>)&#65292;&#24182;&#19988;&#36816;&#34892;&#20320;&#30340;&#24212;&#29992;&#65292;&#24403;&#20320;&#20877;&#27425;&#23545;&#35813;&#39029;&#38754;&#21457;&#36215;&#35831;&#27714;&#26102;&#65292;Excel&#30005;&#23376;&#34920;&#26684;&#34987;&#21019;&#24314;&#65292;&#33258;&#21160;&#19979;&#36733;&#12290;</p></div><div class="sect3" lang="zh_cn"><div class="titlepage"><div><div><h4 class="title"><a name="view-document-configsubclasspdf"></a>13.6.2.4.&nbsp;&#29992;&#20110;PDF&#35270;&#22270;&#30340;&#35270;&#22270;&#23376;&#31867;&#21270;</h4></div></div><div></div></div><p>&#21333;&#35789;&#21015;&#34920;&#30340;PDF&#29256;&#26412;&#23601;&#26356;&#20026;&#31616;&#21333;&#20102;&#12290;&#36825;&#27425;&#65292;&#38656;&#35201;&#35937;&#19979;&#38754;&#19968;&#26679;&#32487;&#25215;<tt class="literal">org.springframework.web.servlet.view.document.AbstractPdfView</tt>&#65292;&#24182;&#23454;&#29616;<tt class="literal">buildPdfDocument()</tt>&#26041;&#27861;&#12290; </p><pre class="programlisting">package pdf;
+
+// imports omitted for brevity
+
+public class PDFPage extends AbstractPdfView {
+
+    protected void buildPdfDocument(
+        Map model,
+        Document doc,
+        PdfWriter writer,
+        HttpServletRequest req,
+        HttpServletResponse resp)
+        throws Exception {
+        
+        List words = (List) model.get("wordList");
+        
+        for (int i=0; i&lt;words.size(); i++)
+            doc.add( new Paragraph((String) words.get(i)));
+    
+    }
+}</pre><p> &#21516;&#26679;&#20462;&#25913;&#25511;&#21046;&#22120;&#65292;&#20351;&#23427;&#36890;&#36807;<tt class="literal">return new
+        ModelAndView("pdf", map);</tt>&#36820;&#22238;&#19968;&#20010;<tt class="literal">pdf</tt>&#35270;&#22270;&#65307;&#24182;&#22312;&#20320;&#30340;&#24212;&#29992;&#20013;&#37325;&#26032;&#36733;&#20837;&#35813;URL&#12290;&#36825;&#27425;&#23601;&#20250;&#20986;&#29616;&#19968;&#20010;PDF&#25991;&#26723;&#65292;&#26174;&#31034;&#23384;&#20648;&#22312;&#27169;&#22411;&#25968;&#25454;&#30340;map&#20013;&#30340;&#21333;&#35789;&#12290;</p></div></div></div><div class="sect1" lang="zh_cn"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="view-tapestry"></a>13.7.&nbsp;Tapestry</h2></div></div><div></div></div><p>Tapestry&#26159;Apache Jakarta&#39033;&#30446;&#65288;<a href="http://jakarta.apache.org/tapestry" target="_top">http://jakarta.apache.org/tapestry</a>&#65289;&#19979;&#30340;&#19968;&#20010;&#38754;&#21521;&#32452;&#20214;&#30340;web&#24212;&#29992;&#26694;&#26550;&#12290;Spring&#26694;&#26550;&#26159;&#22260;&#32469;&#36731;&#37327;&#32423;&#23481;&#22120;&#27010;&#24565;&#24314;&#31435;&#30340;J2EE&#24212;&#29992;&#26694;&#26550;&#12290;&#34429;&#28982;Spring&#23427;&#33258;&#24049;&#30340;web&#34920;&#29616;&#23618;&#21151;&#33021;&#20063;&#24456;&#20016;&#23500;&#65292;&#20294;&#26159;&#20351;&#29992;Tapestry&#20316;&#20026;web&#34920;&#29616;&#23618;&#65292;Spring&#23481;&#22120;&#20316;&#20026;&#24213;&#23618;&#26500;&#24314;&#30340;J2EE&#24212;&#29992;&#26377;&#35768;&#22810;&#29420;&#29305;&#30340;&#20248;&#21183;&#12290;&#36825;&#19968;&#33410;&#23558;&#35814;&#32454;&#20171;&#32461;&#20351;&#29992;&#36825;&#20004;&#31181;&#26694;&#26550;&#30340;&#26368;&#20339;&#23454;&#29616;&#12290;&#36825;&#37324;&#20551;&#35774;&#20320;&#29087;&#24713;Tapestry&#21644;Spring&#26694;&#26550;&#30340;&#22522;&#30784;&#30693;&#35782;&#65292;&#36825;&#37324;&#23601;&#19981;&#20877;&#21152;&#20197;&#35299;&#37322;&#20102;&#12290;&#23545;&#20110;Tapestry&#21644;Spring&#26694;&#26550;&#30340;&#19968;&#33324;&#24615;&#20171;&#32461;&#25991;&#26723;&#65292;&#21487;&#20197;&#22312;&#23427;&#20204;&#30340;&#32593;&#31449;&#25214;&#21040;&#12290;</p><div class="sect2" lang="zh_cn"><div class="titlepage"><div><div><h3 class="title"><a name="view-tapestry-architecture"></a>13.7.1.&nbsp;&#26550;&#26500;</h3></div></div><div></div></div><p>&#19968;&#20010;&#30001;Tapestry&#21644;Spring&#26500;&#24314;&#30340;&#20856;&#22411;&#20998;&#23618;&#30340;J2EE&#24212;&#29992;&#21253;&#25324;&#19968;&#20010;&#19978;&#23618;&#30340;Tapestry&#34920;&#29616;&#23618;&#21644;&#35768;&#22810;&#24213;&#37096;&#23618;&#27425;&#26500;&#25104;&#65292;&#23427;&#20204;&#23384;&#22312;&#20110;&#19968;&#20010;&#25110;&#22810;&#20010;Spring&#24212;&#29992;&#19978;&#19979;&#25991;&#20013;&#12290;</p><div class="itemizedlist"><ul type="disc"><li><p>
+						<span class="emphasis"><em>&#29992;&#25143;&#30028;&#38754;&#23618;&#65306;</em></span>
+					</p><p>- &#20027;&#35201;&#20851;&#27880;&#29992;&#25143;&#30028;&#38754;&#30340;&#20869;&#23481;</p><p>- &#21253;&#21547;&#26576;&#20123;&#24212;&#29992;&#36923;&#36753;</p><p>- &#30001;Tapestry&#25552;&#20379;</p><p>- &#38500;&#20102;&#36890;&#36807;Tapestry&#25552;&#20379;&#30340;&#29992;&#25143;&#30028;&#38754;&#65292;&#36825;&#19968;&#23618;&#30340;&#20195;&#30721;&#35775;&#38382;&#23454;&#29616;&#19994;&#21153;&#23618;&#25509;&#21475;&#30340;&#23545;&#35937;&#12290;&#23454;&#29616;&#23545;&#35937;&#30001;Spring&#24212;&#29992;&#19978;&#19979;&#25991;&#25552;&#20379;&#12290;</p></li><li><p>
+						<span class="emphasis"><em>&#19994;&#21153;&#23618;&#65306;</em></span>
+					</p><p>- &#24212;&#29992;&#30456;&#20851;&#30340;&#8220;&#19994;&#21153;&#8221;&#20195;&#30721;</p><p>- &#35775;&#38382;&#22495;&#23545;&#35937;&#65292;&#24182;&#19988;&#20351;&#29992;Mapper API&#20174;&#26576;&#31181;&#25968;&#25454;&#23384;&#20648;&#65288;&#25968;&#25454;&#24211;&#65289;&#20013;&#23384;&#21462;&#22495;&#23545;&#35937;</p><p>- &#23384;&#22312;&#22312;&#19968;&#20010;&#25110;&#22810;&#20010;Spring&#19978;&#19979;&#25991;&#20013;</p><p>- &#36825;&#23618;&#30340;&#20195;&#30721;&#20197;&#19968;&#31181;&#24212;&#29992;&#30456;&#20851;&#30340;&#26041;&#24335;&#25805;&#20316;&#22495;&#27169;&#22411;&#20013;&#30340;&#23545;&#35937;&#12290;&#23427;&#36890;&#36807;&#36825;&#23618;&#20013;&#30340;&#20854;&#23427;&#20195;&#30721;&#21644;Mapper API&#24037;&#20316;&#12290;&#36825;&#23618;&#20013;&#30340;&#23545;&#35937;&#30001;&#26576;&#20010;&#29305;&#23450;&#30340;mapper&#23454;&#29616;&#36890;&#36807;&#24212;&#29992;&#19978;&#19979;&#25991;&#25552;&#20379;&#12290;</p><p>- &#26082;&#28982;&#36825;&#23618;&#20013;&#30340;&#20195;&#30721;&#23384;&#22312;&#22312;Spring&#19978;&#19979;&#25991;&#20013;&#65292;&#23427;&#30001;Spring&#19978;&#19979;&#25991;&#25552;&#20379;&#20107;&#21153;&#22788;&#29702;&#65292;&#32780;&#19981;&#33258;&#24049;&#31649;&#29702;&#20107;&#21153;&#12290;</p></li><li><p>
+						<span class="emphasis"><em>&#22495;&#27169;&#22411;&#65306;</em></span>
+					</p><p>- &#38382;&#39064;&#22495;&#30456;&#20851;&#30340;&#23545;&#35937;&#23618;&#27425;&#65292;&#36825;&#20123;&#23545;&#35937;&#22788;&#29702;&#21644;&#38382;&#39064;&#22495;&#30456;&#20851;&#30340;&#25968;&#25454;&#21644;&#36923;&#36753;</p><p>- &#34429;&#28982;&#22495;&#23545;&#35937;&#23618;&#27425;&#34987;&#21019;&#24314;&#26102;&#32771;&#34385;&#21040;&#23427;&#20250;&#34987;&#26576;&#31181;&#26041;&#24335;&#25345;&#20037;&#21270;&#65292;&#24182;&#19988;&#20026;&#27492;&#23450;&#20041;&#19968;&#20123;&#36890;&#29992;&#30340;&#32422;&#26463;&#65288;&#20363;&#22914;&#65292;&#21452;&#21521;&#20851;&#32852;&#65289;&#65292;&#23427;&#36890;&#24120;&#24182;&#19981;&#30693;&#36947;&#20854;&#23427;&#23618;&#27425;&#30340;&#24773;&#20917;&#12290;&#22240;&#27492;&#65292;&#23427;&#21487;&#20197;&#34987;&#29420;&#31435;&#22320;&#27979;&#35797;&#65292;&#24182;&#19988;&#22312;&#20135;&#21697;&#21644;&#27979;&#35797;&#36825;&#20004;&#31181;&#19981;&#21516;&#30340;mapping&#23454;&#29616;&#20013;&#20351;&#29992;&#12290;</p><p>- &#36825;&#20123;&#23545;&#35937;&#21487;&#20197;&#26159;&#29420;&#31435;&#30340;&#65292;&#20063;&#21487;&#20197;&#20851;&#32852;Spring&#24212;&#29992;&#19978;&#19979;&#25991;&#20197;&#21457;&#25381;&#23427;&#30340;&#20248;&#21183;&#65292;&#20363;&#22914;&#38548;&#31163;&#65292;&#21453;&#21521;&#25511;&#21046;&#65292;&#19981;&#21516;&#30340;&#31574;&#30053;&#23454;&#29616;&#65292;&#31561;&#31561;&#12290;</p></li><li><p>
+						<span class="emphasis"><em>&#25968;&#25454;&#28304;&#23618;&#65306;</em></span>
+					</p><p>- Mapper API&#65288;&#20063;&#31216;&#20026;Data Access Objects&#65289;&#65306;&#26159;&#19968;&#31181;&#23558;&#22495;&#27169;&#22411;&#25345;&#20037;&#21270;&#21040;&#26576;&#31181;&#25968;&#25454;&#23384;&#20648;&#65288;&#19968;&#33324;&#26159;&#25968;&#25454;&#24211;&#65292;&#20294;&#26159;&#20063;&#21487;&#20197;&#26159;&#25991;&#20214;&#31995;&#32479;&#65292;&#20869;&#23384;&#65292;&#31561;&#31561;&#65289;&#30340;API&#12290;</p><p>- Mapper API&#23454;&#29616;&#65306;&#26159;&#25351;Mapper API&#30340;&#19968;&#20010;&#25110;&#22810;&#20010;&#29305;&#23450;&#23454;&#29616;&#65292;&#20363;&#22914;&#65292;Hibernate&#30340;mapper&#65292;JDO&#30340;mapper&#65292;JDBC&#30340;mapper&#65292;&#25110;&#32773;&#20869;&#23384;mapper&#12290;</p><p>- mapper&#23454;&#29616;&#23384;&#22312;&#22312;&#19968;&#20010;&#25110;&#22810;&#20010;Spring&#24212;&#29992;&#19978;&#19979;&#25991;&#20013;&#12290;&#19968;&#20010;&#19994;&#21153;&#23618;&#23545;&#35937;&#38656;&#35201;&#24212;&#29992;&#19978;&#19979;&#25991;&#30340;mapper&#23545;&#35937;&#25165;&#33021;&#24037;&#20316;&#12290;</p></li><li><p>
+						<span class="emphasis"><em>&#25968;&#25454;&#24211;&#65292;&#25991;&#20214;&#31995;&#32479;&#65292;&#25110;&#20854;&#23427;&#24418;&#24335;&#30340;&#25968;&#25454;&#23384;&#20648;&#65306;</em></span>
+					</p><p>- &#22312;&#22495;&#27169;&#22411;&#20013;&#30340;&#23545;&#35937;&#26681;&#25454;&#19968;&#20010;&#25110;&#22810;&#20010;mapper&#23454;&#29616;&#21487;&#20197;&#23384;&#25918;&#22312;&#19981;&#27490;&#19968;&#20010;&#25968;&#25454;&#23384;&#20648;&#20013;</p><p>- &#25968;&#25454;&#23384;&#20648;&#30340;&#26041;&#24335;&#21487;&#20197;&#26159;&#31616;&#21333;&#30340;&#65288;&#20363;&#22914;&#65292;&#25991;&#20214;&#31995;&#32479;&#65289;&#65292;&#25110;&#32773;&#26377;&#23427;&#22495;&#27169;&#22411;&#33258;&#24049;&#30340;&#25968;&#25454;&#34920;&#36798;&#65288;&#20363;&#22914;&#65292;&#19968;&#20010;&#25968;&#25454;&#24211;&#20013;&#30340;schema&#65289;&#12290;&#20294;&#26159;&#23427;&#19981;&#30693;&#36947;&#20854;&#23427;&#23618;&#27425;&#30340;&#24773;&#20917;&#12290;</p></li></ul></div></div><div class="sect2" lang="zh_cn"><div class="titlepage"><div><div><h3 class="title"><a name="view-tapestry-implementation"></a>13.7.2.&nbsp;&#23454;&#29616;</h3></div></div><div></div></div><p>&#30495;&#27491;&#30340;&#38382;&#39064;&#65288;&#26412;&#33410;&#25152;&#38656;&#35201;&#22238;&#31572;&#30340;&#65289;&#65292;&#26159;Tapestry&#39029;&#38754;&#26159;&#22914;&#20309;&#35775;&#38382;&#19994;&#21153;&#23454;&#29616;&#30340;&#65292;&#19994;&#21153;&#23454;&#29616;&#20165;&#20165;&#26159;&#23450;&#20041;&#22312;Spring&#24212;&#29992;&#19978;&#19979;&#25991;&#23454;&#20363;&#20013;&#30340;bean&#12290;</p><div class="sect3" lang="zh_cn"><div class="titlepage"><div><div><h4 class="title"><a name="view-tapestry-context"></a>13.7.2.1.&nbsp;&#24212;&#29992;&#19978;&#19979;&#25991;&#31034;&#20363;</h4></div></div><div></div></div><p>&#20551;&#35774;&#25105;&#20204;&#20197;xml&#26684;&#24335;&#23450;&#20041;&#30340;&#19979;&#38754;&#30340;&#24212;&#29992;&#19978;&#19979;&#25991;:</p><pre class="programlisting">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+        "http://www.springframework.org/dtd/spring-beans.dtd"&gt;
+ 
+&lt;beans&gt;
+ 
+    &lt;!-- ========================= GENERAL DEFINITIONS ========================= --&gt;
+ 
+    &lt;!-- ========================= PERSISTENCE DEFINITIONS ========================= --&gt;
+ 
+    &lt;!-- the DataSource --&gt;
+    &lt;bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean"&gt;
+        &lt;property name="jndiName"&gt;&lt;value&gt;java:DefaultDS&lt;/value&gt;&lt;/property&gt;
+        &lt;property name="resourceRef"&gt;&lt;value&gt;false&lt;/value&gt;&lt;/property&gt;
+    &lt;/bean&gt;
+ 
+    &lt;!-- define a Hibernate Session factory via a Spring LocalSessionFactoryBean --&gt;
+    &lt;bean id="hibSessionFactory" 
+        class="org.springframework.orm.hibernate.LocalSessionFactoryBean"&gt;
+        &lt;property name="dataSource"&gt;&lt;ref bean="dataSource"/&gt;&lt;/property&gt;
+    &lt;/bean&gt;
+ 
+    &lt;!--
+     - Defines a transaction manager for usage in business or data access objects.
+     - No special treatment by the context, just a bean instance available as reference
+     - for business objects that want to handle transactions, e.g. via TransactionTemplate.
+     --&gt;
+    &lt;bean id="transactionManager" 
+        class="org.springframework.transaction.jta.JtaTransactionManager"&gt;
+    &lt;/bean&gt;
+ 
+    &lt;bean id="mapper" 
+        class="com.whatever.dataaccess.mapper.hibernate.MapperImpl"&gt;
+        &lt;property name="sessionFactory"&gt;&lt;ref bean="hibSessionFactory"/&gt;&lt;/property&gt;
+    &lt;/bean&gt;
+   
+    &lt;!-- ========================= BUSINESS DEFINITIONS ========================= --&gt;
+ 
+    &lt;!-- AuthenticationService, including tx interceptor --&gt;
+    &lt;bean id="authenticationServiceTarget"
+        class="com.whatever.services.service.user.AuthenticationServiceImpl"&gt;
+        &lt;property name="mapper"&gt;&lt;ref bean="mapper"/&gt;&lt;/property&gt;
+    &lt;/bean&gt;
+    &lt;bean id="authenticationService" 
+        class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"&gt;
+        &lt;property name="transactionManager"&gt;&lt;ref bean="transactionManager"/&gt;&lt;/property&gt;
+        &lt;property name="target"&gt;&lt;ref bean="authenticationServiceTarget"/&gt;&lt;/property&gt;
+        &lt;property name="proxyInterfacesOnly"&gt;&lt;value&gt;true&lt;/value&gt;&lt;/property&gt;
+        &lt;property name="transactionAttributes"&gt;
+            &lt;props&gt;
+                &lt;prop key="*"&gt;PROPAGATION_REQUIRED&lt;/prop&gt;
+            &lt;/props&gt;
+        &lt;/property&gt;
+    &lt;/bean&gt;  
+ 
+    &lt;!-- UserService, including tx interceptor --&gt;
+    &lt;bean id="userServiceTarget"
+        class="com.whatever.services.service.user.UserServiceImpl"&gt;
+        &lt;property name="mapper"&gt;&lt;ref bean="mapper"/&gt;&lt;/property&gt;
+    &lt;/bean&gt;
+    &lt;bean id="userService" 
+        class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"&gt;
+        &lt;property name="transactionManager"&gt;&lt;ref bean="transactionManager"/&gt;&lt;/property&gt;
+        &lt;property name="target"&gt;&lt;ref bean="userServiceTarget"/&gt;&lt;/property&gt;
+        &lt;property name="proxyInterfacesOnly"&gt;&lt;value&gt;true&lt;/value&gt;&lt;/property&gt;
+        &lt;property name="transactionAttributes"&gt;
+            &lt;props&gt;
+                &lt;prop key="*"&gt;PROPAGATION_REQUIRED&lt;/prop&gt;
+            &lt;/props&gt;
+        &lt;/property&gt;
+    &lt;/bean&gt;  
+ 
+ &lt;/beans&gt;</pre><p> &#22312;Tapestry&#24212;&#29992;&#20013;&#65292;&#25105;&#20204;&#38656;&#35201;&#36733;&#20837;&#36825;&#20010;&#24212;&#29992;&#19978;&#19979;&#25991;&#65292;&#24182;&#20801;&#35768;Tapestry&#39029;&#38754;&#35775;&#38382;authenticationService&#21644;userService&#36825;&#20004;&#20010;bean&#65292;&#23427;&#20204;&#20998;&#21035;&#23454;&#29616;&#20102;AuthenticationService&#25509;&#21475;&#21644;UserService&#25509;&#21475;&#12290;</p></div><div class="sect3" lang="zh_cn"><div class="titlepage"><div><div><h4 class="title"><a name="view-tapestry-appctx"></a>13.7.2.2.&nbsp;&#22312;Tapestry&#39029;&#38754;&#20013;&#33719;&#21462;bean</h4></div></div><div></div></div><p>&#22312;&#36825;&#28857;&#19978;&#65292;web&#24212;&#29992;&#21487;&#20197;&#35843;&#29992;Spring&#30340;&#38745;&#24577;&#24037;&#20855;&#26041;&#27861;<tt class="literal">WebApplicationContextUtils.getApplicationContext(servletContext)</tt>&#26469;&#33719;&#21462;&#24212;&#29992;&#19978;&#19979;&#25991;&#65292;&#21442;&#25968;servletContext&#26159;J2EE Servlet&#35268;&#33539;&#23450;&#20041;&#30340;&#26631;&#20934;<tt class="literal">ServletContext</tt>&#12290;&#22240;&#27492;&#65292;&#39029;&#38754;&#33719;&#21462;&#20363;&#22914;UserService&#23454;&#20363;&#30340;&#19968;&#20010;&#31616;&#21333;&#26041;&#27861;&#23601;&#35937;&#19979;&#38754;&#30340;&#20195;&#30721;&#65306;</p><pre class="programlisting">    WebApplicationContext appContext = WebApplicationContextUtils.getApplicationContext(
+        getRequestCycle().getRequestContext().getServlet().getServletContext());
+    UserService userService = appContext.getBean("userService");
+    ... some code which uses UserService</pre><p> &#36825;&#20010;&#26041;&#27861;&#21487;&#20197;&#24037;&#20316;&#12290;&#23558;&#22823;&#37096;&#20998;&#36923;&#36753;&#23553;&#35013;&#22312;&#39029;&#38754;&#25110;&#32452;&#20214;&#22522;&#31867;&#30340;&#19968;&#20010;&#26041;&#27861;&#20013;&#21487;&#20197;&#20943;&#23569;&#24456;&#22810;&#20887;&#20313;&#12290;&#28982;&#32780;&#65292;&#36825;&#22312;&#26576;&#20123;&#26041;&#38754;&#36829;&#32972;&#20102;Spring&#25152;&#20513;&#23548;&#30340;&#21453;&#21521;&#25511;&#21046;&#26041;&#27861;&#65292;&#32780;&#24212;&#29992;&#20013;&#20854;&#23427;&#23618;&#27425;&#24688;&#24688;&#22312;&#20351;&#29992;&#21453;&#21521;&#25511;&#21046;&#65292;&#22240;&#20026;&#20320;&#24076;&#26395;&#39029;&#38754;&#19981;&#24517;&#21521;&#19978;&#19979;&#25991;&#35201;&#27714;&#26576;&#20010;&#21517;&#23383;&#30340;bean&#65292;&#20107;&#23454;&#19978;&#65292;&#39029;&#38754;&#20063;&#30340;&#30830;&#23545;&#19978;&#19979;&#25991;&#19968;&#26080;&#25152;&#30693;&#12290;</p><p>&#24184;&#36816;&#30340;&#26159;&#65292;&#26377;&#19968;&#20010;&#26041;&#27861;&#21487;&#20197;&#20570;&#21040;&#36825;&#19968;&#28857;&#12290;&#36825;&#26159;&#22240;&#20026;Tapestry&#24050;&#32463;&#25552;&#20379;&#19968;&#31181;&#26041;&#27861;&#32473;&#39029;&#38754;&#28155;&#21152;&#22768;&#26126;&#23646;&#24615;&#65292;&#20107;&#23454;&#19978;&#65292;&#20197;&#22768;&#26126;&#26041;&#24335;&#31649;&#29702;&#19968;&#20010;&#39029;&#38754;&#19978;&#30340;&#25152;&#26377;&#23646;&#24615;&#26159;&#39318;&#36873;&#30340;&#26041;&#27861;&#65292;&#36825;&#26679;Tapestry&#33021;&#22815;&#23558;&#23646;&#24615;&#30340;&#29983;&#21629;&#21608;&#26399;&#20316;&#20026;&#39029;&#38754;&#21644;&#32452;&#20214;&#29983;&#21629;&#21608;&#26399;&#30340;&#19968;&#37096;&#20998;&#21152;&#20197;&#31649;&#29702;&#12290;</p></div><div class="sect3" lang="zh_cn"><div class="titlepage"><div><div><h4 class="title"><a name="view-tapestry-exposeappctx"></a>13.7.2.3.&nbsp;&#21521;Tapestry&#26292;&#38706;&#24212;&#29992;&#19978;&#19979;&#25991;</h4></div></div><div></div></div><p>&#39318;&#20808;&#25105;&#20204;&#38656;&#35201;Tapestry&#39029;&#38754;&#32452;&#20214;&#22312;&#27809;&#26377;<tt class="literal">ServletContext</tt>&#30340;&#24773;&#20917;&#19979;&#35775;&#38382;<tt class="literal">ApplicationContext</tt>&#65307;&#36825;&#26159;&#22240;&#20026;&#22312;&#39029;&#38754;/&#32452;&#20214;&#29983;&#21629;&#21608;&#26399;&#37324;&#65292;&#24403;&#25105;&#20204;&#38656;&#35201;&#35775;&#38382;<tt class="literal">ApplicationContext</tt>&#26102;&#65292;<tt class="literal">ServletContext</tt>&#24182;&#19981;&#33021;&#34987;&#39029;&#38754;&#24456;&#26041;&#20415;&#22320;&#35775;&#38382;&#21040;&#65292;&#25152;&#20197;&#25105;&#20204;&#19981;&#33021;&#30452;&#25509;&#20351;&#29992;<tt class="literal">WebApplicationContextUtils.getApplicationContext(servletContext)</tt>&#12290;&#19968;&#20010;&#26041;&#27861;&#23601;&#26159;&#23454;&#29616;&#19968;&#20010;&#29305;&#23450;&#30340;Tapestry&#30340;IEngine&#26469;&#26292;&#38706;&#23427;&#65306;</p><pre class="programlisting">package com.whatever.web.xportal;
+...
+import ...
+...
+public class MyEngine extends org.apache.tapestry.engine.BaseEngine {
+ 
+    public static final String APPLICATION_CONTEXT_KEY = "appContext";
+ 
+    /**
+     * @see org.apache.tapestry.engine.AbstractEngine#setupForRequest(org.apache.tapestry.request.RequestContext)
+     */
+    protected void setupForRequest(RequestContext context) {
+        super.setupForRequest(context);
+     
+        // insert ApplicationContext in global, if not there
+        Map global = (Map) getGlobal();
+        ApplicationContext ac = (ApplicationContext) global.get(APPLICATION_CONTEXT_KEY);
+        if (ac == null) {
+            ac = WebApplicationContextUtils.getWebApplicationContext(
+                context.getServlet().getServletContext()
+            );
+            global.put(APPLICATION_CONTEXT_KEY, ac);
+        }
+    }
+}</pre><p>&#36825;&#20010;engine&#31867;&#23558;Spring&#24212;&#29992;&#19978;&#19979;&#25991;&#20316;&#20026;&#8220;appContext&#8221;&#23646;&#24615;&#23384;&#25918;&#22312;Tapestry&#24212;&#29992;&#30340;&#8220;Global&#8221;&#23545;&#35937;&#20013;&#12290;&#22312;Tapestry&#24212;&#29992;&#23450;&#20041;&#25991;&#20214;&#20013;&#24517;&#39035;&#20445;&#35777;&#36825;&#20010;&#29305;&#27530;&#30340;IEngine&#23454;&#20363;&#22312;&#36825;&#20010;Tapestry&#24212;&#29992;&#20013;&#34987;&#20351;&#29992;&#12290;&#20363;&#22914;&#65292;</p><pre class="programlisting">file: xportal.application:
+ 
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE application PUBLIC 
+    "-//Apache Software Foundation//Tapestry Specification 3.0//EN" 
+    "http://jakarta.apache.org/tapestry/dtd/Tapestry_3_0.dtd"&gt;
+&lt;application
+    name="Whatever xPortal"
+    engine-class="com.whatever.web.xportal.MyEngine"&gt;
+&lt;/application&gt;</pre><p>
+				</p></div><div class="sect3" lang="zh_cn"><div class="titlepage"><div><div><h4 class="title"><a name="view-tapestry-componentdefs"></a>13.7.2.4.&nbsp;&#32452;&#20214;&#23450;&#20041;&#25991;&#20214;</h4></div></div><div></div></div><p>&#29616;&#22312;&#22312;&#25105;&#20204;&#30340;&#39029;&#38754;&#25110;&#32452;&#20214;&#23450;&#20041;&#25991;&#20214;&#65288;*.page&#25110;*.jwc&#65289;&#20013;&#65292;&#25105;&#20204;&#20165;&#20165;&#28155;&#21152;property-specification&#20803;&#32032;&#20174;ApplicatonContext&#20013;&#33719;&#21462;bean&#65292;&#24182;&#20026;&#36825;&#20123;bean&#21019;&#24314;&#39029;&#38754;&#25110;&#32452;&#20214;&#23646;&#24615;&#12290;&#20363;&#22914;&#65306;</p><pre class="programlisting">    &lt;property-specification name="userService"
+                            type="com.whatever.services.service.user.UserService"&gt;
+        global.appContext.getBean("userService")
+    &lt;/property-specification&gt;
+    &lt;property-specification name="authenticationService"
+                            type="com.whatever.services.service.user.AuthenticationService"&gt;
+        global.appContext.getBean("authenticationService")
+    &lt;/property-specification&gt;</pre><p> &#22312;property-specification&#20013;&#23450;&#20041;&#30340;OGNL&#34920;&#36798;&#24335;&#20351;&#29992;&#19978;&#19979;&#25991;&#20013;&#30340;bean&#26469;&#25351;&#23450;&#23646;&#24615;&#30340;&#21021;&#22987;&#20540;&#12290;&#25972;&#20010;&#39029;&#38754;&#23450;&#20041;&#25991;&#20214;&#22914;&#19979;&#65306; </p><pre class="programlisting">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE page-specification PUBLIC 
+    "-//Apache Software Foundation//Tapestry Specification 3.0//EN" 
+    "http://jakarta.apache.org/tapestry/dtd/Tapestry_3_0.dtd"&gt;
+     
+&lt;page-specification class="com.whatever.web.xportal.pages.Login"&gt;
+ 
+    &lt;property-specification name="username" type="java.lang.String"/&gt;
+    &lt;property-specification name="password" type="java.lang.String"/&gt;
+    &lt;property-specification name="error" type="java.lang.String"/&gt;
+    &lt;property-specification name="callback" type="org.apache.tapestry.callback.ICallback" persistent="yes"/&gt;
+    &lt;property-specification name="userService"
+                            type="com.whatever.services.service.user.UserService"&gt;
+        global.appContext.getBean("userService")
+    &lt;/property-specification&gt;
+    &lt;property-specification name="authenticationService"
+                            type="com.whatever.services.service.user.AuthenticationService"&gt;
+        global.appContext.getBean("authenticationService")
+    &lt;/property-specification&gt;
+   
+    &lt;bean name="delegate" class="com.whatever.web.xportal.PortalValidationDelegate"/&gt;
+ 
+    &lt;bean name="validator" class="org.apache.tapestry.valid.StringValidator" lifecycle="page"&gt;
+        &lt;set-property name="required" expression="true"/&gt;
+        &lt;set-property name="clientScriptingEnabled" expression="true"/&gt;
+    &lt;/bean&gt;
+ 
+    &lt;component id="inputUsername" type="ValidField"&gt;
+        &lt;static-binding name="displayName" value="Username"/&gt;
+        &lt;binding name="value" expression="username"/&gt;
+        &lt;binding name="validator" expression="beans.validator"/&gt;
+    &lt;/component&gt;
+   
+    &lt;component id="inputPassword" type="ValidField"&gt;
+        &lt;binding name="value" expression="password"/&gt;
+       &lt;binding name="validator" expression="beans.validator"/&gt;
+       &lt;static-binding name="displayName" value="Password"/&gt;
+       &lt;binding name="hidden" expression="true"/&gt;
+    &lt;/component&gt;
+ 
+&lt;/page-specification&gt;</pre><p>
+				</p></div><div class="sect3" lang="zh_cn"><div class="titlepage"><div><div><h4 class="title"><a name="view-tapestry-getters"></a>13.7.2.5.&nbsp;&#28155;&#21152;&#25277;&#35937;&#35775;&#38382;&#26041;&#27861;</h4></div></div><div></div></div><p>&#29616;&#22312;&#22312;&#39029;&#38754;&#25110;&#32452;&#20214;&#26412;&#36523;&#30340;Java&#31867;&#23450;&#20041;&#20013;&#65292;&#25105;&#20204;&#25152;&#38656;&#35201;&#20570;&#30340;&#26159;&#20026;&#25105;&#20204;&#23450;&#20041;&#30340;&#23646;&#24615;&#28155;&#21152;&#25277;&#35937;getter&#26041;&#27861;&#12290;&#24403;Tapestry&#30495;&#27491;&#36733;&#20837;&#39029;&#38754;&#25110;&#32452;&#20214;&#26102;&#65292;Tepestry&#20250;&#23545;&#31867;&#25991;&#20214;&#20316;&#19968;&#20123;&#36816;&#34892;&#26102;&#30340;&#20195;&#30721;&#22788;&#29702;&#65292;&#28155;&#21152;&#24050;&#23450;&#20041;&#30340;&#23646;&#24615;&#65292;&#25346;&#25509;&#25277;&#35937;getter&#26041;&#27861;&#21040;&#26032;&#21019;&#24314;&#30340;&#22495;&#19978;&#12290;&#20363;&#22914;&#65306;</p><pre class="programlisting">    // our UserService implementation; will come from page definition
+    public abstract UserService getUserService();
+    // our AuthenticationService implementation; will come from page definition
+    public abstract AuthenticationService getAuthenticationService();</pre><p>
+        &#36825;&#20010;&#20363;&#23376;&#30340;login&#39029;&#38754;&#30340;&#23436;&#25972;Java&#31867;&#22914;&#19979;&#65306;</p><pre class="programlisting">package com.whatever.web.xportal.pages;
+ 
+/**
+ *  Allows the user to login, by providing username and password.
+ *  After succesfully logging in, a cookie is placed on the client browser
+ *  that provides the default username for future logins (the cookie
+ *  persists for a week).
+ */
+public abstract class Login extends BasePage implements ErrorProperty, PageRenderListener {
+ 
+    /** the key under which the authenticated user object is stored in the visit as */
+    public static final String USER_KEY = "user";
+   
+    /**
+     * The name of a cookie to store on the user's machine that will identify
+     * them next time they log in.
+     **/
+    private static final String COOKIE_NAME = Login.class.getName() + ".username";  
+    private final static int ONE_WEEK = 7 * 24 * 60 * 60;
+ 
+    // --- attributes
+ 
+    public abstract String getUsername();
+    public abstract void setUsername(String username);
+ 
+    public abstract String getPassword();
+    public abstract void setPassword(String password);
+ 
+    public abstract ICallback getCallback();
+    public abstract void setCallback(ICallback value);
+    
+    public abstract UserService getUserService();
+ 
+    public abstract AuthenticationService getAuthenticationService();
+ 
+    // --- methods
+ 
+    protected IValidationDelegate getValidationDelegate() {
+        return (IValidationDelegate) getBeans().getBean("delegate");
+    }
+ 
+    protected void setErrorField(String componentId, String message) {
+        IFormComponent field = (IFormComponent) getComponent(componentId);
+        IValidationDelegate delegate = getValidationDelegate();
+        delegate.setFormComponent(field);
+        delegate.record(new ValidatorException(message));
+    }
+ 
+    /**
+     *  Attempts to login. 
+     *
+     *  &lt;p&gt;If the user name is not known, or the password is invalid, then an error
+     *  message is displayed.
+     *
+     **/
+    public void attemptLogin(IRequestCycle cycle) {
+     
+        String password = getPassword();
+ 
+        // Do a little extra work to clear out the password.
+ 
+        setPassword(null);
+        IValidationDelegate delegate = getValidationDelegate();
+ 
+        delegate.setFormComponent((IFormComponent) getComponent("inputPassword"));
+        delegate.recordFieldInputValue(null);
+ 
+        // An error, from a validation field, may already have occured.
+ 
+        if (delegate.getHasErrors())
+            return;
+ 
+        try {
+            User user = getAuthenticationService().login(getUsername(), getPassword());
+           loginUser(user, cycle);
+        }
+        catch (FailedLoginException ex) {
+            this.setError("Login failed: " + ex.getMessage());
+            return;
+        }
+    }
+ 
+    /**
+     *  Sets up the {@link User} as the logged in user, creates
+     *  a cookie for their username (for subsequent logins),
+     *  and redirects to the appropriate page, or
+     *  a specified page).
+     *
+     **/
+    public void loginUser(User user, IRequestCycle cycle) {
+     
+        String username = user.getUsername();
+ 
+        // Get the visit object; this will likely force the
+        // creation of the visit object and an HttpSession.
+ 
+        Map visit = (Map) getVisit();
+        visit.put(USER_KEY, user);
+ 
+        // After logging in, go to the MyLibrary page, unless otherwise
+        // specified.
+ 
+        ICallback callback = getCallback();
+ 
+        if (callback == null)
+            cycle.activate("Home");
+        else
+            callback.performCallback(cycle);
+ 
+        // I've found that failing to set a maximum age and a path means that
+        // the browser (IE 5.0 anyway) quietly drops the cookie.
+ 
+        IEngine engine = getEngine();
+        Cookie cookie = new Cookie(COOKIE_NAME, username);
+        cookie.setPath(engine.getServletPath());
+        cookie.setMaxAge(ONE_WEEK);
+ 
+        // Record the user's username in a cookie
+ 
+        cycle.getRequestContext().addCookie(cookie);
+ 
+        engine.forgetPage(getPageName());
+    }
+   
+    public void pageBeginRender(PageEvent event) {
+        if (getUsername() == null)
+            setUsername(getRequestCycle().getRequestContext().getCookieValue(COOKIE_NAME));
+    }
+}</pre><p>
+				</p></div></div><div class="sect2" lang="zh_cn"><div class="titlepage"><div><div><h3 class="title"><a name="view-tapestry-summary"></a>13.7.3.&nbsp;&#23567;&#32467;</h3></div></div><div></div></div><p>&#22312;&#36825;&#20010;&#20363;&#23376;&#20013;&#65292;&#25105;&#20204;&#29992;&#22768;&#26126;&#30340;&#26041;&#24335;&#23558;&#23450;&#20041;&#22312;Spring&#30340;<tt class="literal">ApplicationContext</tt>&#20013;&#19994;&#21153;bean&#33021;&#22815;&#34987;&#39029;&#38754;&#35775;&#38382;&#12290;&#39029;&#38754;&#31867;&#24182;&#19981;&#30693;&#36947;&#19994;&#21153;&#23454;&#29616;&#20174;&#21738;&#37324;&#26469;&#65292;&#20107;&#23454;&#19978;&#65292;&#20063;&#24456;&#23481;&#26131;&#36716;&#31227;&#21040;&#21478;&#19968;&#20010;&#23454;&#29616;&#65292;&#20363;&#22914;&#20026;&#20102;&#27979;&#35797;&#12290;&#36825;&#26679;&#30340;&#21453;&#21521;&#25511;&#21046;&#26159;Spring&#26694;&#26550;&#30340;&#20027;&#35201;&#30446;&#26631;&#21644;&#20248;&#28857;&#65292;&#22312;&#36825;&#20010;Tapestry&#24212;&#29992;&#20013;&#65292;&#25105;&#20204;&#22312;J2EE&#26632;&#19978;&#33258;&#22987;&#33267;&#32456;&#20351;&#29992;&#21453;&#21521;&#25511;&#21046;&#12290;</p></div></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="mvc.html">&#19978;&#19968;&#39029;</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="index.html">&#19978;&#19968;&#32423;</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="jms.html">&#19979;&#19968;&#39029;</a></td></tr><tr><td width="40%" align="left" valign="top">&#31532;&nbsp;12&nbsp;&#31456;&nbsp;Web&#26694;&#26550;&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">&#36215;&#22987;&#39029;</a></td><td width="40%" align="right" valign="top">&nbsp;&#31532;&nbsp;14&nbsp;&#31456;&nbsp;JMS&#25903;&#25345;</td></tr></table></div></body></html>

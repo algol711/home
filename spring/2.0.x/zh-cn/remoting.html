@@ -1,0 +1,491 @@
+<html>
+<!-- Mirrored from www.redsaga.com/spring_ref/2.0RC2/html/remoting.html by HTTrack Website Copier/3.x [XR&CO'2005], Tue, 17 Oct 2006 16:56:38 GMT -->
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Chapter&nbsp;17.&nbsp;&#20351;&#29992;Spring&#36827;&#34892;&#36828;&#31243;&#35775;&#38382;&#19982;Web&#26381;&#21153;</title><link rel="stylesheet" href="http://www.redsaga.com/spring_ref/2.0RC2/styles/html.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.60.1"><link rel="home" href="index.html" title="Spring Framework &#24320;&#21457;&#21442;&#32771;&#25163;&#20876;"><link rel="up" href="pt04.html" title="Part&nbsp;IV.&nbsp;&#25972;&#21512;"><link rel="previous" href="pt04.html" title="Part&nbsp;IV.&nbsp;&#25972;&#21512;"><link rel="next" href="ejb.html" title="Chapter&nbsp;18.&nbsp;Enterprise Java Bean(EJB)&#38598;&#25104;&#xA;	"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div xmlns="http://www.w3.org/TR/xhtml1/transitional" style="background-color:#31430f;border:none;height:110px;border:1px solid black;"><a style="border:none;background: url();" href="http://www.springframework.org/" title="The Spring Framework"><img style="border:none;" src="images/banner4.jpg"></a><a style="border:none;background: url();" href="http://www.interface21.com/" title="Interface21 - Spring from the Source"><img style="border:none;position:absolute;right:32px;" src="images/bannerR.gif"></a></div><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="remoting"></a>Chapter&nbsp;17.&nbsp;&#20351;&#29992;Spring&#36827;&#34892;&#36828;&#31243;&#35775;&#38382;&#19982;Web&#26381;&#21153;</h2></div></div><div></div></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d0e21566"></a>17.1.&nbsp;&#31616;&#20171;</h2></div></div><div></div></div>
+   <table align="center">
+<tr>
+<td>
+<script type="text/javascript"><!--
+google_ad_client = "pub-2627642070897863";
+google_ad_width = 336;
+google_ad_height = 280;
+google_ad_format = "336x280_as";
+google_ad_type = "text_image";
+//2006-10-13: com_336x280
+google_ad_channel = "7652836435";
+google_color_border = "FFFFFF";
+google_color_bg = "FFFFFF";
+google_color_link = "0000FF";
+google_color_text = "000000";
+google_color_url = "000000";
+//--></script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</td>
+<td>
+<script type="text/javascript"><!--
+google_ad_client = "pub-2627642070897863";
+google_ad_width = 336;
+google_ad_height = 280;
+google_ad_format = "336x280_as";
+google_ad_type = "text_image";
+//2006-10-13: com_336x280
+google_ad_channel = "7652836435";
+google_color_border = "FFFFFF";
+google_color_bg = "FFFFFF";
+google_color_link = "0000FF";
+google_color_text = "000000";
+google_color_url = "000000";
+//--></script>
+<script type="text/javascript"
+  src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</td>
+</tr>
+</table>
+   <p>
+			Spring&#20026;&#21508;&#31181;&#36828;&#31243;&#35775;&#38382;&#25216;&#26415;&#30340;&#38598;&#25104;&#25552;&#20379;&#20102;&#24037;&#20855;&#31867;&#12290;Spring&#36828;&#31243;&#25903;&#25345;&#26159;&#30001;&#26222;&#36890;&#65288;Spring&#65289;POJO&#23454;&#29616;&#30340;&#65292;&#36825;&#20351;&#24471;&#24320;&#21457;&#20855;&#26377;&#36828;&#31243;&#35775;&#38382;&#21151;&#33021;&#30340;&#26381;&#21153;&#21464;&#24471;&#30456;&#24403;&#23481;&#26131;&#12290;&#30446;&#21069;&#65292;Spring&#25903;&#25345;&#22235;&#31181;&#36828;&#31243;&#25216;&#26415;&#65306;
+			</p><div class="itemizedlist"><ul type="disc" compact><li><p>
+						<span class="emphasis"><em>&#36828;&#31243;&#26041;&#27861;&#35843;&#29992;&#65288;RMI&#65289;</em></span>&#12290;&#36890;&#36807;&#20351;&#29992; <tt class="literal">RmiProxyFactoryBean</tt> &#21644; <tt class="literal">RmiServiceExporter</tt>&#65292;Spring&#21516;&#26102;&#25903;&#25345;&#20256;&#32479;&#30340;RMI&#65288;&#20351;&#29992;java.rmi.Remote&#25509;&#21475;&#21644;java.rmi.RemoteException&#65289;&#21644;&#36890;&#36807;RMI&#35843;&#29992;&#22120;&#23454;&#29616;&#30340;&#36879;&#26126;&#36828;&#31243;&#35843;&#29992;&#65288;&#25903;&#25345;&#20219;&#20309;Java&#25509;&#21475;&#65289;&#12290;
+					</p></li><li><p>
+						<span class="emphasis"><em>Spring&#30340;HTTP&#35843;&#29992;&#22120;</em></span>&#12290;Spring&#25552;&#20379;&#20102;&#19968;&#31181;&#29305;&#27530;&#30340;&#20801;&#35768;&#36890;&#36807;HTTP&#36827;&#34892;Java&#20018;&#34892;&#21270;&#30340;&#36828;&#31243;&#35843;&#29992;&#31574;&#30053;&#65292;&#25903;&#25345;&#20219;&#24847;Java&#25509;&#21475;&#65288;&#23601;&#20687;RMI&#35843;&#29992;&#22120;&#65289;&#12290;&#30456;&#23545;&#24212;&#30340;&#25903;&#25345;&#31867;&#26159; <tt class="literal">HttpInvokerProxyFactoryBean</tt> &#21644; <tt class="literal">HttpInvokerServiceExporter</tt>&#12290;
+					</p></li><li><p>
+						<span class="emphasis"><em>Hessian</em></span>&#12290;&#36890;&#36807; <tt class="literal">HessianProxyFactoryBean</tt> &#21644; <tt class="literal">HessianServiceExporter</tt>&#65292;&#21487;&#20197;&#20351;&#29992;Caucho&#25552;&#20379;&#30340;&#22522;&#20110;HTTP&#30340;&#36731;&#37327;&#32423;&#20108;&#36827;&#21046;&#21327;&#35758;&#26469;&#36879;&#26126;&#22320;&#26292;&#38706;&#26381;&#21153;&#12290;
+					</p></li><li><p>
+						<span class="emphasis"><em>Burlap</em></span>&#12290; Burlap&#26159;Caucho&#30340;&#21478;&#22806;&#19968;&#20010;&#23376;&#39033;&#30446;&#65292;&#21487;&#20197;&#20316;&#20026;Hessian&#22522;&#20110;XML&#30340;&#26367;&#20195;&#26041;&#26696;&#12290;Spring&#25552;&#20379;&#20102;&#35832;&#22914; <tt class="literal">BurlapProxyFactoryBean</tt> &#21644; <tt class="literal">BurlapServiceExporter</tt> &#30340;&#25903;&#25345;&#31867;&#12290;
+					</p></li><li><p>
+						<span class="emphasis"><em>JAX RPC</em></span>&#12290;Spring&#36890;&#36807;JAX-RPC&#20026;&#36828;&#31243;Web&#26381;&#21153;&#25552;&#20379;&#25903;&#25345;&#12290;
+					</p></li><li><p>
+						<span class="emphasis"><em>JMS&#65288;&#24453;&#23454;&#29616;&#65289;</em></span>&#12290;
+					</p></li></ul></div><p>
+		</p><p>
+			&#22312;&#35752;&#35770;Spring&#23545;&#36828;&#31243;&#35775;&#38382;&#30340;&#25903;&#25345;&#26102;&#65292;&#25105;&#20204;&#23558;&#20351;&#29992;&#19979;&#38754;&#30340;&#22495;&#27169;&#22411;&#21644;&#23545;&#24212;&#30340;&#26381;&#21153;&#65306;
+			</p><pre class="programlisting">
+// Account domain object
+public class Account implements Serializable{
+  private String name;
+
+  public String getName();
+  public void setName(String name) {
+    this.name = name;
+  }
+}
+			</pre><p>
+			</p><pre class="programlisting">
+// Account service
+public interface AccountService {
+
+  public void insertAccount(Account acc);
+
+  public List getAccounts(String name);
+}
+			</pre><p>
+			</p><pre class="programlisting">
+// Remote Account service
+public interface RemoteAccountService extends Remote {
+
+  public void insertAccount(Account acc) throws RemoteException;
+
+  public List getAccounts(String name) throws RemoteException;
+}
+			</pre><p>
+			</p><pre class="programlisting">
+// ... and corresponding implement doing nothing at the moment
+public class AccountServiceImpl implements AccountService {
+
+  public void insertAccount(Account acc) {
+    // do something
+  }
+
+  public List getAccounts(String name) {
+    // do something
+  }
+}
+			</pre><p>
+		</p><p>&#25105;&#20204;&#23558;&#20174;&#20351;&#29992;RMI&#25226;&#26381;&#21153;&#26292;&#38706;&#32473;&#36828;&#31243;&#23458;&#25143;&#31471;&#24320;&#22987;&#24182;&#25506;&#35752;&#20351;&#29992;RMI&#30340;&#19968;&#20123;&#32570;&#28857;&#12290;&#28982;&#21518;&#25105;&#20204;&#23558;&#28436;&#31034;&#19968;&#20010;&#20351;&#29992;Hessian&#30340;&#20363;&#23376;&#12290;</p></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d0e21649"></a>17.2.&nbsp;&#20351;&#29992;RMI&#26292;&#38706;&#26381;&#21153;</h2></div></div><div></div></div><p>&#20351;&#29992;Spring&#30340;RMI&#25903;&#25345;&#65292;&#20320;&#21487;&#20197;&#36890;&#36807;RMI&#22522;&#30784;&#35774;&#26045;&#36879;&#26126;&#30340;&#26292;&#38706;&#20320;&#30340;&#26381;&#21153;&#12290;&#35774;&#32622;&#22909;Spring&#30340;RMI&#25903;&#25345;&#21518;&#65292;&#20320;&#20250;&#30475;&#21040;&#19968;&#20010;&#21644;&#36828;&#31243;EJB&#25509;&#21475;&#31867;&#20284;&#30340;&#37197;&#32622;&#65292;&#21482;&#26159;&#27809;&#26377;&#23545;&#23433;&#20840;&#19978;&#19979;&#25991;&#20256;&#36882;&#21644;&#36828;&#31243;&#20107;&#21153;&#20256;&#36882;&#30340;&#26631;&#20934;&#25903;&#25345;&#12290;&#24403;&#20351;&#29992;RMI&#35843;&#29992;&#22120;&#26102;&#65292;Spring&#23545;&#36825;&#20123;&#39069;&#22806;&#30340;&#35843;&#29992;&#19978;&#19979;&#25991;&#25552;&#20379;&#20102;&#38057;&#23376;&#65292;&#20320;&#21487;&#20197;&#22312;&#27492;&#25554;&#20837;&#23433;&#20840;&#26694;&#26550;&#25110;&#32773;&#23450;&#21046;&#30340;&#23433;&#20840;&#35777;&#20070;&#12290;</p><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e21654"></a>17.2.1.&nbsp;&#20351;&#29992; <tt class="literal">RmiServiceExporter</tt> &#26292;&#38706;&#26381;&#21153;</h3></div></div><div></div></div><p>&#20351;&#29992; <tt class="literal">RmiServiceExporter</tt>&#65292;&#25105;&#20204;&#21487;&#20197;&#25226;AccountService&#23545;&#35937;&#30340;&#25509;&#21475;&#26292;&#38706;&#25104;RMI&#23545;&#35937;&#12290;&#21487;&#20197;&#20351;&#29992; <tt class="literal">RmiProxyFactoryBean</tt> &#25110;&#32773;&#22312;&#20256;&#32479;RMI&#26381;&#21153;&#20013;&#20351;&#29992;&#26222;&#36890;RMI&#26469;&#35775;&#38382;&#35813;&#25509;&#21475;&#12290;<tt class="literal">RmiServiceExporter</tt> &#26174;&#24335;&#22320;&#25903;&#25345;&#20351;&#29992;RMI&#35843;&#29992;&#22120;&#26292;&#38706;&#20219;&#20309;&#38750;RMI&#30340;&#26381;&#21153;&#12290;
+			</p><p>
+				&#24403;&#28982;&#65292;&#25105;&#20204;&#39318;&#20808;&#38656;&#35201;&#22312;Spring BeanFactory&#20013;&#35774;&#32622;&#25105;&#20204;&#30340;&#26381;&#21153;&#65306;
+				</p><pre class="programlisting">
+&lt;bean id="accountService" class="example.AccountServiceImpl"&gt;
+    &lt;!-- any additional properties, maybe a DAO? --&gt;
+&lt;/bean&gt;
+				</pre><p>
+			</p><p>
+				&#28982;&#21518;&#65292;&#25105;&#20204;&#23558;&#20351;&#29992; <tt class="literal">RmiServiceExporter</tt> &#26469;&#26292;&#38706;&#25105;&#20204;&#30340;&#26381;&#21153;&#65306;
+				</p><pre class="programlisting">
+&lt;bean class="org.springframework.remoting.rmi.RmiServiceExporter"&gt;
+	&lt;!-- does not necessarily have to be the same name as the bean to be exported --&gt;
+	&lt;property name="serviceName" value="AccountService"/&gt;
+	&lt;property name="service" ref="accountService"/&gt;
+	&lt;property name="serviceInterface" value="example.AccountService"/&gt;
+	&lt;!-- defaults to 1099 --&gt;
+	&lt;property name="registryPort" value="1199"/&gt;
+&lt;/bean&gt;
+				</pre><p>
+				&#27491;&#22914;&#20320;&#25152;&#35265;&#65292;&#25105;&#20204;&#35206;&#30422;&#20102;RMI&#27880;&#20876;&#30340;&#31471;&#21475;&#21495;&#12290;&#36890;&#24120;&#65292;&#20320;&#30340;&#24212;&#29992;&#26381;&#21153;&#20063;&#20250;&#32500;&#25252;RMI&#27880;&#20876;&#65292;&#26368;&#22909;&#19981;&#35201;&#21644;&#23427;&#20914;&#31361;&#12290;&#26356;&#36827;&#19968;&#27493;&#26469;&#35828;&#65292;&#26381;&#21153;&#21517;&#26159;&#29992;&#26469;&#32465;&#23450;&#19979;&#38754;&#30340;&#26381;&#21153;&#30340;&#12290;&#25152;&#20197;&#26412;&#20363;&#20013;&#65292;&#26381;&#21153;&#32465;&#23450;&#22312; <tt class="literal">rmi://HOST:1199/AccountService</tt>&#12290;&#22312;&#23458;&#25143;&#31471;&#25105;&#20204;&#23558;&#20351;&#29992;&#36825;&#20010;URL&#26469;&#38142;&#25509;&#21040;&#26381;&#21153;&#12290;
+			</p><p>
+				<span class="emphasis"><em>&#27880;&#24847;&#65306;&#25105;&#20204;&#30465;&#30053;&#20102;&#19968;&#20010;&#23646;&#24615;&#65292;&#23601;&#26159; <tt class="literal">servicePort</tt> &#23646;&#24615;&#65292;&#23427;&#30340;&#40664;&#35748;&#20540;&#20026;0&#12290; &#36825;&#34920;&#31034;&#22312;&#26381;&#21153;&#36890;&#20449;&#26102;&#20351;&#29992;&#21311;&#21517;&#31471;&#21475;&#12290;&#24403;&#28982;&#22914;&#26524;&#20320;&#24895;&#24847;&#30340;&#35805;&#65292;&#20063;&#21487;&#20197;&#25351;&#23450;&#19968;&#20010;&#19981;&#21516;&#30340;&#31471;&#21475;&#12290;</em></span>
+			</p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e21695"></a>17.2.2.&nbsp;&#22312;&#23458;&#25143;&#31471;&#38142;&#25509;&#26381;&#21153;</h3></div></div><div></div></div><p>
+				&#25105;&#20204;&#30340;&#23458;&#25143;&#31471;&#26159;&#19968;&#20010;&#20351;&#29992;AccountService&#26469;&#31649;&#29702;account&#30340;&#31616;&#21333;&#23545;&#35937;&#65306;
+				</p><pre class="programlisting">
+public class SimpleObject {
+  private AccountService accountService;
+  public void setAccountService(AccountService accountService) {
+    this.accountService = accountService;
+  }
+}
+				</pre><p>
+			</p><p>
+				&#20026;&#20102;&#25226;&#26381;&#21153;&#36830;&#25509;&#21040;&#23458;&#25143;&#31471;&#19978;&#65292;&#25105;&#20204;&#23558;&#21019;&#24314;&#21478;&#19968;&#20010;&#21333;&#29420;&#30340;bean&#24037;&#21378;&#65292;&#23427;&#21253;&#21547;&#36825;&#20010;&#31616;&#21333;&#23545;&#35937;&#21644;&#26381;&#21153;&#38142;&#25509;&#37197;&#32622;&#20301;&#65306;
+				</p><pre class="programlisting">
+&lt;bean class="example.SimpleObject"&gt;
+	&lt;property name="accountService" ref="accountService"/&gt;
+&lt;/bean&gt;
+
+&lt;bean id="accountService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean"&gt;
+	&lt;property name="serviceUrl" value="rmi://HOST:1199/AccountService"/&gt;
+	&lt;property name="serviceInterface" value="example.AccountService"/&gt;
+&lt;/bean&gt;
+				</pre><p>
+				&#36825;&#23601;&#26159;&#25105;&#20204;&#22312;&#23458;&#25143;&#31471;&#20026;&#25903;&#25345;&#36828;&#31243;account&#26381;&#21153;&#25152;&#38656;&#35201;&#20570;&#30340;&#12290;Spring&#23558;&#36879;&#26126;&#30340;&#21019;&#24314;&#19968;&#20010;&#35843;&#29992;&#22120;&#24182;&#19988;&#36890;&#36807;RmiServiceExporter&#20351;&#24471;account&#26381;&#21153;&#25903;&#25345;&#36828;&#31243;&#26381;&#21153;&#12290;&#22312;&#23458;&#25143;&#31471;&#65292;&#25105;&#20204;&#29992;RmiProxyFactoryBean&#36830;&#25509;&#23427;&#12290;
+			</p></div></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d0e21708"></a>17.3.&nbsp;&#20351;&#29992;Hessian&#25110;&#32773;Burlap&#36890;&#36807;HTTP&#36828;&#31243;&#35843;&#29992;&#26381;&#21153;</h2></div></div><div></div></div><p>
+			Hessian&#25552;&#20379;&#19968;&#31181;&#22522;&#20110;HTTP&#30340;&#20108;&#36827;&#21046;&#36828;&#31243;&#21327;&#35758;&#12290;&#23427;&#26159;&#30001;Caucho&#21019;&#24314;&#30340;&#65292;&#21487;&#20197;&#22312; <a href="http://www.caucho.com/" target="_top">http://www.caucho.com</a> &#25214;&#21040;&#26356;&#22810;&#26377;&#20851;Hessian&#30340;&#20449;&#24687;&#12290;
+		</p><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e21715"></a>17.3.1.&nbsp;&#20026;Hessian&#37197;&#32622;DispatcherServlet</h3></div></div><div></div></div><p>
+                Hessian&#20351;&#29992;&#19968;&#20010;&#29305;&#23450;&#30340;Servlet&#36890;&#36807;HTTP&#36827;&#34892;&#36890;&#35759;&#12290;&#20351;&#29992;Spring&#30340;DispatcherServlet&#65292;&#21487;&#20197;&#24456;&#23481;&#26131;&#30340;&#37197;&#32622;&#36825;&#26679;&#19968;&#20010;Servlet&#26469;&#26292;&#38706;&#20320;&#30340;&#26381;&#21153;&#12290;&#39318;&#20808;&#25105;&#20204;&#35201;&#22312;&#20320;&#30340;&#24212;&#29992;&#37324;&#21019;&#24314;&#19968;&#20010;&#26032;&#30340;Servlet&#65288;&#19979;&#38754;&#26469;&#33258;<tt class="literal">web.xml</tt>&#25991;&#20214;&#65289;&#65306;
+				</p><pre class="programlisting">
+&lt;servlet&gt;
+	&lt;servlet-name&gt;remoting&lt;/servlet-name&gt;
+	&lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;
+	&lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+&lt;/servlet&gt;
+
+&lt;servlet-mapping&gt;
+	&lt;servlet-name&gt;remoting&lt;/servlet-name&gt;
+	&lt;url-pattern&gt;/remoting/*&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;
+				</pre><p>
+			</p><p>&#20320;&#21487;&#33021;&#23545;Spring&#30340;DispatcherServlet&#24456;&#29087;&#24713;&#65292;&#36825;&#26679;&#20320;&#23601;&#30693;&#36947;&#65292;&#38656;&#35201;&#22312; <tt class="literal">WEB-INF</tt> &#30446;&#24405;&#37324;&#21019;&#24314;&#19968;&#20010;&#21517;&#20026; <tt class="literal">remoting-servlet.xml</tt>&#65288;&#22312;&#20320;&#30340;servlet&#21517;&#21518;&#65289;&#30340;&#24212;&#29992;&#19978;&#19979;&#25991;&#12290;&#36825;&#20010;&#24212;&#29992;&#19978;&#19979;&#25991;&#23558;&#22312;&#19979;&#19968;&#33410;&#20013;&#37324;&#20351;&#29992;&#12290;
+			</p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e21734"></a>17.3.2.&nbsp;&#20351;&#29992;HessianServiceExporter&#26292;&#38706;&#20320;&#30340;bean</h3></div></div><div></div></div><p>
+				&#22312;&#26032;&#21019;&#24314;&#30340; <tt class="literal">remoting-servlet.xml</tt> &#24212;&#29992;&#19978;&#19979;&#25991;&#37324;&#65292;&#25105;&#20204;&#23558;&#21019;&#24314;&#19968;&#20010;HessianServiceExporter&#26469;&#26292;&#38706;&#20320;&#30340;&#26381;&#21153;&#65306;
+				</p><pre class="programlisting">
+&lt;bean id="accountService" class="example.AccountServiceImpl"&gt;
+  &lt;!-- any additional properties, maybe a DAO? --&gt;
+&lt;/bean&gt;
+
+&lt;bean name="/AccountService" class="org.springframework.remoting.caucho.HessianServiceExporter"&gt;
+  &lt;property name="service" ref="accountService"/&gt;
+  &lt;property name="serviceInterface" value="example.AccountService"/&gt;
+&lt;/bean&gt;
+				</pre><p>
+				&#29616;&#22312;&#65292;&#25105;&#20204;&#20934;&#22791;&#22312;&#23458;&#25143;&#31471;&#36830;&#25509;&#26381;&#21153;&#20102;&#12290;&#19981;&#24517;&#26174;&#31034;&#25351;&#23450;&#22788;&#29702;&#22120;&#30340;&#26144;&#23556;&#65292;&#21482;&#35201;&#20351;&#29992;BeanNameUrlHandlerMapping&#25226;URL&#35831;&#27714;&#26144;&#23556;&#21040;&#26381;&#21153;&#19978;&#65306;&#25152;&#20197;&#65292;&#36825;&#20010;&#26381;&#21153;&#23558;&#22312;&#30001;bean&#21517;&#31216;&#25351;&#26126;&#30340;URL <tt class="literal">http://HOST:8080/remoting/AccountService</tt> &#20301;&#32622;&#36827;&#34892;&#26292;&#38706;&#12290;
+			</p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e21748"></a>17.3.3.&nbsp;&#23458;&#25143;&#31471;&#36830;&#25509;&#26381;&#21153;</h3></div></div><div></div></div><p>
+				&#20351;&#29992; <tt class="literal">HessianProxyFactoryBean</tt>&#65292;&#25105;&#20204;&#21487;&#20197;&#22312;&#23458;&#25143;&#31471;&#36830;&#25509;&#26381;&#21153;&#12290;&#21516;&#26679;&#30340;&#26041;&#24335;&#23545;RMI&#31034;&#20363;&#20063;&#36866;&#29992;&#12290;&#25105;&#20204;&#23558;&#21019;&#24314;&#19968;&#20010;&#21333;&#29420;&#30340;bean&#24037;&#21378;&#25110;&#32773;&#24212;&#29992;&#19978;&#19979;&#25991;&#65292;&#32780;&#21518;&#31616;&#21333;&#22320;&#25351;&#26126;&#19979;&#38754;&#30340;bean SimpleObject&#23558;&#20351;&#29992;AccountService&#26469;&#31649;&#29702;accounts&#65306;
+				</p><pre class="programlisting">
+&lt;bean class="example.SimpleObject"&gt;
+  &lt;property name="accountService" ref="accountService"/&gt;
+&lt;/bean&gt;
+
+&lt;bean id="accountService" class="org.springframework.remoting.caucho.HessianProxyFactoryBean"&gt;
+	&lt;property name="serviceUrl" value="http://remotehost:8080/AccountService"/&gt;
+	&lt;property name="serviceInterface" value="example.AccountService"/&gt;
+&lt;/bean&gt;
+				</pre><p>
+				&#36825;&#23601;&#26159;&#25152;&#26377;&#35201;&#20570;&#30340;&#12290;
+			</p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e21759"></a>17.3.4.&nbsp;&#20351;&#29992;Burlap</h3></div></div><div></div></div><p>&#25105;&#20204;&#22312;&#36825;&#37324;&#23558;&#19981;&#21435;&#20180;&#32454;&#35752;&#35770;Burlap&#65292;&#23427;&#26159;&#19968;&#20010;&#22522;&#20110;XML&#30340;Hessian&#26367;&#20195;&#26041;&#26696;&#12290;&#23427;&#30340;&#37197;&#32622;&#26041;&#27861;&#21644;&#19978;&#36848;Hessian&#30340;&#19968;&#26679;&#12290;&#21482;&#35201;&#25226; <tt class="literal">Hessian</tt> &#25442;&#25104; <tt class="literal">Burlap</tt> &#23601;&#34892;&#20102;&#12290;</p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e21770"></a>17.3.5.&nbsp;&#23545;&#36890;&#36807;Hessian&#25110;Burlap&#26292;&#38706;&#30340;&#26381;&#21153;&#20351;&#29992;HTTP&#22522;&#30784;&#35748;&#35777;</h3></div></div><div></div></div><p>Hessian&#21644;Burlap&#30340;&#19968;&#20010;&#20248;&#21183;&#26159;&#25105;&#20204;&#21487;&#20197;&#23481;&#26131;&#30340;&#20351;&#29992;HTTP&#22522;&#30784;&#35748;&#35777;&#65292;&#22240;&#20026;&#20182;&#20204;&#20108;&#32773;&#37117;&#26159;&#22522;&#20110;HTTP&#30340;&#12290;&#20363;&#22914;&#65292;&#26222;&#36890;HTTP Server&#23433;&#20840;&#26426;&#21046;&#21487;&#20197;&#36890;&#36807;&#20351;&#29992; <tt class="literal">web.xml</tt> &#23433;&#20840;&#29305;&#24449;&#26469;&#24212;&#29992;&#12290;&#36890;&#24120;&#65292;&#20320;&#19981;&#20250;&#20026;&#27599;&#20010;&#29992;&#25143;&#37117;&#24314;&#31435;&#19981;&#21516;&#30340;&#23433;&#20840;&#35777;&#20070;&#65292;&#32780;&#26159;&#22312;Hessian/BurlapProxyFactoryBean&#32423;&#21035;&#20849;&#20139;&#23433;&#20840;&#35777;&#20070;&#65288;&#31867;&#20284;&#19968;&#20010;JDBC&#25968;&#25454;&#28304;&#65289;&#12290;</p><p>
+				</p><pre class="programlisting">
+&lt;bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"&gt;
+	&lt;property name="interceptors"&gt;
+		&lt;list&gt;
+			&lt;ref bean="authorizationInterceptor"/&gt;
+		&lt;/list&gt;
+	&lt;/property&gt;
+&lt;/bean&gt;
+
+&lt;bean id="authorizationInterceptor"
+	class="org.springframework.web.servlet.handler.UserRoleAuthorizationInterceptor"&gt;
+	&lt;property name="authorizedRoles"&gt;
+		&lt;list&gt;
+			&lt;value&gt;administrator&lt;/value&gt;
+			&lt;value&gt;operator&lt;/value&gt;
+		&lt;/list&gt;
+	&lt;/property&gt;
+&lt;/bean&gt;
+				</pre><p>
+			</p><p>&#36825;&#20010;&#20363;&#23376;&#37324;&#25105;&#20204;&#26174;&#24335;&#20351;&#29992;&#20102;BeanNameUrlHandlerMapping&#65292;&#24182;&#35774;&#32622;&#20102;&#19968;&#20010;&#25318;&#25130;&#22120;&#65292;&#21518;&#32773;&#23558;&#21482;&#20801;&#35768;&#31649;&#29702;&#21592;&#21644;&#25805;&#20316;&#21592;&#35843;&#29992;&#36825;&#20010;&#24212;&#29992;&#19978;&#19979;&#25991;&#20013;&#25552;&#21450;&#30340;bean&#12290;</p><p>
+				<span class="emphasis"><em>&#27880;&#24847;&#65306;&#24403;&#28982;&#65292;&#36825;&#20010;&#20363;&#23376;&#27809;&#26377;&#28436;&#31034;&#28789;&#27963;&#30340;&#23433;&#20840;&#35774;&#26045;&#12290;&#32771;&#34385;&#26356;&#22810;&#26377;&#20851;&#23433;&#20840;&#30340;&#38382;&#39064;&#26102;&#65292;&#35831;&#21442;&#38405; <a href="http://acegisecurity.sourceforge.net/" target="_top">http://acegisecurity.sourceforge.net</a> &#22788;&#30340;Acegi Security System for Spring</em></span> &#12290;
+			</p></div></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d0e21792"></a>17.4.&nbsp;&#20351;&#29992;HTTP&#35843;&#29992;&#22120;&#26292;&#38706;&#26381;&#21153;</h2></div></div><div></div></div><p>
+			&#21644;&#20351;&#29992;&#33258;&#36523;&#24207;&#21015;&#21270;&#26426;&#21046;&#30340;&#36731;&#37327;&#32423;&#21327;&#35758;Burlap&#21644;Hessian&#30456;&#21453;&#65292;Spring HTTP&#35843;&#29992;&#22120;&#20351;&#29992;&#26631;&#20934;Java&#24207;&#21015;&#21270;&#26426;&#21046;&#26469;&#36890;&#36807;HTTP&#26292;&#38706;&#19994;&#21153;&#12290;&#22914;&#26524;&#20320;&#30340;&#21442;&#25968;&#25110;&#36820;&#22238;&#20540;&#26159;&#22797;&#26434;&#31867;&#22411;&#65292;&#24182;&#19988;&#19981;&#33021;&#36890;&#36807;Hessian&#21644;Burlap&#30340;&#24207;&#21015;&#21270;&#26426;&#21046;&#36827;&#34892;&#24207;&#21015;&#21270;&#65292;HTTP&#35843;&#29992;&#22120;&#23601;&#24456;&#26377;&#20248;&#21183;&#65288;&#21442;&#38405;&#19979;&#19968;&#33410;&#65292;&#36873;&#25321;&#36828;&#31243;&#25216;&#26415;&#26102;&#30340;&#32771;&#34385;&#65289;&#12290;
+		</p><p>
+		&#23454;&#38469;&#19978;&#65292;Spring&#21487;&#20197;&#20351;&#29992;J2SE&#25552;&#20379;&#30340;&#26631;&#20934;&#21151;&#33021;&#25110;Commons&#30340;HttpClient&#26469;&#23454;&#29616;HTTP&#35843;&#29992;&#12290;&#22914;&#26524;&#20320;&#38656;&#35201;&#26356;&#20808;&#36827;&#65292;&#26356;&#23481;&#26131;&#20351;&#29992;&#30340;&#21151;&#33021;&#65292;&#23601;&#20351;&#29992;&#21518;&#32773;&#12290;&#20320;&#21487;&#20197;&#21442;&#32771; <a href="http://jakarta.apache.org/commons/httpclient" target="_top">jakarta.apache.org/commons/httpclient</a>&#12290;
+		</p><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e21802"></a>17.4.1.&nbsp;&#26292;&#38706;&#26381;&#21153;&#23545;&#35937;</h3></div></div><div></div></div><p>
+				&#20026;&#26381;&#21153;&#23545;&#35937;&#35774;&#32622;HTTP&#35843;&#29992;&#22120;&#21644;&#20320;&#22312;Hessian&#25110;Burlap&#20013;&#20351;&#29992;&#30340;&#26041;&#24335;&#31867;&#20284;&#12290;&#23601;&#35937;&#20026;Hessian&#25903;&#25345;&#25552;&#20379;&#30340; <tt class="literal">HessianServiceExporter</tt>&#65292;Spring&#30340;HTTP&#35843;&#29992;&#22120;&#25552;&#20379;&#20102; <tt class="literal">org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter</tt>&#12290;&#20026;&#20102;&#26292;&#38706; <tt class="literal">AccountService</tt>&#65288;&#19978;&#36848;&#30340;&#65289;&#65292;&#20351;&#29992;&#19979;&#38754;&#30340;&#37197;&#32622;&#65306;
+</p><pre class="programlisting">
+&lt;bean name="/AccountService" class="org.sprfr.remoting.httpinvoker.HttpInvokerServiceExporter"&gt;
+  &lt;property name="service" ref="accountService"/&gt;
+  &lt;property name="serviceInterface" value="example.AccountService"/&gt;
+&lt;/bean&gt;
+</pre><p>
+			</p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e21819"></a>17.4.2.&nbsp;&#22312;&#23458;&#25143;&#31471;&#36830;&#25509;&#26381;&#21153;</h3></div></div><div></div></div><p>
+				&#21516;&#26679;&#65292;&#20174;&#23458;&#25143;&#31471;&#36830;&#25509;&#19994;&#21153;&#19982;&#20320;&#20351;&#29992;Hessian&#25110;Burlap&#26102;&#25152;&#20570;&#30340;&#24456;&#30456;&#20284;&#12290;&#20351;&#29992;&#20195;&#29702;&#65292;Spring&#21487;&#20197;&#23558;&#20320;&#35843;&#29992;&#30340;HTTP POST&#35831;&#27714;&#36716;&#25442;&#25104;&#34987;&#26292;&#38706;&#26381;&#21153;&#30340;URL&#12290;
+</p><pre class="programlisting">
+&lt;bean id="httpInvokerProxy" class="org.sprfr.remoting.httpinvoker.HttpInvokerProxyFactoryBean"&gt;
+  &lt;property name="serviceUrl" value="http://remotehost:8080/AccountService"/&gt;
+  &lt;property name="serviceInterface" value="example.AccountService"/&gt;
+&lt;/bean&gt;
+</pre><p>
+			</p><p>
+&#23601;&#35937;&#19978;&#38754;&#35828;&#30340;&#19968;&#26679;&#65292;&#20320;&#21487;&#20197;&#36873;&#25321;&#20351;&#29992;&#20320;&#24819;&#20351;&#29992;&#30340;HTTP&#23458;&#25143;&#31471;&#12290;&#32570;&#30465;&#24773;&#20917;&#19979;&#65292;HttpInvokerPropxy&#20351;&#29992;J2SE&#30340;HTTP&#21151;&#33021;&#65292;&#20294;&#26159;&#20320;&#20063;&#21487;&#20197;&#36890;&#36807;&#35774;&#32622;<tt class="literal">httpInvokerRequestExecutor</tt>&#23646;&#24615;&#36873;&#25321;&#20351;&#29992;Commons HttpClient&#65306;
+
+</p><pre class="programlisting">
+&lt;property name="httpInvokerRequestExecutor"&gt;
+	&lt;bean class="org.springframework.remoting.httpinvoker.CommonsHttpInvokerRequestExecutor"/&gt;
+&lt;/property&gt;
+</pre><p>
+			</p></div></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d0e21835"></a>17.5.&nbsp;Web&#26381;&#21153;</h2></div></div><div></div></div><p>
+			Spring&#25903;&#25345;&#65306;
+			</p><div class="itemizedlist"><ul type="disc" compact><li><p>&#20351;&#29992;JAX-RPC&#26292;&#38706;&#26381;&#21153;</p></li><li><p>&#35775;&#38382;Web&#26381;&#21153;</p></li></ul></div><p>
+		</p><p>&#38500;&#20102;&#19978;&#38754;&#25152;&#35828;&#30340;&#25903;&#25345;&#26041;&#27861;&#65292;&#20320;&#36824;&#21487;&#20197;&#29992;XFire <a href="http://xfire.codehaus.org/" target="_top">xfire.codehaus.org</a> &#26469;&#26292;&#38706;&#20320;&#30340;&#26381;&#21153;&#12290;XFire&#26159;&#19968;&#20010;&#36731;&#37327;&#32423;&#30340;SOAP&#24211;&#65292;&#30446;&#21069;&#22312;Codehaus&#24320;&#21457;&#12290;</p><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e21853"></a>17.5.1.&nbsp;&#20351;&#29992;JAXI-RPC&#26292;&#38706;&#26381;&#21153;</h3></div></div><div></div></div><p>
+				Spring&#23545;JAX-RPC Servlet&#30340;&#31471;&#28857;&#23454;&#29616;&#26377;&#20010;&#26041;&#20415;&#30340;&#22522;&#31867; - <tt class="literal">ServletEndpointSupport</tt>&#12290;&#20026;&#26292;&#38706;&#25105;&#20204;&#30340;Account&#26381;&#21153;&#65292;&#25105;&#20204;&#32487;&#25215;&#20102;Spring&#30340;ServletEndpointSupport&#31867;&#26469;&#23454;&#29616;&#19994;&#21153;&#36923;&#36753;&#65292;&#36825;&#37324;&#36890;&#24120;&#25226;&#35843;&#29992;&#22996;&#25176;&#32473;&#19994;&#21153;&#23618;&#12290;
+</p><pre class="programlisting">
+/**
+ * JAX-RPC compliant RemoteAccountService implementation that simply delegates
+ * to the AccountService implementation in the root web application context.
+ *
+ * This wrapper class is necessary because JAX-RPC requires working with
+ * RMI interfaces. If an existing service needs to be exported, a wrapper that
+ * extends ServletEndpointSupport for simple application context access is
+ * the simplest JAX-RPC compliant way.
+ *
+ * This is the class registered with the server-side JAX-RPC implementation.
+ * In the case of Axis, this happens in "server-config.wsdd" respectively via
+ * deployment calls. The Web Service tool manages the life-cycle of instances
+ * of this class: A Spring application context can just be accessed here.
+ */
+public class AccountServiceEndpoint extends ServletEndpointSupport implements RemoteAccountService {
+
+    private AccountService biz;
+
+    protected void onInit() {
+        this.biz = (AccountService) getWebApplicationContext().getBean("accountService");
+    }
+
+    public void insertAccount(Account acc) throws RemoteException {
+        biz.insertAccount(acc);
+    }
+
+    public Account[] getAccounts(String name) throws RemoteException {
+        return biz.getAccounts(name);
+    }
+
+}
+</pre><p>
+			AccountServletEndpoint&#38656;&#35201;&#22312;Spring&#20013;&#21516;&#19968;&#20010;&#19978;&#19979;&#25991;&#30340;web&#24212;&#29992;&#37324;&#36816;&#34892;&#65292;&#20197;&#33719;&#24471;&#23545;Spring&#30340;&#35775;&#38382;&#33021;&#21147;&#12290;&#22914;&#26524;&#20351;&#29992;Axis&#65292;&#25226;Axis&#30340;&#23450;&#20041;&#22797;&#21046;&#21040;&#20320;&#30340;web.xml&#20013;&#65292;&#24182;&#19988;&#22312;"server-config.wsdd"&#20013;&#35774;&#32622;&#31471;&#28857;&#65288;&#25110;&#20351;&#29992;&#21457;&#24067;&#24037;&#20855;&#65289;&#12290;&#21442;&#30475;JPetStore&#36825;&#20010;&#20363;&#23376;&#20013;OrderService&#26159;&#22914;&#20309;&#29992;Axis&#21457;&#24067;&#25104;&#19968;&#20010;Web&#26381;&#21153;&#30340;&#12290;
+			</p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e21864"></a>17.5.2.&nbsp;&#35775;&#38382;Web&#26381;&#21153;</h3></div></div><div></div></div><p>
+				Spring&#26377;&#20004;&#20010;&#24037;&#21378;bean&#29992;&#26469;&#21019;&#24314;Web&#26381;&#21153;&#20195;&#29702;&#65292;<tt class="literal">LocalJaxRpcServiceFactoryBean</tt> &#21644; <tt class="literal">JaxRpcPortProxyFactoryBean</tt>&#12290;&#21069;&#32773;&#21482;&#36820;&#22238;&#19968;&#20010;JAX-RPT&#26381;&#21153;&#31867;&#20379;&#25105;&#20204;&#20351;&#29992;&#12290;&#21518;&#32773;&#26159;&#19968;&#20010;&#20840;&#21151;&#33021;&#30340;&#29256;&#26412;&#65292;&#21487;&#20197;&#36820;&#22238;&#19968;&#20010;&#23454;&#29616;&#25105;&#20204;&#19994;&#21153;&#26381;&#21153;&#25509;&#21475;&#30340;&#20195;&#29702;&#12290;&#26412;&#20363;&#20013;&#65292;&#25105;&#20204;&#20351;&#29992;&#21518;&#32773;&#26469;&#20026;&#21069;&#38754;&#27573;&#33853;&#20013;&#26292;&#38706;&#30340;AccountService&#31471;&#28857;&#21019;&#24314;&#19968;&#20010;&#20195;&#29702;&#12290;&#20320;&#23558;&#30475;&#21040;Spring&#23545;Web&#26381;&#21153;&#25552;&#20379;&#20102;&#26497;&#22909;&#30340;&#25903;&#25345;&#65292;&#21482;&#38656;&#35201;&#24456;&#23569;&#30340;&#20195;&#30721; - &#22823;&#22810;&#25968;&#37117;&#26159;&#36890;&#36807;&#31867;&#20284;&#19979;&#38754;&#30340;Spring&#37197;&#32622;&#25991;&#20214;&#65306;
+</p><pre class="programlisting">
+    &lt;bean id="accountWebService" class="org.springframework.remoting.jaxrpc.JaxRpcPortProxyFactoryBean"&gt;
+        &lt;property name="serviceInterface"&gt;
+            &lt;value&gt;example.RemoteAccountService&lt;/value&gt;
+        &lt;/property&gt;
+        &lt;property name="wsdlDocumentUrl"&gt;
+            &lt;value&gt;http://localhost:8080/account/services/accountService?WSDL&lt;/value&gt;
+        &lt;/property&gt;
+        &lt;property name="namespaceUri"&gt;
+            &lt;value&gt;http://localhost:8080/account/services/accountService&lt;/value&gt;
+        &lt;/property&gt;
+        &lt;property name="serviceName"&gt;
+            &lt;value&gt;AccountService&lt;/value&gt;
+        &lt;/property&gt;
+        &lt;property name="portName"&gt;
+            &lt;value&gt;AccountPort&lt;/value&gt;
+        &lt;/property&gt;
+    &lt;/bean&gt;
+</pre><p>
+				<tt class="literal">serviceInterface</tt> &#26159;&#23458;&#25143;&#31471;&#23558;&#35201;&#20351;&#29992;&#30340;&#36828;&#31243;&#19994;&#21153;&#25509;&#21475;&#12290;<tt class="literal">wsdlDocumentUrl</tt> &#26159;WSDL&#25991;&#20214;&#30340;URL&#12290;Spring&#38656;&#35201;&#36825;&#20123;&#22312;&#21551;&#21160;&#26102;&#21019;&#24314;JAX-RPC&#26381;&#21153;&#12290;<tt class="literal">namespaceUri</tt> &#23545;&#24212;&#21040;.wsdl&#25991;&#20214;&#20013;&#30340;targetNamespace&#12290;<tt class="literal">serviceName</tt> &#23545;&#24212;&#21040;.wsdl&#25991;&#20214;&#20013;&#30340;service name&#12290;<tt class="literal">portName</tt> &#23545;&#24212;&#21040;.wsdl&#25991;&#20214;&#20013;&#30340;&#31471;&#21475;&#21495;&#12290;
+			</p><p>
+				&#29616;&#22312;bean&#24037;&#21378;&#23558;&#25226;Web&#26381;&#21153;&#26292;&#38706;&#20026; <tt class="literal">RemoteAccountService</tt> &#25509;&#21475;&#65292;&#35775;&#38382;&#26381;&#21153;&#21464;&#24471;&#24456;&#23481;&#26131;&#12290;&#25105;&#20204;&#21487;&#20197;&#22312;Spring&#20013;&#36825;&#26679;&#32452;&#35013;&#36215;&#26469;&#65306;
+</p><pre class="programlisting">
+    &lt;bean id="client" class="example.AccountClientImpl"&gt;
+        ...
+        &lt;property name="service" ref="accountWebService"/&gt;
+    &lt;/bean&gt;
+</pre><p>
+				&#22312;&#23458;&#25143;&#31471;&#25105;&#20204;&#21487;&#20197;&#20351;&#29992;&#31867;&#20284;&#20110;&#26222;&#36890;&#31867;&#30340;&#26041;&#24335;&#26469;&#35775;&#38382;Web&#26381;&#21153;&#65292;&#21306;&#21035;&#26159;&#23427;&#25243;&#20986;RemoteException&#24322;&#24120;&#12290;
+</p><pre class="programlisting">
+public class AccountClientImpl {
+
+    private RemoteAccountService service;
+
+    public void setService(RemoteAccountService service) {
+        this.service = service;
+    }
+
+    public void foo() {
+       try {
+           service.insertAccount(...);
+        } catch (RemoteException e) {
+           // ouch
+           ...
+        }
+     }
+
+}
+</pre><p>
+			</p><p>
+				&#30001;&#20110;Spring&#25552;&#20379;&#20102;&#33258;&#21160;&#36716;&#25442;&#25104;&#38750;&#21463;&#25511;&#24322;&#24120;&#30340;&#33021;&#21147;&#65292;&#25105;&#20204;&#21487;&#20197;&#19981;&#29992;&#32771;&#34385;&#21463;&#25511;&#30340;RemoteException&#24322;&#24120;&#12290;&#36825;&#35201;&#27714;&#25105;&#20204;&#20063;&#25552;&#20379;&#19968;&#20010;&#38750;RMI&#25509;&#21475;&#65292;&#37197;&#32622;&#25991;&#20214;&#29616;&#22312;&#22914;&#19979;&#65306;
+</p><pre class="programlisting">
+    &lt;bean id="accountWebService" class="org.springframework.remoting.jaxrpc.JaxRpcPortProxyFactoryBean"&gt;
+        &lt;property name="serviceInterface"&gt;
+            &lt;value&gt;example.AccountService&lt;/value&gt;
+        &lt;/property&gt;
+        &lt;property name="portInterface"&gt;
+            &lt;value&gt;example.RemoteAccountService&lt;/value&gt;
+        &lt;/property&gt;
+        ...
+    &lt;/bean&gt;
+</pre><p>
+			&#36825;&#37324; <tt class="literal">serviceInterface</tt> &#24050;&#32463;&#25913;&#25104;&#25105;&#20204;&#30446;&#21069;&#30340;&#38750;RMI&#25509;&#21475;&#12290;&#25105;&#20204;&#30340;RMI&#25509;&#21475;&#29616;&#22312;&#20351;&#29992;&#23646;&#24615; <tt class="literal">portInterface</tt> &#36827;&#34892;&#23450;&#20041;&#12290;&#29616;&#22312;&#23458;&#25143;&#31471;&#20195;&#30721;&#21487;&#20197;&#19981;&#29992;&#22788;&#29702; <tt class="literal">java.rmi.RemoteException</tt> &#24322;&#24120;&#65306;
+</p><pre class="programlisting">
+public class AccountClientImpl {
+
+    private AccountService service;
+
+    public void setService(AccountService service) {
+        this.service = service;
+    }
+
+    public void foo() {
+        service.insertAccount(...);
+     }
+
+}
+</pre><p>
+			</p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e21921"></a>17.5.3.&nbsp;&#27880;&#20876;bean&#26144;&#23556;</h3></div></div><div></div></div><p>
+				&#20026;&#20102;&#20256;&#36882;&#31867;&#20284;Account&#31561;&#22797;&#26434;&#23545;&#35937;&#65292;&#25105;&#20204;&#24517;&#39035;&#22312;&#23458;&#25143;&#31471;&#27880;&#20876;bean&#26144;&#23556;&#12290;
+				</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="http://www.redsaga.com/spring_ref/2.0RC2/images/admons/note.png"></td><th align="left">Note</th></tr><tr><td colspan="2" align="left" valign="top"><p>&#22312;&#26381;&#21153;&#22120;&#31471;&#36890;&#24120;&#22312;server-config.wsdd&#20013;&#20351;&#29992;Axis&#36827;&#34892;bean&#26144;&#23556;&#27880;&#20876;&#12290;</p></td></tr></table></div><p>
+				&#25105;&#20204;&#23558;&#20351;&#29992;Axis&#22312;&#23458;&#25143;&#31471;&#27880;&#20876;bean&#26144;&#23556;&#12290;&#20026;&#27492;&#65292;&#25105;&#20204;&#38656;&#35201;&#32487;&#25215;&#19968;&#20010;Spring Bean&#24037;&#21378;&#24182;&#36890;&#36807;&#32534;&#31243;&#27880;&#20876;&#36825;&#20010;bean&#26144;&#23556;&#12290;
+</p><pre class="programlisting">
+public class AxisPortProxyFactoryBean extends JaxRpcPortProxyFactoryBean {
+
+	protected void postProcessJaxRpcService(Service service) {
+		TypeMappingRegistry registry = service.getTypeMappingRegistry();
+		TypeMapping mapping = registry.createTypeMapping();
+		registerBeanMapping(mapping, Account.class, "Account");
+		registry.register("http://schemas.xmlsoap.org/soap/encoding/", mapping);
+	}
+
+	protected void registerBeanMapping(TypeMapping mapping, Class type, String name) {
+		QName qName = new QName("http://localhost:8080/account/services/accountService", name);
+		mapping.register(type, qName,
+		    new BeanSerializerFactory(type, qName),
+		    new BeanDeserializerFactory(type, qName));
+	}
+
+}
+</pre><p>
+			</p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e21933"></a>17.5.4.&nbsp;&#27880;&#20876;&#33258;&#24049;&#30340;&#22788;&#29702;&#26041;&#27861;</h3></div></div><div></div></div><p>
+				&#26412;&#33410;&#20013;&#65292;&#25105;&#20204;&#23558;&#27880;&#20876;&#33258;&#24049;&#30340; <tt class="literal">javax.rpc.xml.handler.Handler</tt> &#21040;Web&#26381;&#21153;&#20195;&#29702;&#65292;&#36825;&#26679;&#25105;&#20204;&#21487;&#20197;&#22312;SOAP&#28040;&#24687;&#34987;&#21457;&#36865;&#21069;&#25191;&#34892;&#23450;&#21046;&#30340;&#20195;&#30721;&#12290;<tt class="literal">javax.rpc.xml.handler.Handler</tt> &#26159;&#19968;&#20010;&#22238;&#35843;&#25509;&#21475;&#12290;jarxpr.jar&#20013;&#26377;&#20010;&#26041;&#20415;&#30340;&#22522;&#31867; - <tt class="literal">javax.rpc.xml.handler.GenericHandler</tt> &#20379;&#25105;&#20204;&#32487;&#25215;&#20351;&#29992;&#65306;
+
+</p><pre class="programlisting">
+public class AccountHandler extends GenericHandler {
+
+    public QName[] getHeaders() {
+        return null;
+    }
+
+    public boolean handleRequest(MessageContext context) {
+        SOAPMessageContext smc = (SOAPMessageContext) context;
+        SOAPMessage msg = smc.getMessage();
+
+        try {
+            SOAPEnvelope envelope = msg.getSOAPPart().getEnvelope();
+            SOAPHeader header = envelope.getHeader();
+            ...
+
+        } catch (SOAPException e) {
+            throw new JAXRPCException(e);
+        }
+
+        return true;
+    }
+
+}
+</pre><p>
+    &#25105;&#20204;&#29616;&#22312;&#35201;&#20570;&#30340;&#23601;&#26159;&#25226;AccountHandler&#27880;&#20876;&#21040;JAX-RPC&#26381;&#21153;&#65292;&#36825;&#26679;&#23427;&#21487;&#20197;&#22312;&#28040;&#24687;&#34987;&#21457;&#36865;&#21069;&#35843;&#29992; <tt class="literal">handleRequest</tt>&#12290;Spring&#30446;&#21069;&#23545;&#27880;&#20876;&#22788;&#29702;&#26041;&#27861;&#36824;&#19981;&#25552;&#20379;&#22768;&#26126;&#24335;&#25903;&#25345;&#12290;&#25152;&#20197;&#25105;&#20204;&#24517;&#39035;&#20351;&#29992;&#32534;&#31243;&#26041;&#24335;&#12290;&#20294;&#26159;Spring&#20013;&#36825;&#24456;&#23481;&#26131;&#23454;&#29616;&#65292;&#25105;&#20204;&#21482;&#38656;&#32487;&#25215;&#30456;&#20851;&#30340;bean&#24037;&#21378;&#31867;&#24182;&#35206;&#30422;&#19987;&#38376;&#20026;&#27492;&#35774;&#35745;&#30340; <tt class="literal">postProcessJaxRpcService</tt> &#26041;&#27861;&#65306;
+
+</p><pre class="programlisting">
+public class AccountHandlerJaxRpcPortProxyFactoryBean extends JaxRpcPortProxyFactoryBean {
+
+    protected void postProcessJaxRpcService(Service service) {
+        QName port = new QName(this.getNamespaceUri(), this.getPortName());
+        List list = service.getHandlerRegistry().getHandlerChain(port);
+        list.add(new HandlerInfo(AccountHandler.class, null, null));
+
+        logger.info("Registered JAX-RPC Handler [" + AccountHandler.class.getName() + "] on port " + port);
+    }
+
+}
+</pre><p>
+			&#26368;&#21518;&#65292;&#25105;&#20204;&#35201;&#35760;&#24471;&#26356;&#25913;Spring&#37197;&#32622;&#25991;&#20214;&#26469;&#20351;&#29992;&#25105;&#20204;&#30340;&#24037;&#21378;bean&#12290;
+</p><pre class="programlisting">
+    &lt;bean id="accountWebService" class="example.AccountHandlerJaxRpcPortProxyFactoryBean"&gt;
+        ...
+    &lt;/bean&gt;
+</pre><p>
+			</p></div><div class="sect2" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e21962"></a>17.5.5.&nbsp;&#20351;&#29992;XFire&#26469;&#26292;&#38706;Web&#26381;&#21153;</h3></div></div><div></div></div><p>XFire&#26159;&#19968;&#20010;Codehaus&#25552;&#20379;&#30340;&#36731;&#37327;&#32423;SOAP&#24211;&#12290;&#22312;&#20889;&#20316;&#36825;&#20010;&#25991;&#26723;&#26102;&#65288;2005&#24180;3&#26376;&#65289;XFire&#36824;&#22788;&#20110;&#24320;&#21457;&#38454;&#27573;&#12290;&#34429;&#28982;Spring&#25552;&#20379;&#20102;&#31283;&#23450;&#30340;&#25903;&#25345;&#65292;&#20294;&#26159;&#22312;&#26410;&#26469;&#24212;&#35813;&#20250;&#21152;&#20837;&#26356;&#22810;&#29305;&#24615;&#12290;&#26292;&#38706;XFire&#26159;&#36890;&#36807;XFire&#33258;&#36523;&#24102;&#30340;context&#65292;&#36825;&#20010;context&#23558;&#21644;RemoteExporter&#39118;&#26684;&#30340;bean&#30456;&#32467;&#21512;&#65292;&#21518;&#32773;&#38656;&#35201;&#34987;&#21152;&#20837;&#21040;&#22312;&#20320;&#30340;WebApplicationContext&#20013;&#12290;</p><p>
+                &#22312;&#25152;&#26377;&#36825;&#20123;&#20801;&#35768;&#20320;&#26292;&#38706;&#26381;&#21153;&#30340;&#26041;&#27861;&#20013;&#65292;&#20320;&#37117;&#24517;&#39035;&#20351;&#29992;&#19968;&#20010;&#30456;&#20851;&#30340;WebApplicationContext&#26469;&#21019;&#24314;&#19968;&#20010;DispatcherServlet&#65292;&#36825;&#20010;WebApplicationContext&#21253;&#21547;&#23558;&#26292;&#38706;&#30340;&#26381;&#21153;&#65306;
+                </p><pre class="programlisting">
+&lt;servlet&gt;
+  &lt;servlet-name&gt;xfire&lt;/servlet-name&gt;
+  &lt;servlet-class&gt;
+    org.springframework.web.servlet.DispatcherServlet
+  &lt;/servlet-class&gt;
+&lt;/servlet&gt;
+                </pre><p>
+			</p><p>
+                &#20320;&#36824;&#24517;&#39035;&#38142;&#25509;XFire&#37197;&#32622;&#12290;&#36825;&#26159;&#36890;&#36807;&#22686;&#21152;&#19968;&#20010;context&#25991;&#20214;&#21040;ContextLoaderListener&#65288;&#25110;&#32773;&#26159;Servlet&#65289;&#25351;&#23450;&#30340; <tt class="literal">contextConfigLocations</tt> &#21442;&#25968;&#20013;&#12290;&#36825;&#20010;&#37197;&#32622;&#25991;&#20214;&#22312;XFire jar&#20013;&#65292;&#24403;&#28982;&#36825;&#20010;jar&#25991;&#20214;&#24212;&#35813;&#25918;&#22312;&#20320;&#24212;&#29992;&#30340;classpath&#20013;&#12290;
+                </p><pre class="programlisting">
+&lt;context-param&gt;
+  &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
+  &lt;param-value&gt;
+    classpath:org/codehaus/xfire/spring/xfire.xml
+  &lt;/param-value&gt;
+&lt;/context-param&gt;
+
+&lt;listener&gt;
+  &lt;listener-class&gt;
+    org.springframework.web.context.ContextLoaderListener
+  &lt;/listener-class&gt;
+&lt;/listener&gt;
+                </pre><p>
+			</p><p>
+              &#22312;&#20320;&#21152;&#20837;&#19968;&#20010;Servlet&#26144;&#23556;&#21518;&#65288;&#26144;&#23556; /* &#21040;&#19978;&#38754;&#23450;&#20041;&#30340;XFire Servlet&#65289;&#65292;&#20320;&#21482;&#38656;&#35201;&#22686;&#21152;&#19968;&#20010;&#39069;&#22806;&#30340;bean&#26469;&#26292;&#38706;&#20351;&#29992;XFire&#30340;&#26381;&#21153;&#12290;&#20363;&#22914;&#65292;&#22312; <tt class="literal">xfire-servlet.xml</tt> &#20013;&#22914;&#19979;&#65306;
+              </p><pre class="programlisting">
+&lt;beans&gt;
+  &lt;bean name="/Echo" class="org.codehaus.xfire.spring.XFireExporter"&gt;
+    &lt;property name="service" ref="echo"&gt;
+    &lt;property name="serviceInterface" value="org.codehaus.xfire.spring.Echo"/&gt;
+    &lt;property name="serviceBuilder" ref="xfire.serviceBuilder"/&gt;
+    &lt;!-- the XFire bean is wired up in the xfire.xml file you've linked in earlier --&gt;
+    &lt;property name="xfire" ref="xfire"/&gt;
+  &lt;/bean&gt;
+
+  &lt;bean id="echo" class="org.codehaus.xfire.spring.EchoImpl"/&gt;
+&lt;/beans&gt;
+</pre><p>
+			</p><p>XFire&#22788;&#29702;&#20102;&#20854;&#20182;&#30340;&#20107;&#24773;&#12290;&#23427;&#26816;&#26597;&#20320;&#30340;&#26381;&#21153;&#25509;&#21475;&#24182;&#20135;&#29983;&#19968;&#20010;WSDL&#25991;&#20214;&#12290;&#36825;&#37324;&#30340;&#37096;&#20998;&#25991;&#26723;&#26469;&#33258;XFire&#32593;&#31449;&#65292;&#35201;&#20102;&#35299;&#26356;&#22810;&#26377;&#20851;XFire Spring&#30340;&#38598;&#25104;&#35831;&#35775;&#38382; <a href="http://docs.codehaus.org/display/XFIRE/Spring" target="_top">docs.codehaus.org/display/XFIRE/Spring</a>&#12290;
+       </p></div></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d0e21993"></a>17.6.&nbsp;&#23545;&#36828;&#31243;&#25509;&#21475;&#19981;&#25552;&#20379;&#33258;&#21160;&#25506;&#27979;</h2></div></div><div></div></div><p>&#23545;&#36828;&#31243;&#25509;&#21475;&#19981;&#23454;&#29616;&#33258;&#21160;&#25506;&#27979;&#30340;&#20027;&#35201;&#21407;&#22240;&#26159;&#38450;&#27490;&#24102;&#26469;&#22826;&#22810;&#30340;&#36828;&#31243;&#35843;&#29992;&#12290;&#30446;&#26631;&#23545;&#35937;&#26377;&#21487;&#33021;&#23454;&#29616;&#30340;&#26159;&#31867;&#20284;InitializingBean&#25110;&#32773;DisposableBean&#30340;&#20869;&#37096;&#22238;&#35843;&#25509;&#21475;&#65292;&#32780;&#36825;&#20123;&#26159;&#19981;&#24076;&#26395;&#26292;&#38706;&#32473;&#35843;&#29992;&#32773;&#30340;&#12290;</p><p>&#25552;&#20379;&#19968;&#20010;&#25152;&#26377;&#25509;&#21475;&#37117;&#34987;&#30446;&#26631;&#23454;&#29616;&#30340;&#20195;&#29702;&#36890;&#24120;&#21644;&#26412;&#22320;&#24773;&#20917;&#26080;&#20851;&#12290;&#20294;&#26159;&#24403;&#26292;&#38706;&#19968;&#20010;&#36828;&#31243;&#26381;&#21153;&#26102;&#65292;&#20320;&#24212;&#35813;&#21482;&#26292;&#38706;&#29305;&#23450;&#30340;&#29992;&#20110;&#36828;&#31243;&#20351;&#29992;&#30340;&#26381;&#21153;&#25509;&#21475;&#12290;&#38500;&#20102;&#20869;&#37096;&#22238;&#35843;&#25509;&#21475;&#65292;&#30446;&#26631;&#26377;&#21487;&#33021;&#23454;&#29616;&#20102;&#22810;&#20010;&#22240;&#20026;&#25509;&#21475;&#65292;&#32780;&#24448;&#24448;&#21482;&#26377;&#19968;&#20010;&#26159;&#29992;&#20110;&#36828;&#31243;&#20351;&#29992;&#30340;&#12290;&#20986;&#20110;&#36825;&#20123;&#21407;&#22240;&#65292;&#25105;&#20204; <span class="emphasis"><em>&#35201;&#27714;</em></span> &#25351;&#23450;&#36825;&#26679;&#30340;&#26381;&#21153;&#25509;&#21475;&#12290;</p><p>&#36825;&#26159;&#22312;&#37197;&#32622;&#26041;&#20415;&#24615;&#21644;&#24847;&#22806;&#26292;&#38706;&#20869;&#37096;&#26041;&#27861;&#20855;&#26377;&#30340;&#21361;&#38505;&#20043;&#38388;&#20316;&#30340;&#24179;&#34913;&#12290;&#24635;&#26159;&#25351;&#26126;&#26381;&#21153;&#25509;&#21475;&#24182;&#19981;&#35201;&#33457;&#22826;&#22823;&#20195;&#20215;&#65292;&#24182;&#21487;&#20197;&#20351;&#20320;&#23545;&#20110;&#26292;&#38706;&#25351;&#23450;&#26041;&#27861;&#26356;&#21152;&#23433;&#20840;&#12290;</p></div><div class="sect1" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d0e22005"></a>17.7.&nbsp;&#22312;&#36873;&#25321;&#36825;&#20123;&#25216;&#26415;&#26102;&#30340;&#19968;&#20123;&#32771;&#34385;</h2></div></div><div></div></div><p>
+		&#36825;&#37324;&#25552;&#21040;&#30340;&#27599;&#31181;&#25216;&#26415;&#37117;&#26377;&#23427;&#30340;&#32570;&#28857;&#12290;&#20320;&#22312;&#36873;&#25321;&#19968;&#31181;&#25216;&#26415;&#26102;&#65292;&#24212;&#35813;&#20180;&#32454;&#32771;&#34385;&#20320;&#30340;&#38656;&#35201;&#65292;&#20320;&#25152;&#26292;&#38706;&#30340;&#26381;&#21153;&#21644;&#20320;&#22312;&#36828;&#31243;&#35775;&#38382;&#26102;&#20256;&#36865;&#30340;&#23545;&#35937;&#12290;
+		</p><p>
+		&#24403;&#20351;&#29992;RMI&#26102;&#65292;&#36890;&#36807;HTTP&#21327;&#35758;&#35775;&#38382;&#23545;&#35937;&#26159;&#19981;&#21487;&#33021;&#30340;&#65292;&#38500;&#38750;&#20320;&#29992;HTTP&#21253;&#35065;RMI&#27969;&#12290;RMI&#26159;&#19968;&#31181;&#37325;&#37327;&#32423;&#30340;&#21327;&#35758;&#65292;&#22240;&#20026;&#23427;&#25903;&#25345;&#25972;&#20010;&#23545;&#35937;&#30340;&#24207;&#21015;&#21270;&#65292;&#24403;&#35201;&#27714;&#32593;&#32476;&#19978;&#20256;&#36755;&#22797;&#26434;&#25968;&#25454;&#32467;&#26500;&#26102;&#36825;&#26679;&#30340;&#24207;&#21015;&#21270;&#26159;&#38750;&#24120;&#37325;&#35201;&#30340;&#12290;&#28982;&#32780;&#65292;RMI-JRMP&#21482;&#33021;&#32465;&#23450;&#21040;Java&#23458;&#25143;&#31471;&#65306;&#23427;&#26159;&#19968;&#31181;Java-to-Java&#30340;&#36828;&#31243;&#35775;&#38382;&#35299;&#20915;&#26041;&#26696;&#12290;
+		</p><p>&#22914;&#26524;&#20320;&#38656;&#35201;&#22522;&#20110;HTTP&#30340;&#36828;&#31243;&#35775;&#38382;&#32780;&#19988;&#36824;&#35201;&#27714;&#20351;&#29992;Java&#24207;&#21015;&#21270;&#65292;Spring&#30340;HTTP&#35843;&#29992;&#22120;&#26159;&#19968;&#20010;&#24456;&#22909;&#30340;&#36873;&#25321;&#12290;&#23427;&#21644;RMI&#35843;&#29992;&#22120;&#20351;&#29992;&#30456;&#21516;&#30340;&#22522;&#30784;&#35774;&#26045;&#65292;&#20165;&#20165;&#20351;&#29992;HTTP&#20316;&#20026;&#20256;&#36755;&#26041;&#24335;&#12290;&#27880;&#24847;HTTP&#35843;&#29992;&#22120;&#19981;&#20165;&#21482;&#33021;&#29992;&#22312;Java-to-Java&#30340;&#36828;&#31243;&#35775;&#38382;&#65292;&#32780;&#19988;&#22312;&#23458;&#25143;&#31471;&#21644;&#26381;&#21153;&#22120;&#31471;&#37117;&#24517;&#39035;&#20351;&#29992;Spring&#12290;&#65288;Spring&#20026;&#38750;RMI&#25509;&#21475;&#25552;&#20379;&#30340;RMI&#35843;&#29992;&#22120;&#20063;&#35201;&#27714;&#23458;&#25143;&#31471;&#21644;&#26381;&#21153;&#22120;&#31471;&#37117;&#20351;&#29992;Spring&#65289;
+		</p><p>
+		&#24403;&#22312;&#24322;&#26500;&#29615;&#22659;&#20013;&#65292;Hessian&#21644;Burlap&#23558;&#21487;&#33021;&#26497;&#26377;&#20215;&#20540;&#12290;&#22240;&#20026;&#23427;&#20204;&#21487;&#20197;&#20351;&#29992;&#22312;&#38750;Java&#30340;&#23458;&#25143;&#31471;&#12290;&#28982;&#32780;&#65292;&#23545;&#38750;Java&#25903;&#25345;&#20173;&#28982;&#26159;&#26377;&#38480;&#30340;&#12290;&#24050;&#30693;&#30340;&#38382;&#39064;&#21253;&#25324;&#21547;&#26377;&#24310;&#36831;&#21021;&#22987;&#21270;&#30340;collection&#23545;&#35937;&#30340;Hibernate&#23545;&#35937;&#30340;&#24207;&#21015;&#21270;&#12290;&#22914;&#26524;&#20320;&#26377;&#19968;&#20010;&#36825;&#26679;&#30340;&#25968;&#25454;&#32467;&#26500;&#65292;&#24212;&#24403;&#32771;&#34385;&#20351;&#29992;RMI&#25110;HTTP&#35843;&#29992;&#22120;&#65292;&#32780;&#19981;&#26159;Hessian&#12290;
+		</p><p>&#22312;&#20351;&#29992;&#26381;&#21153;&#38598;&#32676;&#21644;&#38656;&#35201;JMS&#20195;&#29702;&#65288;JMS broker&#65289;&#26469;&#22788;&#29702;&#36127;&#36733;&#22343;&#34913;&#65292;&#21457;&#29616;&#21644;&#33258;&#21160;-&#22833;&#36133;&#24674;&#22797;&#26381;&#21153;&#26102;JMS&#26159;&#24456;&#26377;&#29992;&#30340;&#12290;&#32570;&#30465;&#24773;&#20917;&#19979;&#65292;&#22312;&#20351;&#29992;JMS&#36828;&#31243;&#26381;&#21153;&#26102;&#20351;&#29992;Java&#24207;&#21015;&#21270;&#65292;&#20294;&#26159;JMS&#25552;&#20379;&#32773;&#20063;&#21487;&#20197;&#20351;&#29992;&#19981;&#21516;&#30340;&#26426;&#21046;&#20363;&#22914;XStream&#26469;&#35753;&#26381;&#21153;&#22120;&#29992;&#20854;&#20182;&#25216;&#26415;&#12290;</p><p>&#26368;&#21518;&#30340;&#19968;&#28857;&#26159;&#65292;&#30456;&#23545;&#20110;RMI&#65292;EJB&#26377;&#19968;&#20010;&#20248;&#28857;&#26159;&#23427;&#25903;&#25345;&#26631;&#20934;&#30340;&#22522;&#20110;&#35282;&#33394;&#30340;&#35748;&#35777;&#21644;&#25480;&#26435;&#65292;&#20197;&#21450;&#36828;&#31243;&#20107;&#21153;&#20256;&#36882;&#12290;&#29992;RMI&#35843;&#29992;&#22120;&#25110;HTTP&#35843;&#29992;&#22120;&#26469;&#25903;&#25345;&#23433;&#20840;&#19978;&#19979;&#25991;&#30340;&#20256;&#36882;&#26159;&#21487;&#33021;&#30340;&#65292;&#34429;&#28982;&#36825;&#19981;&#30001;&#26680;&#24515;Spring&#25552;&#20379;&#65306;Spring&#25552;&#20379;&#20102;&#21512;&#36866;&#30340;&#38057;&#23376;&#26469;&#25554;&#20837;&#31532;&#19977;&#26041;&#25110;&#23450;&#21046;&#30340;&#35299;&#20915;&#26041;&#26696;&#12290;</p></div></div><div class="navfooter"><hr><table width="100%" summary="Navigation footer"><tr><td width="40%" align="left"><a accesskey="p" href="pt04.html">Prev</a>&nbsp;</td><td width="20%" align="center"><a accesskey="u" href="pt04.html">Up</a></td><td width="40%" align="right">&nbsp;<a accesskey="n" href="ejb.html">Next</a></td></tr><tr><td width="40%" align="left" valign="top">Part&nbsp;IV.&nbsp;&#25972;&#21512;&nbsp;</td><td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td><td width="40%" align="right" valign="top">&nbsp;Chapter&nbsp;18.&nbsp;Enterprise Java Bean(EJB)&#38598;&#25104;
+	</td></tr></table></div><div xmlns="http://www.w3.org/TR/xhtml1/transitional" style="background-color:#31430f;border:none;height:50px;border:1px solid black;text-align:center"><table cellspacing="0" cellpadding="0" width="100%" style="margin: 0px; padding: 0px"><tr><td width="50%" style="font-size: 110%; color: white; vertical-align: center; text-align: right">
+        				Sponsored by
+        			</td><td width="50%" style="padding: 0px"><a style="border:none;background: url();" href="http://www.interface21.com/" title="Brought to you by Interface21"><img style="border: none" src="images/interface21.gif"></a></td></tr></table></div></body>
+<!-- Mirrored from www.redsaga.com/spring_ref/2.0RC2/html/remoting.html by HTTrack Website Copier/3.x [XR&CO'2005], Tue, 17 Oct 2006 16:56:38 GMT -->
+</html>
